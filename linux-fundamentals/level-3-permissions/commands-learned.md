@@ -25,30 +25,49 @@ NUMERIC MODE - the 4-2-1 system
 
    Why 4-2-1 specifically?
        It's binary place values for 3 bits.
+       
        Only combination that gives unique sums
+       
        AND fits in a single digit (0-7).
+       
        Other systems (5-2-1, 5-6-2) either skip
+       
        numbers or overflow into two digits.
+       
        The math forced the choice, not designers.
 
    Common patterns:
+
+       
        600 = -rw------- = private (SSH keys, secrets)
+  
        644 = -rw-r--r-- = blog/post (I write, world reads)
+       
        755 = -rwxr-xr-x = directories and executables
+       
        711 = -rwx--x--x = run-only-no-read (binaries)
+       
        666 = -rw-rw-rw- = world-writable. RED FLAG.
+       
        777 = -rwxrwxrwx = wide open. Never in prod.
 
-chmod - change mode
-   Stands for "change mode" - mode = permission state.
-   Same naming pattern as cd, cp, mv, rm, chown.
+   chmod - change mode
+   
+       Stands for "change mode" - mode = permission state.
+   
+       Same naming pattern as cd, cp, mv, rm, chown.
 
    Numeric form:
+       
        chmod 644 file = set exact state, all 9 bits.
+       
        Overwrites everything. Absolute.
 
    Symbolic form:
+
+       
        chmod [who][operator][what] file
+       
        Adjusts only the bit you name. Relative.
 
        WHO:
@@ -80,18 +99,27 @@ chmod - change mode
        Symbolic for live work/incident response.
 
 OWNERSHIP RULES (the deep truth)
-   Only the OWNER (or root) can chmod a file.
-   Wide-open rwx bits don't let others change perms.
-   The lock on the lock is OWNERSHIP, not rwx bits.
-   This protects the entire DAC model.
+  
+  Only the OWNER (or root) can chmod a file.
+   
+  Wide-open rwx bits don't let others change perms.
+   
+  The lock on the lock is OWNERSHIP, not rwx bits.
+   
+  This protects the entire DAC model.
 
    This is called Discretionary Access Control (DAC).
+   
    The owner has DISCRETION over their own files.
+   
    Every Linux security model rests on this.
 
    Real attack vectors aren't chmod itself:
+      
        1. File already world-writable (666/777)
+      
        2. Attacker becomes root (priv escalation)
+      
        3. Attacker hijacks the owner's account
 
 WHAT EACH PERMISSION ACTUALLY MEANS
@@ -112,22 +140,33 @@ WHAT EACH PERMISSION ACTUALLY MEANS
 
 chown - PARKED FOR LAPTOP (May 2026)
    Transfers the "deed" of a file to a new owner.
-   Only root can run chown.
+  
+ Only root can run chown.
+   
    Why? Otherwise users could:
+      
        - Steal files by claiming ownership
+       
        - Frame others by transferring malware
+       
        - Evade detection by laundering ownership
+   
    Termux is single-user + sandboxed, can't practice.
+   
    Will cover on laptop with multi-user setup.
 
 THE CHECK-FLIP-VERIFY HABIT
+
 Always:
    1. ls -la file       (see current state)
    2. chmod ... file    (change it)
    3. ls -la file       (verify the change)
+
 Never assume the change worked. Always verify.
 
+
 THINGS THAT CLICKED HARD
+
 - 4-2-1 isn't arbitrary. It's binary mathematics.
 - Numeric overwrites all 9 bits.
 - Symbolic only touches the bit you name.
