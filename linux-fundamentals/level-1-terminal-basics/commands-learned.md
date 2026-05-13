@@ -5,13 +5,14 @@ ls - list (shows files and folders in current spot)
    Flags are like attachments for commands - they
    change what the command does.
 
-   ls -a = shows hidden stuff too
+   ls -a = shows hidden files and folders
    "."  = where I am right now
    ".." = one step up
-   ls -l = shows permissions and details
-       Looks like "drwx------"
-       First letter tells the type
-       d = directory, - = regular file
+   ls -l = shows permissions and detail but no hidden filess
+   
+   Looks like "drwx------"
+   First letter tells the type
+   d = directory, - = regular file
    ls -la = both at once (this is the one I actually use)
    ls -R = walks through everything inside, all levels
 
@@ -35,5 +36,5 @@ history - shows what I typed before
 
 THE HABIT I WANT TO KEEP
 Always pwd + ls before doing anything serious.
-Know where I am. Know what's around. Then act.R 
+Know where I am. Know what's around. Then act. 
 
