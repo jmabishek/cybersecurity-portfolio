@@ -78,3 +78,99 @@ Ready to start 5.2.
 - [x] Level 2 — Files and Directories
 - [x] Level 3 — Permissions
 - [x] Level 4 — Variables and Environment
+
+# Cybersecurity Roadmap — Progress
+
+**Last updated:** 17 May 2026  
+**Current hero:** 🦾 Iron Man (Linux & Bash)  
+**Current level:** 5 — Functions and Conditions  
+**Current sub-level:** 5.3 ✅ COMPLETE → consolidation practice before 5.4
+
+---
+
+## The 8 Heroes — Roadmap Overview
+
+| # | Hero | Domain | Status |
+|---|------|--------|--------|
+| 1 | 🦾 Iron Man | Linux & Bash | **In progress** (Level 5 of 11) |
+| 2 | 🕸️ Spider-Man | Networking | Locked |
+| 3 | 🛡️ Captain America | Security Concepts | Locked |
+| 4 | 🗺️ Nick Fury | MITRE ATT&CK | Locked |
+| 5 | 📝 Hawkeye | Text Processing | Locked |
+| 6 | 🐍 Bruce Banner | Python | Locked |
+| 7 | 🐙 J.A.R.V.I.S | Git & GitHub | Active alongside Iron Man |
+| 8 | 🗣️ Black Widow | English | Active alongside Iron Man |
+
+---
+
+## Iron Man — Linux & Bash Progress
+
+### Completed levels
+- ✅ **Level 1** — Terminal Basics
+- ✅ **Level 2** — Files and Directories
+- ✅ **Level 3** — Permissions
+- ✅ **Level 4** — Variables and Environment
+
+### Level 5 — Functions and Conditions (in progress)
+- ✅ **5.1** — Functions
+- ✅ **5.2** — Conditions (if / else / elif)
+- ✅ **5.3** — Comparison Flags ← completed today
+- ⏸ **5.4** — File Conditions (paused for consolidation practice)
+- ⏸ **Level 5 Mini Boss** — Build `fcd` function from scratch
+
+### Remaining levels in Iron Man
+- Level 6 — Loops
+- Level 7 — Scripts and Automation
+- Level 8 — Process Management
+- Level 9 — System Information
+- Level 10 — Cron and Scheduling
+- Level 11 — SSH and Remote Access
+
+---
+
+## Current state — 17 May 2026
+
+5.3 closed today. Bigger than the original roadmap scope — earned two extra concepts that weren't planned:
+
+- **Exit codes** as the real engine under `if` (the truth-value mechanic from 5.2 was exit codes all along)
+- **Dead branches** and the refactoring-vs-patching distinction
+
+Mini boss completed (access gate script) through ~30 iterations, including design-intent clarification with the tutor and two voluntary refactors (UX polish, then dead-branch removal).
+
+### Tomorrow's focus — consolidation, not advancement
+
+Practice the **structure** of 5.1 + 5.2 + 5.3 fluently before opening 5.4. Today's biggest realization: making code work is one skill; making code clean is another. The second one needs reps.
+
+No new tools tomorrow. Just clean use of existing ones.
+
+---
+
+## Portfolio structure so far
+
+```
+cybersecurity-portfolio/
+├── PROGRESS.md
+├── README.md
+├── security-checklist.md
+└── linux-fundamentals/
+    ├── level-1-terminal-basics/
+    ├── level-2-files-and-directories/
+    ├── level-3-permissions/
+    ├── level-4-variables-and-environment/
+    └── level-5-functions-and-conditions/
+        ├── 5.1-functions/
+        ├── 5.2-conditions/
+        └── 5.3-comparison-flags/   ← new today
+```
+
+---
+
+## Effort summary — Iron Man so far
+
+- 4 full levels closed (terminal basics through environment variables)
+- 3 of 4 sub-levels in Level 5 closed (5.1, 5.2, 5.3)
+- 1 mini boss completed inside 5.3 (access gate, single-user design)
+- ~30 iterations on the 5.3 boss script with full debug trace documented
+- 5 levels documented with `commands-learned.md` + reflections format
+- Quoting discipline now reflexive (verified under stress testing)
+- Refactoring discipline introduced (dead-branch hunting + cascade simplification)
