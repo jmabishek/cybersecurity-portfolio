@@ -1,4 +1,4 @@
-# Cybersecurity Roadmap — Progress
+ Cybersecurity Roadmap — Progress
 
 **Last updated:** 21 May 2026
 **Current hero:** 🦾 Iron Man (Linux & Bash)
@@ -386,3 +386,16 @@ cybersecurity-portfolio/
 
 ## To resume in the new chat
 Paste this, then we go straight to **5.4 — file conditions** (`-f` = is a file, `-d` = is a directory, `-e` = exists), then **Level 6 — Loops**. Teach 5.4 the same way: one concept, analogy, worked example, build-on practice.
+
+### 24 May 2026 — Sub-Level 5.4 (File Conditions) + Level 5 Mini-Boss ✅
+**Closed:** file conditions (`-f`, `-d`, `-e`) and the `fcd` capstone — Level 5 is done.
+
+- **The three sensors** — proved each by hand: tested the empty case, created the target, retested, then ran the full cross-matrix (`-f` on a folder, `-d` on a file) to confirm each one fires only for its own type, while `-e` fires for anything.
+- **Own analogy** — office-building security desks: `-f` = first-floor biometric (files only), `-d` = the directors' department (folders only), `-e` = front desk / emergency squad (sees everyone, every floor).
+- **Mini-Boss — `fcd`** (built from scratch): empty-input guard (`-z` + `return`), existence check (`-e`), nested type check (`-d` → `cd` + confirm), plus separate honest messages for *file-not-folder* vs *not-found*. Went one branch beyond the brief.
+- **Three real bugs, debugged independently:**
+  1. *Silent miss* — a branch with no `echo` ran quietly; fixed by adding the `else`.
+  2. *Location trap* — `fcd` checks the current directory only; the target lived elsewhere. Lesson: `pwd` before judging.
+  3. *Permission wall* — a passing `-d` still failed `cd` (no execute permission); fixed with `chmod`. Existence and permission are separate gates (Level 3 callback).
+- **New ground:** existence *check* vs *scan* — `-e` looks in one room; `find` (parked for later) searches the whole system.
+- **Workflow shift:** moved to AI-assisted documentation — own the understanding and debugging myself, delegate the *arranging* of portfolio docs, then critically edit.
