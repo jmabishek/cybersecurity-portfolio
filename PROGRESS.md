@@ -265,9 +265,9 @@ Ready to start 5.2.
 
 ---
 
-## Current state — 17 May 2026
+### Current state — 17 May 2026
 
-5.3 closed today. Bigger than the original roadmap scope — earned two extra concepts that weren't planned:
+- 5.3 closed today. Bigger than the original roadmap scope — earned two extra concepts that weren't planned:
 
 - **Exit codes** as the real engine under `if` (the truth-value mechanic from 5.2 was exit codes all along)
 - **Dead branches** and the refactoring-vs-patching distinction
@@ -314,12 +314,12 @@ cybersecurity-portfolio/
 
 # PROGRESS — Resume Snapshot
 
-**Saved:** 24 May 202
-6
---## Resume point
-Hero 1 — 🦾 Iron Man (Linux & Bash) → **Level 5 (Functions & Conditions).**
-**Level 5 combination practice is FULLY CLOSED** — 5.1–5.3 atoms + Phase A (rearrangements) + Phase B (functions talking to each other).
-**Next: 5.4 — file conditions** (`-f`, `-d`, `-e`), then **Level 6 — Loops.**
+**Saved:** 24 May 2026
+
+---## Resume point
+- Hero 1 — 🦾 Iron Man (Linux & Bash) → **Level 5 (Functions & Conditions).**
+- **Level 5 combination practice is FULLY CLOSED** — 5.1–5.3 atoms + Phase A (rearrangements) + Phase B (functions talking to each other).
+- **Next: 5.4 — file conditions** (`-f`, `-d`, `-e`), then **Level 6 — Loops.**
 
 ---
 
