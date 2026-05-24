@@ -316,7 +316,7 @@ cybersecurity-portfolio/
 
 **Saved:** 24 May 2026
 
----## Resume point
+# Resume point
 - Hero 1 — 🦾 Iron Man (Linux & Bash) → **Level 5 (Functions & Conditions).**
 - **Level 5 combination practice is FULLY CLOSED** — 5.1–5.3 atoms + Phase A (rearrangements) + Phase B (functions talking to each other).
 - **Next: 5.4 — file conditions** (`-f`, `-d`, `-e`), then **Level 6 — Loops.**
