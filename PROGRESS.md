@@ -311,3 +311,80 @@ cybersecurity-portfolio/
 - 5 levels documented with `commands-learned.md` + reflections format
 - Quoting discipline now reflexive (verified under stress testing)
 - Refactoring discipline introduced (dead-branch hunting + cascade simplification)
+# PROGRESS — Resume Snapshot
+
+**Saved:** 24 May 2026
+**How to use:** paste this at the start of the next chat so it picks up cleanly at **5.4**.
+
+---
+
+## Resume point
+Hero 1 — 🦾 Iron Man (Linux & Bash) → **Level 5 (Functions & Conditions).**
+**Level 5 combination practice is FULLY CLOSED** — 5.1–5.3 atoms + Phase A (rearrangements) + Phase B (functions talking to each other).
+**Next: 5.4 — file conditions** (`-f`, `-d`, `-e`), then **Level 6 — Loops.**
+
+---
+
+## What we did today (24 May)
+- Re-drilled all six **Phase A** patterns at **two arguments**.
+- Ran a rapid-fire oral eval on all six Phase A patterns (my own analogies + real-world).
+- Learned and practiced all six **Phase B** patterns ("functions talking to each other"), mostly by **extending my own login program** rather than starting fresh each time.
+
+---
+
+## Phase A — rearrangement patterns (OWN THESE — do not re-teach)
+- **#3 Nested conditionals** — inner check only matters once the outer passed (precondition → refinement). *(Eval: clean pass — landed authentication-before-authorization.)*
+- **#5 if–elif–else ladder (OR-of-AND split)** — mutually-exclusive cascade, FIRST match wins, rest skipped; several branches can land on the SAME outcome. *(Eval: my weakest — keep "many branches → one outcome" and "exactly one branch fires" in mind.)*
+- **#7 Default parameter values** — `${1:-default}`; fill a fallback instead of rejecting.
+- **#8 Argument-count / arity check** — `$#`; guards QUANTITY not content (an empty arg still counts).
+- **#13 Boolean flag** — start a flag, several checks can flip it, decide ONCE at the end.
+- **#14 Guard clause (empty + range)** — `[ -z "$x" ] || [ "$x" -lt LOW ] || [ "$x" -gt HIGH ]`; put `-z` FIRST so empty never hits the numeric tests; bail early.
+
+## Phase B — functions talking to each other (NEW — own these)
+**The unlock:** a function communicates on TWO channels — **exit code** (`return 0/1` = yes/no, read by `if`/`$?`) and **output** (`echo` = a value, captured by `$(...)`).
+- **#2 Function-as-predicate** — `if my_func "$x"; then`; `[ ]` and functions are *both* just commands returning exit codes.
+- **#4 One function calling another** — checker + actor (separation of concerns); args are handed over explicitly — each function has its own fresh `$1`/`$2`.
+- **#6 Function in a compound condition** — `if predicate "$x" && [ test ]; then`; **no `;` before `&&`**, the only `;` is before `then`. (Untangled the old `validate_event` knot: push complex logic into a named predicate.)
+- **#9 Command substitution** — `result=$(func)`; `echo` a VALUE (not `return` — return is number-only); capture a **clean bare token** so it stays reusable.
+- **#12 Sequential `&&` chains** — `a && b && c`; the FLAT replacement for a tower of nested ifs; the idiom of build/deploy/CI pipelines. (Mechanic is obvious to me — the POINT is flattening nesting + knowing when to choose it over explicit ifs.)
+- **#15 Predicate-then-classify** — classifier echoes a bare label (#9) + router branches on it (#5); separates "what is this?" from "what do I do about it?". (This is *why* bare tokens matter.)
+
+---
+
+## Concepts now owned (do NOT re-teach)
+- **Two channels:** exit code (`return` / `if` / `$?`) vs output (`echo` / `$()`). `return` is number-only; for a value, echo + capture.
+- `[ ]` and functions are both commands returning exit codes → they mix freely with `&&`.
+- `&&` *inside* `if` = combine conditions; `&&` *between commands* = sequence with abort-on-first-failure.
+- **Syntax:** space required before `]`; **no `;` before `&&`**; `;` before `then`; `{` opens a function body, `}` closes it.
+- `=` is string compare, `-eq` is numeric (`"00"` ≠ `"0"` as strings, but `= 0` as numbers).
+- Capture a clean **bare token** (not a sentence) so downstream code can branch on it.
+- Declaring `local a/b` but then using `$1/$2` in the body is inconsistent — pick one; use self-documenting names.
+- **bash ≠ Python here:** Python `return value` gives the value back; bash `return` is status only.
+
+## Still parked for 5.4+
+- Non-numeric input crashing `-eq`/`-lt`/`-gt` ("integer expected") — clean fix is `[[ ]]`, deferred to 5.4+.
+
+---
+
+## My learning style — PLEASE FOLLOW
+- ONE concept at a time, ONE task per response. Grounded analogy for every NEW concept. Lead with a worked example and trace it.
+- Lane 1 (analogy + understanding) → Lane 2 (professional context) → practice.
+- I extend my EXISTING program from one-arg → two-arg rather than starting fresh (efficient; shows the delta). Only give a fresh scenario when you want to test transfer to a new context.
+- I learn by experimenting — once I understand, give hints, not full solutions. Verify in my own words. Bridge to other heroes.
+- NO invented urgency / deadlines; if time is short, do *less*, never faster. Praise specifically; if I forgot, re-anchor without shame.
+
+## Reminders for Claude (lessons from today)
+- For a pattern whose **mechanic I already own**, don't over-scaffold or hand me a hollow toy example — **lead with the POINT** (when & why to use it), and be honest that the mechanic is a combo of things I already know. *(This came up hard on #12.)*
+- Confirm my design intent **before** grading my code.
+- Flag any NEW operator/keyword before using it.
+- Surface what's deferred honestly; don't claim "no gaps" without checking.
+- Watch session length; offer clean pauses at milestones.
+
+---
+
+## Roadmap — the Spine (8 Heroes)
+🦾 Linux & Bash → 🕸️ Networking → 🛡️ Security Concepts → 🗺️ MITRE ATT&CK → 📝 Text Processing → 🐍 Python → 🐙 Git & GitHub → 🗣️ English.
+**Currently: Hero 1, Level 5 of 11 — next stop 5.4.** Git & English run alongside throughout.
+
+## To resume in the new chat
+Paste this, then we go straight to **5.4 — file conditions** (`-f` = is a file, `-d` = is a directory, `-e` = exists), then **Level 6 — Loops**. Teach 5.4 the same way: one concept, analogy, worked example, build-on practice.
