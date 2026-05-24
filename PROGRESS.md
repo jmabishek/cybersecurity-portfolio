@@ -311,14 +311,11 @@ cybersecurity-portfolio/
 - 5 levels documented with `commands-learned.md` + reflections format
 - Quoting discipline now reflexive (verified under stress testing)
 - Refactoring discipline introduced (dead-branch hunting + cascade simplification)
+
 # PROGRESS — Resume Snapshot
 
 **Saved:** 24 May 2026
-**How to use:** paste this at the start of the next chat so it picks up cleanly at **5.4**.
-
----
-
-## Resume point
+--## Resume point
 Hero 1 — 🦾 Iron Man (Linux & Bash) → **Level 5 (Functions & Conditions).**
 **Level 5 combination practice is FULLY CLOSED** — 5.1–5.3 atoms + Phase A (rearrangements) + Phase B (functions talking to each other).
 **Next: 5.4 — file conditions** (`-f`, `-d`, `-e`), then **Level 6 — Loops.**
