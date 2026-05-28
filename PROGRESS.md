@@ -1,9 +1,10 @@
  Cybersecurity Roadmap — Progress
 
-**Last updated:** 21 May 2026
+
+**Last updated:** 28 May 2026
 **Current hero:** 🦾 Iron Man (Linux & Bash)
-**Current level:** Level 5 — Functions & Conditions
-**Current focus:** Combination practice complete → Sub-Level 5.4 (File Conditions) next
+**Current level:** Level 6 — Loops
+**Current focus:** `for`-loop fusion (Levels 1–5 folded into loops) → `while` / `break` next
 
 ---
 
@@ -399,3 +400,38 @@ Paste this, then we go straight to **5.4 — file conditions** (`-f` = is a file
   3. *Permission wall* — a passing `-d` still failed `cd` (no execute permission); fixed with `chmod`. Existence and permission are separate gates (Level 3 callback).
 - **New ground:** existence *check* vs *scan* — `-e` looks in one room; `find` (parked for later) searches the whole system.
 - **Workflow shift:** moved to AI-assisted documentation — own the understanding and debugging myself, delegate the *arranging* of portfolio docs, then critically edit.
+
+
+### 28 May 2026 — Level 6 (Loops): `for` deep-dive + two fusion mini-bosses ✅
+**Goal:** open Level 6 with the `for` loop, then *fuse* it with every tool from Levels 1–5. By my own call: push `for` to its limits before touching `while`/`break`, so I'd feel the real *need* for them instead of learning them blind.
+
+**Core concepts owned today:**
+- **One item per pass** — `for x in "$@"` hands `x` a single argument each time around, in order, until the list runs out, then the loop ends.
+- **A loop variable outlives the loop** — after `done` it still holds the final value (proved it live with `echo "$x"`).
+- **Override, re-seen** — a variable is one box holding one value; each pass overwrites the last (watched `hello` get wiped by `apple`).
+- **`$@` vs the loop variable vs `$#` (the breakthrough)** — `"$@"` is the whole *row* of arguments as separate items (NOT one string — that's `$*`, parked); the loop variable is the *one* I'm on; `$#` is the *count*. Reading `$@` in the body where I meant the current item caused a `[: too many arguments` storm — and that error was literally `$@` proving it expands to many separate words.
+- **`source` vs `./` (bonus, from a bug)** — a sourced script runs in the current shell and sees its variables; `./` spawns a child that only inherits *exported* ones. Owned the concept; cut a ceremonial `export` once we saw it did nothing for an in-shell function.
+
+**Mini-bosses cleared — 2:**
+1. **Subsystem Sweep (`sweep`)** — loop over any number of names; classify each as existing-dir / existing-file / missing; create the missing ones; guard zero args. Fused `for` + `if`/`elif`/`else` + `-d`/`-f`/`-e` + `$#`/`-eq` + `mkdir`.
+2. **Sorting Bay (`org`)** — sort a mixed list of files and folders into two bins, with a >5-item heads-up and a no-args guard. Fused `for` + conditions + `-f`/`-d` + `mv` + `mkdir -p` + variables + `ls` + navigation.
+
+**Debugging & testing:**
+- **~25-iteration grind** on `sweep`, reading each error and fixing it solo (misplaced `fi`/`done`, `[-z` spacing, `for "$@"` "not a valid identifier", and finally the `$@`-vs-loop-variable bug).
+- **Same bug class, twice** — the morning's `enemy3` bug (loop advances `me`, body reads `$target`) reappeared as `$@` vs `test1`; recognized the shape the second time.
+- **Stress-tested like a skeptic** — 13 args at once, existing + new mixed (the `964`-in-a-row case), decimals, leading zeros, re-runs to confirm "created" flips to "online".
+- **Hardest part (honest):** the function failing *silently* on non-existent input — no error, no output, nothing to grab. Took a while to spot it was skipping quietly; lesson learned about announcing skips.
+- **Resilience:** lost ~2 hours to an Ubuntu logout mid-session and **rebuilt the whole thing from memory.**
+
+**Working with the AI tutor — mistakes caught & corrected:**
+- Tutor over-ran a `source`/`./` tangent past its usefulness — I called it and we cut it.
+- Tutor over-built an unfamiliar "backup rotation" scenario with vague wording ("that spot," "rotate aside") — I flagged it as straying; rescoped to a familiar sorter.
+- Tutor's spec told me to `cd` into a bin and `ls` it; I'd already thought of the cleaner `ls <bin>` (no `cd`) but suppressed it to follow the spec — then surfaced that the instruction itself was the inefficiency. Takeaway: follow the spec by default, but voice a better way when I see one.
+
+**What hit hardest (honest):** realizing *where* a `for` loop is the right shape and where it isn't — its limits are exactly what create the need for `while` and `break`. I want those tools now because I felt the gap, not because a tutorial said so.
+
+**Refinements banked for next time:** `mkdir -p` already does the create-if-missing check (no `if -d` needed); pull config like bin names into variables and use them throughout; capture `start="$(pwd)"` and `cd "$start"` for a portable return instead of a hardcoded path; announce skipped items.
+
+**Next session:**
+- More `for`-loop fusion (bring in `cp`, `rm`, permissions, `pwd`/`cd`), then open **`while`** and **`break`/`continue`** — meeting them as the answer to the limits I hit today.
+- Wire the variable-config habit into the build from the start, not after.
