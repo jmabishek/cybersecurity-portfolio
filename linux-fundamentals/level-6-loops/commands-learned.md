@@ -70,3 +70,4 @@ org() {
 - **`$@` vs the loop variable** — inside the loop use the loop variable (the one current item). `"$@"` in a test passes many words at once → `[: too many arguments`.
 - **A loop variable keeps its last value** after `done`.
 - **A variable holds one value** — each assignment overwrites the last (no appending).
+
