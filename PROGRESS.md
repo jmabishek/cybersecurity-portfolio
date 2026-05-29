@@ -435,3 +435,53 @@ Paste this, then we go straight to **5.4 — file conditions** (`-f` = is a file
 **Next session:**
 - More `for`-loop fusion (bring in `cp`, `rm`, permissions, `pwd`/`cd`), then open **`while`** and **`break`/`continue`** — meeting them as the answer to the limits I hit today.
 - Wire the variable-config habit into the build from the start, not after.
+
+## 2026-05-29 — Level 6 (Loops): for-loop fusion complete
+
+### Practice done today
+- **Mini-Boss #3 `seed`** (fan-out pattern): copy one starter file into many
+  folders. Fused `cp` into a for-loop. Fixed the missing-file guard by moving it
+  to the TOP (fail-fast), instead of letting it fail per-folder inside the loop.
+- **Mini-Boss #4 `triage` / `cleanup`** (two-fate pattern): walk a folder's
+  contents — each item either locked down (`chmod`) or removed (`rm`).
+  First fusion of `chmod` + `rm` into a loop. Extended it to multiple folders
+  with a nested loop.
+
+### Key insights locked in
+- **`folder/*`** — a glob can be rooted at ANY named path, not just the current
+  directory. Matches come back WITH the path prefix (`testzone/25`), which is
+  exactly why `chmod`/`rm` could act on them. (Real roadmap gap — only `*.txt`
+  in the current dir had been taught.)
+- **Fail-fast guards** — a "whole job can't run" check (no args, missing source)
+  belongs ONCE at the top, before the loop — not inside it firing per item.
+- **Nested loops** — `for` inside `for`. Each deeper level points at the
+  level-above's variable + `/*`: `"$@"` → `"$folder"/*` → `"$sub"/*`.
+  Chain the loop variables downward.
+- **`"$@"/*` only globs the LAST argument** → for a single target folder,
+  use `"$1"/*`.
+- **Delete vs descend** — if the tool removes folders, depth is irrelevant (the
+  folder is destroyed, never entered). Descending into UNKNOWN depth is `find`'s
+  job, not a taller stack of loops.
+- **Empty glob survives as literal text** — `emptyfolder/*` with nothing inside
+  hands the loop the literal string once; `-f`/`-d` guards neutralize it.
+- **Globs skip hidden/dotfiles** — `*` never matches `.bashrc` etc.
+  Security blind spot (dotfiles are where secrets and malware hide).
+
+### Newly owned
+- `folder/*` / `"$1"/*` / `"$folder"/*` — glob into a named directory
+- nested `for` loops (loop-variable chaining)
+- `cp`, `chmod`, `rm` fused into loops
+
+### Status
+- For-loop MECHANICS: complete. Ready for `while`.
+- Patterns banked this arc: sweep (classify-create), org (sort-relocate),
+  seed (fan-out), triage (two-fate).
+
+### Parked / next
+- **`$(())` arithmetic** — prerequisite for `while` counters (`x=$((x+1))`).
+  Pick up as `while` needs it.
+- `find` (unknown-depth descent), `nullglob`/`dotglob`, `?` and `[abc]` glob
+  classes — later.
+
+### Next stop
+🦾 Level 6.2 — `while` loops (condition-driven, not list-driven).
