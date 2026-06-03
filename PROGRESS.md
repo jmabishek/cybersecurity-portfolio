@@ -485,3 +485,142 @@ Paste this, then we go straight to **5.4 — file conditions** (`-f` = is a file
 
 ### Next stop
 🦾 Level 6.2 — `while` loops (condition-driven, not list-driven).
+
+===========================================
+PROGRESS LOG — LINUX & BASH  (Iron Man / Foundation)
+Covers: Day 1 (Level 6.2 while loops + combos)  →  Day 2 (for vs while, [[ ]] patterns)
+===========================================
+
+
+############################################################
+# DAY 1 — Level 6 (Loops) → 6.2 while loops + combos w/ Levels 1–5
+############################################################
+
+--- CONCEPTS LEARNED ---
+1.  while loop: initialize → test condition → change (heartbeat) → done
+2.  Heartbeat line (i=$((i+1))) eventually makes the condition false and stops the loop. Forget it = infinite loop.
+3.  $(( )) = arithmetic ("math goggles"). Bash treats things as TEXT unless wrapped in $(( )). i=i+1 stores "i+1"; i=$((i+1)) does the math. (No $ on vars inside.)
+4.  Integer overflow: counter maxes at ~9.2 quintillion (2^63-1), then rolls into NEGATIVE numbers.
+5.  Infinite loop: bad/missing heartbeat runs forever. Ctrl+C is the emergency brake.
+6.  Patterns: count up, count down, step by N, sentinel (loop until a value flips), while true + break (previewed), while read line < file (previewed — the big one for logs).
+7.  Variable-in-name: file$i / box$i builds a different name each pass.
+8.  Two loops in a row need a fresh/reset counter, or the second never runs.
+9.  ACTION vs REPORT are separate. A failing command does NOT stop the next line. echo "done" prints whether or not the real command worked. Gate it: if cmd; then echo done; fi
+10. Ghost variables: `source script.sh` runs in your CURRENT shell, so variables survive across runs. A typo ($b) grabbed a stale value (5073). Fresh shell or `unset` clears it. `./script.sh` runs in a NEW shell = no ghosts (Level 7).
+11. elif vs separate ifs: elif picks exactly ONE branch and skips the rest; two standalone ifs each fire independently.
+12. && in a while condition stops at the SHORTER range.
+13. Two loops can be merged into ONE (efficiency) with shared counters.
+14. -f (is a file), -d (is a directory) tests used inside loops.
+15. Quoting in tests: always "$var". Spaces required inside [ ].
+
+--- QUESTIONS I EXPLORED ---
+- What is $(( )) and why? → arithmetic expansion.
+- Why did huge multiplications go negative? → integer overflow / rollover.
+- Why did "deleted file471" print when rm failed? → echo is unconditional; nothing gated it.
+- Why did the folder message print "5073" then later blank? → ghost variable from source; died in a fresh shell.
+- Why was break mentioned early? → it's formally sub-level 6.3.
+- elif vs separate if → discovered by running both.
+
+--- PROGRAMS I WROTE (working) ---
+# 1. while + step (odds 1..55)
+x=1; while [ "$x" -le "55" ]; do echo "$x"; x=$((x + 2)); done
+
+# 2. Foundation Layer: create files then folders
+x=0
+while [ "$x" -le "5" ]; do touch file"$x".txt; echo "txt file $x created"; x=$((x+1)); done
+d=0
+while [ "$d" -le "5" ]; do mkdir -p box"$d"; echo "folder $d created"; d=$((d+1)); done
+
+# 3. Combined removal — two SEPARATE ifs (both fire each pass)
+x=0; d=0
+while [ "$x" -le "5" ] && [ "$d" -le "5" ]; do
+    if [ -f "file$x.txt" ]; then echo "file$x.txt detected"; rm -r file"$x".txt; echo "deleted file$x.txt"; fi
+    if [ -d "box$d" ]; then echo "found box$d"; rm -r "box$d"; echo "box$d removed"; fi
+    d=$((d+1)); x=$((x+1))
+done
+
+--- PITFALLS I HIT MYSELF (★ = mine) ---
+★ infinite loop / missing heartbeat
+★ forgetting $(( )) for math
+★ integer overflow
+★ the lying echo (report != reality)
+★ ghost variables from source
+★ elif vs separate ifs
+
+
+############################################################
+# DAY 2 — for vs while, cleanup tool, [[ ]] pattern matching
+############################################################
+
+--- CONCEPTS LEARNED ---
+1.  for vs while (the core distinction):
+      for   = walk a KNOWN list (files/IPs/users); the list controls stopping → no infinite-loop risk, no heartbeat needed.
+      while = repeat while a CONDITION holds; I manage the stop myself.
+      MY RULE: "Use for when I already have the list. Use while when I'm watching a condition that changes."
+2.  for needs no counter/heartbeat — the list ends the loop (contrast with Day 1's while).
+3.  Off-by-one: where the counter STARTS + which test (-le vs -lt) decides the count. Started n=1 with -le → printed exactly N and read "attempt 1..N".
+4.  Variable scope (lived it): inside a loop the LOOP variable holds each item. $@ pointed at nothing, $any was the function's PRIVATE local (invisible outside), $abhi (the loop var) was the right thing to pass → fixed "rm: missing operand".
+5.  [[ ]] double brackets = a TRUE/FALSE test. Works in if, elif, AND while. Smarter + safer than single [ ] (handles spaces/empty, does pattern matching).
+6.  == inside [[ ]] = "matches". With a pattern on the right it matches the SHAPE, not exact text.
+7.  * wildcard in a pattern = "any run of characters". *.sh = "ends in .sh". Quote the LEFT side; leave the pattern UNQUOTED.
+8.  THE BIG INSIGHT — two different *s:
+      `for f in *`            → shell GLOB expansion: builds a REAL list of files from disk BEFORE the loop runs. (reaches into the folder)
+      `[[ "$f" == *.sh ]]`   → PATTERN test: checks the SHAPE of one string already in hand; never touches the disk.
+9.  Other wildcards exist: ? (one char), [abc] (one from a set), [a-z] (one in a range). Learn when a project needs them.
+
+--- QUESTIONS I EXPLORED ---
+- Learn [[ ]] / * / find now or later? → [[ ]] & patterns: learned in context (the best way), basically done. find: NOT a named level in my roadmap (a gap), high value for security → do it as a focused next session.
+- Are [[ ]] only used in if? → No: if, elif, while — anywhere a yes/no is needed.
+- Is the * in `for f in *` the same as in `*.sh`? → No — glob expansion vs shape test (see #8).
+
+--- PROGRAMS I WROTE (working) ---
+# 1. repeat — 2 args + while + counter (off-by-one fixed)
+repeat() {
+  local word="$1"; local times="$2"; n=1
+  while [ "$n" -le "$times" ]; do
+    echo "printing $word - at attempt $n - out of $times"
+    n=$((n+1))
+  done
+}
+
+# 2. Cleanup tool — for + function + if/elif + -f / -d + args
+repeat() {
+  local any="$1"
+  if [ "$any" = "ss.sh" ] || [ "$any" = "rr.sh" ] || [ "$any" = "ll.sh" ] || [ "$any" = "jj.sh" ]; then
+      echo "found shell file $any"
+  elif [ -f "$any" ]; then
+      echo "found file - $any"; rm -r "$any"; echo "file $any deleted"
+  elif [ -d "$any" ]; then
+      echo "found folder - $any"; rm -r "$any"; echo "$any folder deleted"
+  fi
+}
+for abhi in *; do repeat "$abhi"; done
+
+--- PITFALLS I HIT MYSELF (★ = mine) ---
+★ off-by-one (counter started at 0 → printed N+1, and "attempt 0" looked wrong)
+★ variable scope ($@ / $any vs the loop var $abhi) → "rm: missing operand"
+★ DESTRUCTIVE loop with no safety — accidentally deleted shared/ and vault/. Lesson: never let a delete loop run blind.
+
+
+############################################################
+# CONSOLIDATED — WHERE I AM & NEXT UP
+############################################################
+
+--- BOSSES ---
+[x] Builder / Stocker / Foundation Layer / Inspector / Teardown / Combined loop (Day 1)
+[ ] Locksmith    - chmod 600 in a loop + ls -l verify
+[ ] Vault Keeper - loop + function routing: cp->vault/ chmod600, mv->shared/ chmod644, else leave
+
+--- NEXT UP ---
+- Answer the open question: would `[[ "$f" == *.sh ]]` say YES if $f="hello.sh" but no such file exists? (tests glob-vs-pattern understanding)
+- Upgrade the cleanup tool: replace the 4-name whitelist with a pattern → [[ "$any" == *.sh ]]
+- Make the cleanup tool SAFE: a dry-run that prints "would delete X" before deleting anything
+- 6.3 break / continue, then Level 6 mini-boss
+- Level 7: Scripts (shebang #!/bin/bash, chmod +x, ./script.sh, $1 $2)
+- find — focused session (security value; bridge into Text Processing / Hawkeye)
+- Other wildcards: ?  [abc]  [a-z]
+
+--- RESOURCES (Lane 2, for later) ---
+mywiki.wooledge.org → BashGuide, BashPitfalls, BashFAQ
+
+===========================================
