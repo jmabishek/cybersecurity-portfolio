@@ -624,3 +624,97 @@ for abhi in *; do repeat "$abhi"; done
 mywiki.wooledge.org → BashGuide, BashPitfalls, BashFAQ
 
 ===========================================
+
+# Progress Snapshot — 4 June 2026
+
+## Session focus
+Level 6 — Loops (nested loops, pattern matching, log scanner)
+
+---
+
+## Concepts learned today
+
+### 1. [[ ]] and pattern matching
+- [[ ]] is the upgraded test — handles patterns, safer than [ ]
+- == inside [[ ]] means "matches"
+- * wildcard means "any run of characters"
+- Rule: quote the LEFT side, never quote the RIGHT side pattern
+- [[ "$f" == *.sh ]] → works
+- [[ "$f" == "*.sh" ]] → breaks — * becomes literal
+
+### 2. && vs ; (the one that cost files before)
+- ; runs the next command no matter what
+- && runs the next command only if previous succeeded
+- || runs the next command only if previous failed
+- Dangerous: [[ "$f" == *.sh ]]; rm "$f" → deletes everything
+- Safe: [[ "$f" == *.sh ]] && rm "$f" → deletes only matches
+
+### 3. for + while together in one script
+- for walks a known list — list controls the stop
+- while repeats while condition holds — you control the stop
+- for can never be infinite — list runs out
+- while can be infinite if heartbeat is missing
+
+### 4. Nested loops — all four combinations
+- for inside for → check every user on every server
+- while inside for → deep scan each item in a fixed list
+- for inside while → continuous monitoring of a known list
+- while inside while → condition-driven depth (not practiced today)
+
+### 5. for inside while — professional monitoring pattern
+- while = keeps running (the monitor)
+- for inside = checks each server/file every round
+- Real version uses sleep 60 between rounds
+- Used in SOC for continuous server and log monitoring
+
+### 6. When to choose which nesting
+- for inside while = monitoring a set at time intervals
+- while inside for = deep scanning each item in a fixed list once
+
+---
+
+## Programs built today
+
+### Simple nested loop (for inside for)
+3 servers × 3 users = 9 output lines
+Proved: outer items × inner items = total iterations
+
+### for + while together
+for walked 3 log files
+while ran 3 scan passes per file
+Total: 9 pass lines + 3 headers = 12 lines
+
+### Log scanner — kk.sh (self-built, extended beyond assignment)
+- for loop walks every item in current directory
+- if -d catches and skips directories
+- else handles files only
+- while runs one scan pass per file
+- [[ ]] with patterns classifies: error* = CRITICAL, system* = NORMAL
+- Non-log files reported correctly
+- Directories identified and excluded using if -d / else structure
+
+---
+
+## Key discoveries made independently
+- $(ls | wc -l) for counting files — learned from online, applied correctly
+- $() vs = for command substitution — figured out through debugging
+- local only works inside functions — hit this error, understood why
+- $@ vs * — $@ needs arguments passed in, * uses current directory
+- Space in list items splits them — "server 4" became two items
+- count=$(ls | wc -l) made while run 7 times — self-diagnosed, fixed to count=1
+- return stops entire script outside a function — switched to if/else structure
+
+---
+
+## Professional insight developed today
+Three monitoring patterns identified independently:
+- Static log → read once, move on
+- Real-time log → infinite loop, keep watching  
+- Periodic log → timed loop, check for changes
+
+---
+
+## Tomorrow
+- Refactor kk.sh → move scan logic into a function, loop just calls it
+- break and continue inside loops
+
