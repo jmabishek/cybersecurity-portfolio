@@ -718,3 +718,132 @@ Three monitoring patterns identified independently:
 - Refactor kk.sh → move scan logic into a function, loop just calls it
 - break and continue inside loops
 
+# Cybersecurity Roadmap — Progress
+
+**Last updated:** 11 June 2026
+**Current hero:** 🦾 Iron Man (Linux & Bash)
+**Current level:** Level 6 — Loops
+**Current focus:** 6.3 — break and continue (next)
+
+---
+
+## The 8 Heroes — Roadmap Overview
+
+| # | Hero | Domain | Status |
+|---|------|--------|--------|
+| 1 | 🦾 Iron Man | Linux & Bash | **In progress** (Level 6 of 11) |
+| 2 | 🕸️ Spider-Man | Networking | Locked |
+| 3 | 🛡️ Captain America | Security Concepts | Locked |
+| 4 | 🗺️ Nick Fury | MITRE ATT&CK | Locked |
+| 5 | 📝 Hawkeye | Text Processing | Locked |
+| 6 | 🐍 Bruce Banner | Python | Locked |
+| 7 | 🐙 J.A.R.V.I.S | Git & GitHub | Active alongside Iron Man |
+| 8 | 🗣️ Black Widow | English | Active alongside Iron Man |
+
+---
+
+## Iron Man — Linux & Bash Progress
+
+### Completed levels
+- ✅ **Level 1** — Terminal Basics
+- ✅ **Level 2** — Files and Directories
+- ✅ **Level 3** — Permissions
+- ✅ **Level 4** — Variables and Environment
+- ✅ **Level 5** — Functions and Conditions
+
+### Level 6 — Loops (in progress)
+
+- ✅ **6.1** — for loops: sweep, org, seed, triage — pushed to ceiling
+- ✅ **6.2a** — while basics: counter, foundation layer, inspector,
+  teardown, repeat() — 6 bugs caught independently
+- ✅ **6.2b** — bash automation: [[ ]] pattern matching, && vs ;,
+  dry-run safety, cleanup tool v1 and v2 — real data loss lesson
+- ✅ **6.2c** — while nested: all four nested combinations, function
+  refactor, ${@:2} flexible arguments, 3 boss fights cleared
+- ⏳ **6.3** — break and continue ← next
+
+### Remaining levels in Iron Man
+- Level 7 — Scripts and Automation
+- Level 8 — Process Management
+- Level 9 — System Information
+- Level 10 — Cron and Scheduling
+- Level 11 — SSH and Remote Access
+
+---
+
+## Level 6 — Full Session Log
+
+### 6.1 — for loops (29 May 2026)
+Pushed the for loop to its limits before touching while. Built sweep
+(classify and create), org (sort into bins), seed (fan-out copy), and
+triage (two-fate: chmod or rm). First nested for loop. Discovered
+folder/* glob into named directory — a roadmap gap that cost 2 hours
+and became the most useful discovery of the session. Deliberately hit
+the ceiling of for so the need for while was felt, not memorized.
+
+### 6.2a — while basics (Early June 2026)
+Learned the three-part structure: initialize, test, heartbeat. Built
+five programs in sequence adding one layer each time. Six bugs caught
+independently — infinite loop, missing $(( )), integer overflow, the
+lying echo, ghost variables, elif vs separate if. Was not satisfied
+after completing the basics. Made the decision to go deeper before
+moving forward.
+
+### 6.2b — bash automation (Early June 2026)
+Self-directed deeper session. Combined for and while in one script.
+Learned [[ ]] pattern matching, the critical quoting rule, the two
+different meanings of *, && vs ; distinction. Built cleanup tool twice
+— v1 with hardcoded protection, v2 with pattern protection and dry-run.
+Lost real files to a quoted pattern — learned permanently. This session
+was not on the roadmap. I created it because I was not satisfied.
+
+### 6.2c — while nested (11 June 2026)
+All four nested loop combinations practiced. Moved to professional
+structure: loop walks, function works, they do not mix. Discovered that
+[ ] cannot call a function in an if — no brackets on function calls.
+Learned ${@:2} for flexible argument lists. Built three boss fights:
+file sorter that physically moves files, monitoring sentinel with
+PRESENT/ALERT per round, flexible monitor that takes any rounds and
+any files as arguments. Identified three monitoring patterns: static,
+real-time, periodic. Applied test environment principle independently
+throughout.
+
+---
+
+## Effort summary — Level 6
+
+- 4 sub-sessions across approximately 2.5 weeks
+- 3 self-directed — went deeper when not satisfied, not because told to
+- ~15 programs built and stress-tested
+- 10+ bugs caught independently, root-caused without being handed answers
+- Real data loss event — learned the quoted pattern rule permanently
+- Professional structure (loop/function separation) adopted by reflex
+- Test environment principle applied independently
+- 3 boss fights cleared in 6.2c
+- Flexible monitoring tool built: any rounds, any files, one script
+
+---
+
+## Portfolio structure
+
+```
+cybersecurity-portfolio/
+├── PROGRESS.md
+├── README.md
+├── security-checklist.md
+└── linux-fundamentals/
+    ├── level-1-terminal-basics/
+    ├── level-2-files-and-directories/
+    ├── level-3-permissions/
+    ├── level-4-variables-and-environment/
+    ├── level-5-functions-and-conditions/
+    │   ├── 5.1-functions/
+    │   ├── 5.2-conditions/
+    │   ├── 5.3-comparison-flags/
+    │   └── 5.4-file-conditions/
+    └── level-6-loops/
+        ├── 6.1-for-loops/
+        ├── 6.2a-while-basics/
+        ├── 6.2b-bash-automation/
+        └── 6.2c-while-nested/
+```
