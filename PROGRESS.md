@@ -1,14 +1,14 @@
 # PROGRESS.md — Cybersecurity Portfolio
 
 **Hero:** 🦾 Iron Man — Linux & Bash
-**Last updated:** 18 June 2026
+**Last updated:** 21 June 2026
 
 ---
 
 ## Current status
 
 ✅ **Level 6 — Loops — COMPLETE**
-⏳ **Level 7 — Scripts and Automation — next**
+🟡 **Level 7 — Scripts and Automation — in progress** (7.1–7.4 done; Level 8 next)
 
 ---
 
@@ -87,6 +87,54 @@ Five-question knowledge test passed at the end of the section — all foundation
 
 ---
 
+## Level 7 — Scripts and Automation (in progress)
+
+### 7.1 — script foundations ✅
+**Date:** ~20 June 2026
+
+Shebang line (`#!/bin/bash`), `chmod +x`, running with `./script.sh`, nano navigation, comment headers. The chef analogy for the shebang — the line that tells the system which interpreter should read the file.
+
+---
+
+### 7.2 — script arguments ✅
+**Date:** 21 June 2026
+
+`$1`, `$2` (positional), `$@` (all arguments), `$#` (count). Same `$1` as Level 6 functions — wider scope. The recipe/ingredients picture: one script, any input, never editing the file. Key catch: an empty string `""` still counts as an argument. Started fixing labels to match what the code actually does.
+
+---
+
+### 7.3 — making scripts permanent & global ✅
+**Date:** 21 June 2026
+
+Moved scripts into `~/bin`, learned how `$PATH` resolves a bare command name (first match wins, search the list only), `export PATH=$PATH:~/bin`. Proved temporary-vs-permanent by hand — added to PATH, closed the terminal, watched it vanish, then anchored it in `~/.bashrc` and watched it survive. Distinction that clicked: **PATH = reach, `.bashrc` = memory.** Used `source` (my `sb` alias) to reload without restarting, and learned why source persists changes (current shell) while `./execute` does not (child shell). `which` to verify the exact file a command resolves to — also the defender's check for PATH hijacking.
+
+Bugs that taught: comma typo gives the same "command not found" as a real PATH miss; PATH holds folders, not files; folder names are convention, not law.
+
+---
+
+### 7.4 — mini boss: the audit tool ✅
+**Date:** 21 June 2026
+
+Built `audit.sh` from a bare spec, no code handed to me — a directory auditor that takes a target as `$1`, validates it exists (`-d`), and writes a dated report (file count + permission-rich, time-sorted listing) with a completion message. Runs two ways: `./audit.sh <dir>` and global `audit <dir>` from `~/bin`.
+
+Hardest part wasn't the commands — it was the engineering. `local` is function-only; a function defined but never called does nothing (why `source` ran it but `./audit.sh` sat silent until I added `audit "$1"` myself). New workhorse commands picked up along the way: `wc -l`, `date +FORMAT`, `>` vs `>>`, `touch`.
+
+Two refinements parked for next session: switch the first write to `>` so each run starts fresh, and use `find` for a true 24-hour filter instead of `ls -lt` (sorted, not filtered).
+
+**Honest read on today:** the conceptual hard work was already done in Levels 5–6. Today's real gap was *breadth* — the everyday tooling commands (`date`, `wc`, `find`, redirection) that building tools leans on constantly. Noticed it mid-build.
+
+---
+
+## Level 7 — Effort summary (so far)
+
+- First tool built end-to-end from a written spec with zero code handed over
+- Most of the work was engineering, not syntax — function call-vs-define, scope, source-vs-execute
+- Self-managed the teaching process: pushed for the full spec, kept the pace honest
+- Identified own gap correctly: breadth of everyday commands, not difficulty
+- Tool committed to the repo alongside its documentation
+
+---
+
 ## Portfolio structure — current
 
 ```
@@ -100,12 +148,15 @@ cybersecurity-portfolio/
     ├── level-3-permissions/
     ├── level-4-variables-and-environment/
     ├── level-5-functions-and-conditions/
-    └── level-6-loops/
-        ├── 6.1-for-loops/
-        ├── 6.2a-while-basics/
-        ├── 6.2b-bash-automation/
-        ├── 6.2c-while-nested/
-        └── 6.3-break-and-continue/
+    ├── level-6-loops/
+    │   ├── 6.1-for-loops/
+    │   ├── 6.2a-while-basics/
+    │   ├── 6.2b-bash-automation/
+    │   ├── 6.2c-while-nested/
+    │   └── 6.3-break-and-continue/
+    └── level-7-scripts/
+        ├── 7.1-script-foundations/
+        └── 7.2-arguments-permanence-and-audit-tool/
 ```
 
 ---
@@ -114,7 +165,7 @@ cybersecurity-portfolio/
 
 | # | Hero | Domain | Status |
 |---|---|---|---|
-| 1 | 🦾 Iron Man | Linux & Bash | Level 6 complete — Level 7 next |
+| 1 | 🦾 Iron Man | Linux & Bash | Level 7 in progress (7.1–7.4 done) |
 | 2 | 🕸️ Spider-Man | Networking | Locked |
 | 3 | 🛡️ Captain America | Security Concepts | Locked |
 | 4 | 🗺️ Nick Fury | MITRE ATT&CK | Locked |
@@ -127,5 +178,6 @@ cybersecurity-portfolio/
 
 ## Next session
 
-**Level 7 — Scripts and Automation**
-Shebang line, `chmod +x`, `./script.sh`, arguments `$1 $2`, making scripts permanent in `~/bin`.
+**Breadth & tooling practice session** — building several small, real, industry-style tools back to back to drill the everyday commands until they're muscle memory: `find`, `grep`, `cut`, `sort`, `uniq`, `head`/`tail`, `tr`, `xargs`, redirection. Fluency, not new hard concepts.
+
+Then: **Level 8 — Process Management** (`ps`, `top`/`htop`, `kill`, background jobs).
