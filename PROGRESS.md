@@ -1,20 +1,27 @@
-## Level 7 — Scripts & Automation ✅ COMPLETE
-- 7.1 script foundations (shebang, chmod +x, nano)
-- 7.2–7.4 arguments ($1 $@ $#), PATH permanence, source vs ./
-- Tool built: audit.sh (directory auditor)
+## Level 7.3 — find: -user & negation · 2 July 2026
 
-## Practice — find Mastery & suspicious_hunter.sh 🟡 WIP
-Deep find practice across several sessions + a 4-day gap.
-- find solid: -name (quote wildcards), -type f/d/l, -mtime/-mmin
-  (sign = timeline, -1 = last 24h, -mtime -0 is dead),
-  -perm (DASH = "at least these bits": -4000 SUID, -2000 SGID,
-  -002 world-writable), -size (k/M/G round UP, c = exact),
-  2>/dev/null, tee
-- Concept learned: SUID/SGID + MITRE T1548.001
-- Tool built: suspicious_hunter.sh (threat hunter) — 4 of 5 sections live
-- Filed under: tools/ (project, not a roadmap level)
+Concepts mastered (not yet written into the tool):
+- `-user <name>` — filters files by owner. Matches a REGISTERED
+  identity (in /etc/passwd), not a filename. Fails loudly and
+  instantly if the account doesn't exist — unlike -name, which
+  searches happily and returns nothing.
+- `-nouser` — finds orphan files whose owner no longer exists
+  (deleted account = dangling ownership pointer). Takes no argument.
+- `! -user <name>` (or `-not -user`) — negation. Flips any test.
+  "Everything NOT owned by this user." The real anomaly detector:
+  an owner-scoped search is blind to an intruder's files, so you
+  invert it to catch what isn't yours.
 
-### ⏭️ NEXT SESSION — pick one:
-A) Finish the hunter — learn -user, add section 5
-   (root-owned + world-writable), drop the cd
-B) Start Level 8 — Process Management (ps, top/htop, kill, &)
+SOC relevance: ownership anomalies + baseline drift (file count
+today vs. 3 days ago = incident window). Validated the detector by
+planting a root-owned file with `sudo touch` and catching it.
+
+Key insight I reasoned to myself: `-user abhi` can't catch an
+attacker's files — only the inverted `! -user abhi` can.
+
+STILL OPEN → suspicious_hunter.sh section 5 unwritten; cd not yet
+dropped. No new concept needed — pure assembly next session.
+
+Also flagged in audit.sh (for later polish): date substitution
+repeated 6× (compute once into a variable); `ls "$file"/*` misses
+hidden files (find sees them).
