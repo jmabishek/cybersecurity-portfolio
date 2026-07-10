@@ -1,5 +1,3 @@
-cd ~/cybersecurity-portfolio
-cat > README.md << 'EOF'
 <div align="center">
 
 <h1>🛡️ Cybersecurity Portfolio</h1>
@@ -158,5 +156,3 @@ New folders appear when their hero actually starts — nothing listed here is a 
 
 </details>
 
-Open that, then scroll back up — that's the distance travelled so far.
-EOF
