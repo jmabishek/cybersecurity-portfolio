@@ -1,709 +1,1039 @@
-🛡️ GRC — DAY 02
+# 🛡️ GRC — DAY 02
 
-A Backup Can Restore Systems. It Cannot Pull Stolen Data Back.
+## From Protecting Systems to Understanding What Happens When They Are Compromised
 
-Learning Track: Governance, Risk & Compliance
-Focus: Critical Information Infrastructure • NCIIPC • Electronic Evidence • IT Act awareness • Ransomware • Data Exfiltration
+**Learning Track:** Governance, Risk & Compliance
+**Focus:** Critical Information Infrastructure • NCIIPC • Electronic Evidence • Ransomware • Encryption • Data Exfiltration • Organisational Responsibility
 
-[!IMPORTANT]
+---
 
-The one idea I am taking from Day 2
+> [!IMPORTANT]
+>
+> ### 💡 The one idea I am taking from Day 2
+>
+> **Recovering a system does not automatically mean the incident is over.**
+>
+> If an attacker steals customer data before encrypting the systems, restoring those systems from backup may bring the organisation back online — but it does **not** take the stolen information back.
+>
+> So I should also ask:
+>
+> **What was stolen? How did the attacker enter? Is that path still open? Who is affected? What responsibility still remains?**
 
-Recovering a system does not automatically mean the incident is over.
+---
 
-If an attacker copied customer data before I restored the server, the server may be working again — but the attacker may still have the data.
+# 📍 Where Day 2 Continued From Day 1
 
-That means I have to think about more than:
+Day 1 mainly changed the way I thought about **authorization and scope**.
 
-“Is the system running again?”
+My main rule was:
 
-I also have to ask:
+> **Just because I can do something does not mean I am authorized to do it.**
 
-What was accessed? What left the environment? What was changed? How did the attacker get in? Can the same path be used again? Who needs to know?
+Day 2 moved one step further.
 
-📍 Where Day 2 Started
+Instead of only asking:
 
-Day 2 did not feel completely separate from Day 1.
+> **"Am I allowed to touch this system?"**
 
-Day 1 taught me to think about authorization, scope and responsibility before using technical capability.
+I started thinking about:
 
-Day 2 started showing me what those ideas look like when real systems, electronic evidence, customer data and incidents are involved.
+> **"What happens when an important system is actually compromised?"**
 
-My instructor roughly grouped some of the discussion around three areas:
+```mermaid
+flowchart LR
+    A["🛡️ Day 1<br/>Authorization & Scope"] --> B["⚠️ Day 2<br/>System Compromise"]
+    B --> C["🔐 Ransomware"]
+    B --> D["📤 Data Theft"]
+    B --> E["📹 Evidence"]
+    B --> F["🏢 Organisational Responsibility"]
+```
 
-Classroom idea
+This made GRC feel less like separate legal terms and more like something connected to actual cybersecurity incidents.
 
-How I currently understand it
+---
 
-Cybercrime
+# 01 — 🏛️ Critical Information Infrastructure
 
-Certain actions against computers, systems, networks or data can have legal consequences.
+Today I learned that some digital systems are much more important than one computer or one organisation.
 
-Organizational responsibility
+Examples include systems supporting:
 
-When an organization holds other people's data, a breach is not only a technical problem. There can also be legal, regulatory and business responsibilities.
+* ⚡ power and energy,
+* 📡 telecommunications,
+* 🚆 transportation,
+* 🏦 banking and financial services,
+* 🏛️ government systems,
+* 🛡️ strategic systems,
+* 🏭 important public enterprises.
 
-Electronic evidence
+If my personal laptop stops working, the impact may mostly affect me.
 
-A digital file is not useful as evidence only because somebody says, “This is the file.” Its source, production and reliability matter.
+But if systems supporting electricity, banking, telecommunications or transportation stop working, the impact can spread across organisations and large numbers of people.
 
-I am still learning the exact legal framework, so I do not want to turn these into oversimplified one-section definitions.
+### 🧠 How I currently think about it
 
-01 — Critical Information Infrastructure
+```mermaid
+flowchart TD
+    A["💻 Digital System"] --> B["⚙️ Supports an Important Service"]
+    B --> C["⚠️ Cyberattack / Failure"]
+    C --> D["🏢 Organisation Affected"]
+    D --> E["🌐 Essential Service Disrupted"]
+    E --> F["👥 Large Number of People Affected"]
+```
 
-One part of the session was about systems that are important enough that their failure can affect much more than one company or one laptop.
+So the real question is not only:
 
-The examples discussed included areas such as:
+> "How important is this computer?"
 
-power and energy,
+It is also:
 
-banking and financial services,
+> **"What important service depends on this computer?"**
 
-telecommunications,
+That changed how I look at critical infrastructure.
 
-transportation and aviation,
+---
 
-government systems,
+# 02 — 🛡️ NCIIPC
 
-strategic/public-sector systems.
+I was introduced to:
 
-My beginner-level understanding is:
+## **NCIIPC — National Critical Information Infrastructure Protection Centre**
 
-Some digital systems support services that society depends on. A serious cyberattack against them can create consequences far beyond the computer that was compromised.
+It operates under:
+
+**NTRO — National Technical Research Organisation**
+
+My beginner understanding is that NCIIPC acts as India's national nodal organisation for the protection of **Critical Information Infrastructure**.
+
+I am not trying to memorise every responsibility after one class.
+
+The larger idea makes more sense to me:
+
+```mermaid
+flowchart TD
+    A["⚡ Power / 🏦 Banking / 📡 Telecom / 🚆 Transport"] --> B["💻 Critical Digital Infrastructure"]
+    B --> C["☠️ Cyber Threats"]
+    C --> D["💥 Possible Large-Scale Impact"]
+    D --> E["🛡️ Need for Coordinated Protection"]
+    E --> F["🏛️ NCIIPC"]
+```
+
+> **When digital systems support nationally important services, their protection cannot depend only on one individual security engineer. It needs organised coordination.**
+
+---
+
+# 03 — 🎭 Fake Website / Online Scam Example
+
+My mentor showed an example involving a fake shopping website designed to look similar to a real website such as Myntra.
+
+The important lesson for me was:
+
+```text
+Looks genuine
+     ≠
+Is genuine
+```
+
+A fake website may copy:
+
+* 🎨 colours,
+* 🖼️ logos,
+* 🛍️ product images,
+* 📄 layouts,
+* 💰 discounts,
+* 💳 payment pages.
+
+A person may trust it simply because it **looks familiar**.
+
+So before transferring money, especially when someone suddenly moves the conversation to random:
+
+* WhatsApp,
+* Telegram,
+* unofficial payment links,
+* or personal accounts,
+
+I should verify the organisation and use proper channels.
+
+### 🔗 Connection to Day 1
+
+Day 1:
+
+```text
+I can access it
+      ≠
+I am authorized
+```
+
+Day 2:
+
+```text
+It looks genuine
+      ≠
+It is legitimate
+```
+
+Both taught me something similar:
+
+> **Never convert an assumption into trust.**
+
+---
+
+# 04 — 📹 Electronic Evidence
+
+Another major topic was electronic evidence.
+
+Before this discussion, I might have thought:
+
+> "If CCTV recorded the incident, then we have the evidence."
+
+But now I understand there are more questions.
 
 For example:
 
-A normal workstation fails
+* 📱 What device created the evidence?
+* 🎥 What was that device being used for?
+* 🕐 When was the record produced?
+* ⚙️ Was the device functioning properly?
+* 📁 Was the record created during normal operation?
+* ✂️ Has the evidence been modified?
+* ✍️ Who is identifying or certifying the record?
+
+So:
+
+> **Possessing an electronic file does not automatically prove that the file is reliable evidence.**
+
+---
+
+# 05 — 🔍 My CCTV Evidence Example
+
+Suppose CCTV records an incident.
+
+Before investigators receive the footage, someone removes **three seconds** from it.
+
+The remaining footage may still look completely normal.
+
+But those three seconds might contain something important.
+
+More importantly:
+
+> **The evidence itself has been altered.**
+
+My analogy was:
+
+> 🗡️ **It is like wiping fingerprints from a knife before investigators examine it.**
+
+The knife still exists.
+
+But somebody has interfered with evidence that investigators were supposed to inspect.
+
+### My current evidence flow
+
+```mermaid
+flowchart LR
+    A["🎥 Original Record"] --> B["📦 Preserve"]
+    B --> C["🔎 Identify Source"]
+    C --> D["⚙️ Check System Condition"]
+    D --> E["🛡️ Protect Integrity"]
+    E --> F["📑 Follow Proper Evidence Procedure"]
+```
+
+For me, this introduced the idea of **evidence integrity**.
+
+---
+
+# 06 — ⚖️ Legal Note I Corrected After Class
+
+> [!NOTE]
+>
+> I am deliberately separating what I heard in class from what I verified afterward.
+
+In class, electronic evidence was discussed using:
+
+**Section 65B**
+
+I later learned that Section 65B belonged to the older **Indian Evidence Act, 1872**.
+
+India now uses the **Bharatiya Sakshya Adhiniyam, 2023**, which came into force on **1 July 2024**.
+
+The corresponding current provision dealing with electronic records is **Section 63**.
+
+So my notes changed from:
+
+```text
+Classroom reference
         ↓
-One employee may be affected
+Section 65B
+```
 
-A critical service fails
+to:
+
+```text
+Current legal framework
         ↓
-Operations may stop
+Bharatiya Sakshya Adhiniyam, 2023
         ↓
-Large numbers of people may be affected
-        ↓
-Economic / public-safety / national consequences may follow
+Section 63
+```
 
-This is why I am starting to understand cybersecurity as something larger than protecting files on a personal computer.
+The bigger lesson for me is:
 
-02 — NCIIPC
+> **I should understand what a law is trying to address instead of blindly memorising section numbers.**
 
-The organization introduced in class was:
+---
 
-NCIIPC — National Critical Information Infrastructure Protection Centre
+# 07 — 🔐 Ransomware
 
-I initially struggled to remember the full name, but the purpose made more sense than the expansion.
+The most interesting topic for me today was **ransomware**.
 
-My current understanding is that NCIIPC is India's national nodal body for protection of Critical Information Infrastructure (CII) and operates under the broader national cybersecurity structure associated with NTRO — National Technical Research Organisation.
+My mentor explained it using a bank.
 
-I do not need to memorize every internal function today.
+Imagine:
 
-What matters to me at this stage is the relationship:
-
+```mermaid
 flowchart TD
-    A[Important national / societal services] --> B[Depend on digital infrastructure]
-    B --> C[Some systems qualify as Critical Information Infrastructure]
-    C --> D[NCIIPC has a national role in protecting CII]
+    A["🏦 Bank"] --> B["💾 Customer Data"]
+    C["☠️ Attacker"] --> D["🚪 Gains Unauthorized Access"]
+    D --> B
+    B --> E["🔐 Data / Systems Encrypted"]
+    E --> F["🚫 Bank Loses Normal Access"]
+    F --> G["💰 Attacker Demands Payment"]
+```
 
-The class also discussed functions in terms of threat awareness, mitigation, coordination and engagement with stakeholders.
+My simple understanding is:
 
-I am treating those as my classroom learning framework, not as a claim that I have memorized the complete statutory function list.
+> **An attacker compromises an organisation, takes away normal access or control over systems/data, and demands money to restore that access or control.**
 
-03 — The Fake Shopping Website Example
+But then I started questioning the example.
 
-My instructor showed us an example involving a website designed to look like a familiar shopping platform.
+---
 
-The visual lesson was simple but useful:
+# 08 — 💾 "What If the Bank Has a Backup?"
 
-A website looking legitimate does not prove that it is legitimate.
+My first thought was:
 
-A victim can see familiar branding, product images, payment instructions or a convincing interface and assume everything is normal.
+> "If the bank has a backup, why should it care about the attacker's encrypted copy?"
 
-The advice from class was to be careful when money is involved and to avoid blindly moving a transaction into unofficial channels such as random Telegram or WhatsApp conversations simply because somebody claims to represent a company.
+The bank could restore the system.
 
-This connected back to Day 1 in an unexpected way.
+That sounds like the problem is solved.
 
-Day 1 was:
+But then I realised something.
 
-Access does not prove authorization.
+What if the attacker **copied the customer information before encrypting the systems?**
 
-Day 2 added another version:
+Now there are two separate problems.
 
-Appearance does not prove authenticity.
-
-A fake site can imitate what I expect to see.
-
-So I should verify the channel, identity and context instead of trusting appearance alone.
-
-04 — IT Act Awareness: Know What Kind of Actions Matter
-
-My instructor showed several legal topics connected to cyber activity.
-
-The point was not to memorize dozens of section numbers.
-
-Some of the ideas mentioned included:
-
-unauthorized access or damage involving computer systems,
-
-copying or extracting data without permission,
-
-protection of data held by organizations,
-
-electronic evidence,
-
-tampering with certain computer source code,
-
-intermediary safe-harbour concepts.
-
-I am intentionally not pretending I understand all of these after one session.
-
-Section 43 — Connection to Day 1
-
-Section 43 of the Information Technology Act is still the easiest one for me to connect to my Day 1 understanding because it deals with specified acts involving computers, systems, networks and data when done without permission, including unauthorized access and certain copying, damage and interference activities.
-
-The lesson I keep coming back to is still:
-
-Technical capability is not permission.
-
-Section 65 — Source Code Tampering
-
-I originally remembered this as simply:
-
-“Tampering with source code is illegal.”
-
-That sentence is too broad.
-
-My corrected understanding is that IT Act Section 65 concerns knowingly or intentionally concealing, destroying or altering computer source code when that source code is required by law to be kept or maintained.
-
-So I should not turn a specific legal provision into a blanket statement that “editing source code is illegal.”
-
-05 — Electronic Evidence: A File Needs Context
-
-This was one of the parts I tried to explain in my own words.
-
-Suppose CCTV footage is being used as electronic evidence.
-
-My classroom understanding was that I should care about questions such as:
-
-What device/system produced the record?
-For example: CCTV/DVR, phone or another computer/communication device.
-
-What was the system normally being used for?
-For example: a CCTV system installed to continuously record a particular location.
-
-Was the system operating properly during the relevant period?
-
-Can we establish what electronic record was produced and how it was produced?
-
-Is the required certificate/signature information present from the responsible persons?
-
-The important thing I understood was not the number of bullet points.
-
-It was this:
-
-Electronic evidence needs provenance and reliability. We should be able to explain where it came from and the conditions under which it was produced.
-
-⚖️ Accuracy Note — “65B” vs Current Section 63
-
-[!NOTE]
-Classroom terminology: Section 65B was used while explaining electronic evidence.
-
-Current-law note I verified afterward: The Bharatiya Sakshya Adhiniyam, 2023 (BSA) came into force on 1 July 2024. Its Section 63 contains the current provision on admissibility of electronic records.
-
-I am keeping the old 65B terminology in my learning history because that is what was discussed in class, but I do not want to incorrectly present it as the current section number.
-
-Section 63 includes ideas such as:
-
-regular use of the relevant computer/communication device,
-
-information being supplied in the ordinary course of activity,
-
-proper operation of the device or whether a malfunction affected accuracy,
-
-identifying the electronic record and describing how it was produced,
-
-device particulars,
-
-certification by the persons specified by the law.
-
-So my classroom explanation was conceptually pointing in the right direction, but it was not an exact five-rule legal checklist.
-
-06 — Evidence Tampering: The Knife/Fingerprint Analogy
-
-When I was tested on evidence integrity, the analogy that came naturally to me was:
-
-Changing CCTV evidence is like trying to brush fingerprints off a murder weapon.
-
-My point was not that the two situations are legally identical.
-
-The analogy helped me think about integrity.
-
-If somebody removes three seconds from a video before investigators receive it, I should no longer blindly treat that copy as unchanged.
-
-Those three seconds might contain something important — or they might not.
-
-The bigger issue is that the evidence has been altered.
-
-Extra concept I learned after class — cryptographic hashes
-
-This was not part of my instructor's Day 2 teaching. It was introduced during my follow-up discussion.
-
-A cryptographic hash can act like a calculated digital fingerprint of a file.
-
-Original CCTV file
-        ↓
-     SHA-256
-        ↓
-Fingerprint A
-
-File changed
-        ↓
-     SHA-256
-        ↓
-Fingerprint B
-
-If the hashes are different, the files are not byte-for-byte identical.
-
-A hash by itself does not tell me who changed the file, what they removed or why they changed it.
-
-For now, that is enough for me to know.
-
-07 — The Bank Ransomware Scenario
-
-The most memorable part of Day 2 was the ransomware example.
-
-My instructor asked us to imagine a bank with customer information stored on its systems.
-
-A malicious actor compromises the environment and interferes with the organization's data or systems.
-
-The attacker may encrypt information or systems so that the organization cannot normally use them and then demand money.
-
-The scenario also introduced another possibility:
-
-The attacker may copy the customer data first and threaten to leak or sell it.
-
-That changed how I thought about backups.
-
-My first instinct could be:
-
-“The bank has backups. Restore everything. Problem solved.”
-
-But that only addresses one part of the incident.
-
+```mermaid
 flowchart TD
-    A[Attacker gains unauthorized access] --> B{What does the attacker do?}
-    B --> C[Encrypt / disrupt systems]
-    B --> D[Copy data out]
-    C --> E[Organization may lose availability]
-    D --> F[Attacker possesses a copy of sensitive data]
-    E --> G[Backup may help restore operations]
-    F --> H[Backup cannot pull stolen copies back]
+    A["☠️ Attacker Gains Access"] --> B{"What Happens Next?"}
 
-This became one of my strongest Day 2 lessons:
+    B --> C["🔐 Encrypt Systems"]
+    B --> D["📤 Copy Customer Data Out"]
 
-Recovery and incident resolution are not the same thing.
+    C --> E["🚫 Bank Cannot Access Systems"]
+    D --> F["☠️ Attacker Now Possesses Data"]
 
-08 — The Question I Asked My Instructor
+    E --> G["💾 Backup Can Help Restore Systems"]
+    F --> H["❌ Backup Cannot Retrieve Stolen Copy"]
+```
 
-The ransomware story made me ask something immediately:
+That was probably the biggest ransomware realization I had today.
 
-If the organization pays, how does it know the attacker will actually give the decryption key?
+---
 
-And even if a key is provided:
+# 09 — 📤 Exfiltration
 
-How does the organization know the attacker deleted every stolen copy of the customer data?
+The technical word I learned for the second path is:
 
-My instructor told me that I did not need to go that deep yet and that the immediate learning goal was simply to understand ransomware.
+## **Data Exfiltration**
 
-I am keeping that question in this portfolio because it shows where my thinking went.
+My simple understanding is:
 
-I now understand why the question matters:
+> **Data exfiltration means data is copied or moved outside the environment where it belongs without authorization.**
 
-Paying money
-    ≠
-Proof that systems will recover
+Example:
 
-Receiving a decryption key
-    ≠
-Proof that stolen data was deleted
+```mermaid
+flowchart LR
+    A["🏢 Company Network<br/>Customer Database"] -->|"❌ Unauthorized Copy"| B["🌐 Outside Company"]
+    B --> C["☠️ Attacker-Controlled Location"]
+```
 
-Restoring from backup
-    ≠
-Proof that the attack path was fixed
+The company may still have the original database.
 
-I am not trying to decide ransomware-payment policy after one class.
+But the attacker now has another copy.
 
-The lesson is simply that a ransomware incident creates technical, operational, legal and business questions at the same time.
+That still counts as exfiltration.
 
-09 — Encryption, Decryption and Exfiltration
+---
 
-I mixed these words up during my first explanation, so this correction is important enough to keep.
+# 10 — 🔐 Encryption vs 🔓 Decryption vs 📤 Exfiltration
 
-At first I thought the word “siphoning” meant converting data through encryption.
+This was one of my biggest terminology corrections today.
+
+### 🔐 Encryption
+
+Readable information becomes ciphertext.
+
+```text
+Readable Data
+     ↓
+ Encryption
+     ↓
+Ciphertext
+```
+
+---
+
+### 🔓 Decryption
+
+Ciphertext becomes readable information again using the correct key/process.
+
+```text
+Ciphertext
+     ↓
+ Decryption
+     ↓
+Readable Data
+```
+
+---
+
+### 📤 Exfiltration
+
+Information is copied or moved outside the organisation without authorization.
+
+```text
+Company Data
+     ↓
+Unauthorized Copy / Transfer
+     ↓
+Outside Location
+```
+
+### 🧠 My final distinction
+
+| Action              | What it means                                                      |
+| ------------------- | ------------------------------------------------------------------ |
+| 🔐 **Encryption**   | Make readable information unreadable using cryptography            |
+| 🔓 **Decryption**   | Convert encrypted information back into readable information       |
+| 📤 **Exfiltration** | Move/copy information outside an environment without authorization |
+
+---
+
+# 11 — ❌ My "Siphoning" Misunderstanding
+
+At first I thought:
+
+> **Siphoning data = encrypting data**
 
 That was incorrect.
 
-Here is how I now separate the terms:
+If someone says information was **siphoned out**, they are talking more about information being taken or diverted away.
 
-Term
+The more precise cybersecurity term in this situation is:
 
-My simple understanding
+**Data Exfiltration**
 
-Encryption
+So now my mental model is:
 
-Transform readable data into ciphertext so it cannot normally be read without the required key/process.
-
-Decryption
-
-Convert encrypted ciphertext back into readable information using the required key/process.
-
-Exfiltration
-
-Copy or move data out of the environment where it belongs to another location without authorization.
-
-The easiest way for me to remember exfiltration is:
-
-EXFILTRATION = DATA GOING OUT.
-
-For example:
-
-Company database
-      |
-      | unauthorized copy
+```text
+Data transformed
       ↓
-==============================
-   Company security boundary
-==============================
+Encryption 🔐
+
+Data taken outside
       ↓
-Attacker-controlled location
+Exfiltration 📤
+```
 
-        = DATA EXFILTRATION
+I want to preserve this mistake in my portfolio because it shows where my understanding actually changed.
 
-The original database can still exist inside the company.
+---
 
-Copying the information out is enough for exfiltration to have occurred.
+# 12 — 🧪 My Exfiltration Understanding Check
 
-And encryption does not need to happen for exfiltration to occur.
+I was given this scenario:
 
-That distinction is now clear to me.
+> An attacker copies 20,000 customer records from a company database to a server they control but does not encrypt anything.
 
-10 — Why a Backup Does Not End the Incident
+Has exfiltration occurred?
 
-I was asked this scenario:
+My answer:
 
-A bank has perfect offline backups. An attacker steals five million customer records, encrypts the live servers and demands money. The bank restores the systems within two hours. Is the incident solved?
+**Yes. ✅**
 
-My answer was no.
+Because the data has been copied outside the organisation without authorization.
 
-My reasoning:
+Encryption has nothing to do with whether exfiltration occurred.
 
-1. The attacker may still possess the customer data
+### The important separation
 
-Restoring my copy does not delete the attacker's copy.
-
-2. The original entry path may still exist
-
-If I only restore systems but never determine how the compromise happened, the weakness, stolen credential or other access path may remain.
-
-3. Recovery does not answer the accountability questions
-
-The organization still has to understand what happened, what information was affected, what obligations apply and what actions are required.
-
-So I now think about ransomware recovery like this:
-
-SYSTEM RESTORED
-      ↓
-Good — availability may be back
-      ↓
-But ask:
-
-Was data stolen?
-Was access removed?
-Was the root cause fixed?
-Was evidence preserved?
-Who needs to be notified?
-What controls need to change?
-
-11 — Organizational Data Responsibility: What I Had Mixed Up
-
-During class I connected organizational responsibility for customer data with Section 43A and the DPDP Act as though they were the same thing.
-
-They are not the same thing.
-
-[!WARNING]
-
-Legal terminology correction
-
-The Digital Personal Data Protection Act, 2023 (DPDP Act) is a separate Act. It is not another name for IT Act Section 43A.
-
-The DPDP framework is being brought into force in phases.
-
-Status note — checked 19 August 2026
-
-The official commencement note says different provisions of the DPDP Act begin at different times. The provision in Section 44(2) that amends the IT Act by omitting Section 43A is scheduled for commencement 18 months after 13 November 2025.
-
-So I should not write:
-
-DPDP = Section 43A
-
-Instead, at my current level I will remember:
-
-IT Act, 2000
-    └── Section 43A is part of the older IT Act data-protection framework
-
-DPDP Act, 2023
-    └── Separate personal-data-protection legislation
-        with a phased commencement schedule
-
-I am deliberately avoiding simplistic statements such as:
-
-“A breach happens, therefore the company automatically gets fined ₹100 crore or ₹200 crore.”
-
-Real regulatory consequences depend on the applicable law, the provision in force, the facts of the incident and the regulatory process.
-
-12 — RansomLook: Seeing Ransomware as a Real-World Problem
-
-My instructor also showed us RansomLook as a reference.
-
-Instead of ransomware remaining only as a classroom word, the site gave me a way to see that ransomware groups, claimed victims and leak activity are tracked in the real world.
-
-I am recording this carefully:
-
-I was shown RansomLook as a classroom reference. I am not claiming that I learned ransomware investigation or threat-intelligence analysis from one demonstration.
-
-That distinction matters to me because this portfolio should show what I genuinely learned — not inflate one exposure into a skill.
-
-13 — The Authorization Principle Still Survives Day 2
-
-I was given another scope scenario after the session:
-
-I am authorized to assess Server A at a power company. I notice that Server B may be vulnerable. Because this is critical infrastructure, should I investigate Server B immediately “to protect the country”?
-
-My answer was no.
-
-The fact that the system is important does not automatically expand my authority.
-
-My reasoning was:
-
-I observe something concerning
-        ↓
-Server B is outside my written scope
-        ↓
-I do NOT investigate it further
-        ↓
-Document what I actually observed
-        ↓
-Report / escalate it
-        ↓
-Let the authorized owner decide the next action
-
-There may be facts I do not know.
-
-Maybe another team owns the system.
-
-Maybe the issue is already known.
-
-Maybe there is another investigation happening.
-
-Maybe testing the system could create operational risk.
-
-So Day 2 reinforced Day 1 instead of replacing it:
-
-A serious vulnerability gives me a reason to report. It does not manufacture authorization.
-
-14 — What I Thought vs What I Understand Now
-
-What I initially thought / said
-
-What I understand now
-
-“Siphoning” means encrypting data.
-
-Encryption changes data into ciphertext. Unauthorized copying/moving of data out is exfiltration.
-
-Restoring a ransomware victim from backup basically solves the problem.
-
-Backup may restore operations, but stolen data, attacker access and root cause can remain unresolved.
-
-If the attacker asks for less money than a possible fine, the company will naturally pay.
-
-Ransom payment is not a simple arithmetic decision and does not guarantee recovery or deletion of stolen data.
-
-DPDP is basically Section 43A.
-
-The DPDP Act, 2023 is separate legislation. The transition from the older Section 43A framework is subject to the statutory commencement schedule.
-
-Section 65B is the current electronic-evidence section.
-
-That is the familiar provision from the old Indian Evidence Act. Under the current Bharatiya Sakshya Adhiniyam, electronic-record admissibility is addressed in Section 63.
-
-Electronic evidence is acceptable if I satisfy exactly five remembered points.
-
-The concepts I remembered are useful, but the law contains specific conditions and certification requirements; my classroom five-point explanation is not a substitute for the actual provision.
-
-Tampering with any source code is automatically illegal under Section 65.
-
-Section 65 has specific conditions, including source code that is legally required to be kept or maintained.
-
-If a system belongs to critical infrastructure, urgency might justify going outside scope.
-
-Criticality increases responsibility; it does not erase authorization boundaries.
-
-15 — How This Connects to My Systems-First Roadmap
-
-My Linux/Bash roadmap is still paused at:
-
-linux-fundamentals/
-└── level-8-process-management/
-    └── 8.1-process-observation/
-
-I am not abandoning or restarting it.
-
-GRC is giving me another layer that will eventually connect to the systems work.
-
-For example:
-
-flowchart LR
-    A[Linux processes] --> B[Logs / system activity]
-    B --> C[Incident evidence]
-    C --> D[Integrity / preservation]
-    D --> E[Incident response]
-    E --> F[Risk / compliance / accountability]
-
-Another connection:
-
-Technical layer:
-Who logged in?
-What process ran?
-What file changed?
-What connection was created?
-
-GRC / investigation layer:
-Was the activity authorized?
-What was the scope?
-What information was affected?
-What evidence proves what happened?
-Who is responsible for responding?
-What requirement applies?
-
-This is starting to show me why learning the operating system first was not wasted time.
-
-Technical evidence ultimately comes from real systems.
-
-16 — What I Am NOT Claiming After Day 2
-
-I want this portfolio to stay honest.
-
-After two GRC sessions, I am not claiming that I can:
-
-interpret Indian cyber law professionally,
-
-perform digital forensics,
-
-certify electronic evidence,
-
-investigate ransomware incidents,
-
-make ransomware-payment decisions,
-
-conduct CII security assessments,
-
-perform regulatory compliance audits.
-
-What I can say is that I have started building the mental model required to learn those subjects properly.
-
-I can now explain in my own words:
-
-why critical infrastructure changes the impact of cyber risk,
-
-what NCIIPC is broadly responsible for,
-
-why electronic evidence needs context and reliability,
-
-why evidence integrity matters,
-
-what ransomware is at a beginner level,
-
-why backup recovery does not automatically end an incident,
-
-the difference between encryption, decryption and exfiltration,
-
-why organizational data responsibility cannot be reduced to a single remembered fine,
-
-why authorization and scope still apply even when a system is important.
-
-17 — My Day 2 Incident Thinking Model
-
-This is the simplest way I can represent today's learning:
-
+```mermaid
 flowchart TD
-    A[Something suspicious happens] --> B[What system / data is affected?]
-    B --> C[Was access authorized?]
-    C --> D[Did data leave the environment?]
-    D --> E[Was data encrypted, altered or made unavailable?]
-    E --> F[What evidence exists?]
-    F --> G[Can I establish where that evidence came from?]
-    G --> H[Can operations be recovered?]
-    H --> I[Has the attack path / root cause been addressed?]
-    I --> J[What legal, regulatory or organizational response is required?]
+    A["💾 Customer Database"] --> B{"Attacker Action"}
 
-Day 1 made me ask:
+    B -->|"Transforms Data"| C["🔐 Encryption"]
+    B -->|"Copies Data Outside"| D["📤 Exfiltration"]
 
-“Am I authorized?”
+    C --> E["Data Format Changes"]
+    D --> F["Data Location / Control Changes"]
+```
 
-Day 2 added:
+That diagram is probably the easiest way for me to remember the difference.
 
-“What actually happened to the system and the data — and can I prove it?”
+---
 
-💭 Reflection
+# 13 — 💥 Ransomware Can Create Multiple Problems
 
-The ransomware example changed my thinking the most today.
+I originally saw ransomware as:
 
-Before this session, I could easily imagine cybersecurity recovery as:
+```text
+Encrypt Data
+     ↓
+Demand Money
+```
 
-Something broke → restore backup → continue working
+Now I understand a more complex situation:
 
-Now I see why that is incomplete.
+```mermaid
+flowchart TD
+    A["☠️ Attacker Gains Access"] --> B["🔐 Encryption"]
+    A --> C["📤 Data Exfiltration"]
 
-If an attacker stole information, restoring my own copy does not remove theirs.
+    B --> D["🚫 Availability Problem"]
+    C --> E["👁️ Confidentiality Problem"]
 
-If I restore the server without understanding how the attacker entered, I may only be restoring the environment for them to attack again.
+    D --> F["💰 Pay to Restore Access"]
+    E --> G["📢 Pay or Data May Be Leaked / Sold"]
 
-If evidence was changed, I may lose confidence in what actually happened.
+    F --> H["⚠️ Extortion"]
+    G --> H
+```
 
-And if I am investigating any of these things, Day 1 still applies: I need authorization and scope.
+This helped me understand that ransomware can affect more than one security property.
 
-So the bigger lesson I am carrying forward is:
+The organisation may lose:
 
-Cybersecurity is not only about getting control of a machine back. It is also about understanding what happened, protecting the people/data affected, preserving evidence, fixing the cause and acting within the right authority.
+* 🚫 access to systems,
+* 🔒 confidentiality of customer information,
+* 💰 money,
+* 🏢 business operations,
+* 🤝 customer trust.
 
-📚 References I Used to Verify the Legal / Technical Corrections
+---
 
-These references are not a replacement for my classroom notes. I used them to avoid putting inaccurate section numbers or terminology into this portfolio.
+# 14 — 💾 Backup ≠ Complete Incident Resolution
 
-Information Technology Act, 2000 — India Code: https://www.indiacode.nic.in/handle/123456789/18594
+I was given this scenario:
 
-IT Act Section 43 — India Code: https://www.indiacode.nic.in/show-data?abv=CEN&actid=AC_CEN_45_76_00001_200021_1517807324077&orderno=48&orgactid=AC_CEN_45_76_00001_200021_1517807324077&sectionId=13057&sectionno=43&statehandle=123456789%2F1362
+An attacker:
 
-IT Act Section 65 — India Code: https://www.indiacode.nic.in/show-data?actid=AC_CEN_45_76_00001_200021_1517807324077&orderno=75
+1. 📤 steals five million customer records,
+2. 🔐 encrypts the live systems,
+3. 💰 demands money.
 
-Bharatiya Sakshya Adhiniyam, 2023 — India Code: https://www.indiacode.nic.in/handle/123456789/20063
+The bank restores everything from backup within two hours.
 
-BSA Section 63 — Admissibility of Electronic Records: https://www.indiacode.nic.in/show-data?abv=CEN&actid=AC_CEN_5_23_00049_2023-47_1719292804654&orderno=63&orgactid=AC_CEN_5_23_00049_2023-47_1719292804654&statehandle=123456789%2F1362
+Is everything solved?
 
-Digital Personal Data Protection Act, 2023 — India Code: https://www.indiacode.nic.in/handle/123456789/22037
+**No.**
 
-DPDP Rules / Enforcement Timeline — MeitY: https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa
+```mermaid
+flowchart TD
+    A["💾 Backup Restored"] --> B["✅ Systems Working Again"]
 
-CERT-In: https://www.cert-in.org.in/
+    B --> C{"Is Incident Completely Over?"}
 
-RansomLook: https://www.ransomlook.io/
+    C -->|"No"| D["📤 Attacker May Still Have Customer Data"]
+    C -->|"No"| E["🚪 Original Entry Point May Still Exist"]
+    C -->|"No"| F["🔑 Credentials May Still Be Compromised"]
+    C -->|"No"| G["👥 Customers May Still Be at Risk"]
+```
 
-➡️ Next
+This is where I understood:
 
-My instructor said the next session will begin introducing cybersecurity roles, specializations and the requirements for entering different roles.
+> **Recovery is not the same as complete incident resolution.**
 
-I will keep that as the next coaching entry rather than pretending to know the role map in advance.
+The backup may solve one part:
 
-My separate Systems-First Linux roadmap remains paused at Level 8.1 — Process Observation and will resume independently.
+### ✅ Availability
+
+But not necessarily:
+
+### ❌ Confidentiality
+
+### ❌ Root cause
+
+### ❌ Customer impact
+
+### ❌ Regulatory responsibility
+
+---
+
+# 15 — 🤔 The Question I Asked My Mentor
+
+I asked:
+
+> "If the organisation pays the attacker, how do we know the attacker will actually give the key?"
+
+And another question followed:
+
+> "Even if they give the key, how do we know they deleted the stolen customer data?"
+
+There is no automatic guarantee.
+
+The attacker could:
+
+* ❌ provide no key,
+* 🔑 provide a key that does not work properly,
+* 📤 keep stolen information,
+* 💰 sell the information,
+* 🔁 attempt another attack later.
+
+So ransomware is not:
+
+```text
+Pay Money
+   ↓
+Everything Fixed
+```
+
+The attacker is not a normal trustworthy service provider.
+
+That is an important limitation in the situation.
+
+---
+
+# 16 — 🏢 Organisational Responsibility
+
+The bank example also made me think about something beyond the hacker.
+
+If an organisation stores customer information, it has responsibilities around that information.
+
+Suppose the technical systems are restored.
+
+That still does not automatically remove:
+
+* 👥 customer impact,
+* 🔍 investigation,
+* 🛡️ remediation,
+* 📢 possible breach notifications,
+* ⚖️ regulatory obligations,
+* 📹 evidence preservation,
+* 🚪 fixing the original attack path.
+
+### My current mental model
+
+```mermaid
+flowchart TD
+    A["💥 Data Breach"] --> B["💻 Technical Problem"]
+    A --> C["👥 Customer Problem"]
+    A --> D["⚖️ Compliance / Legal Problem"]
+    A --> E["🏢 Business Problem"]
+
+    B --> F["🛠️ Recovery"]
+    C --> G["🛡️ Protect Affected People"]
+    D --> H["📑 Required Procedures"]
+    E --> I["📈 Business Response"]
+```
+
+So cybersecurity incidents can become much bigger than:
+
+> "Fix the computer."
+
+---
+
+# 17 — ⚖️ DPDP and Section 43A — My Correction
+
+I initially understood:
+
+```text
+DPDP = Section 43A
+```
+
+That was incorrect.
+
+**Section 43A** belonged to the Information Technology Act framework.
+
+The **Digital Personal Data Protection Act, 2023** is separate legislation.
+
+So:
+
+```text
+IT Act
+  ↓
+Section 43A
+```
+
+is not the same thing as:
+
+```text
+Digital Personal Data Protection Act, 2023
+```
+
+I am not trying to memorise the complete DPDP Act yet.
+
+At my current level, the important concept is:
+
+> **When organisations collect and process personal data, protecting that information is part of their responsibility.**
+
+---
+
+# 18 — 💰 My Ransom vs Fine Assumption
+
+At first I thought about the bank example roughly like:
+
+```text
+Possible Large Fine
+       VS
+Smaller Ransom
+
+Company chooses smaller ransom
+```
+
+After discussing it further, I understood that this is too simple.
+
+A ransomware decision may involve:
+
+* ⚖️ legal considerations,
+* 🛡️ incident response,
+* 👮 law-enforcement involvement,
+* 📤 stolen information,
+* 🔑 uncertainty about receiving a working key,
+* 🏢 business impact,
+* 👥 customer impact,
+* 🚫 other restrictions or obligations.
+
+So:
+
+> **A smaller ransom does not automatically mean paying is the correct solution.**
+
+---
+
+# 19 — 🧾 Source Code Tampering — Another Correction
+
+I also heard about tampering with source code.
+
+Initially this can sound like:
+
+> "Changing source code is illegal."
+
+But that is obviously too broad.
+
+Developers change code every day.
+
+The legal issue discussed in the IT Act is more specific and depends on the circumstances and requirements around maintaining particular computer source documents.
+
+So:
+
+```text
+Authorized software development
+        ≠
+Illegal source-code tampering
+```
+
+Again, context matters.
+
+---
+
+# 20 — 👁️ RansomLook
+
+My mentor also showed us **RansomLook**.
+
+I was introduced to it as a reference for observing ransomware-related activity.
+
+I did **not** conduct ransomware investigations with it.
+
+I did **not** analyse ransomware groups professionally.
+
+So the accurate portfolio statement is:
+
+> **I was introduced to RansomLook as a ransomware intelligence reference during the classroom session.**
+
+I think this distinction is important because:
+
+```text
+Saw a tool
+   ≠
+Professional experience using the tool
+```
+
+---
+
+# 21 — 🔗 Connection to My Systems-First Cybersecurity Roadmap
+
+My Linux/Bash roadmap is currently around:
+
+**Level 8.1 — Process Observation / Process Management**
+
+I temporarily paused it while adjusting to offline coaching.
+
+It is **not abandoned**.
+
+Today actually showed me where some of those foundations may eventually connect.
+
+### 🐧 Linux / System side
+
+```mermaid
+flowchart LR
+    A["🐧 Linux"] --> B["⚙️ Processes"]
+    B --> C["📁 Files"]
+    C --> D["📜 Logs"]
+    D --> E["🔍 Incident Investigation"]
+    E --> F["📹 Digital Evidence"]
+    F --> G["🏛️ GRC"]
+```
+
+### 🌐 Networking side
+
+```mermaid
+flowchart LR
+    A["🌐 Networking"] --> B["🔄 How Systems Communicate"]
+    B --> C["📦 How Data Moves"]
+    C --> D["👀 Observe Suspicious Movement"]
+    D --> E["📤 Understand Exfiltration"]
+```
+
+This showed me that GRC is **not replacing my technical roadmap**.
+
+It is adding another layer:
+
+> **Why technical activity matters to an organisation, its customers and sometimes an entire country's services.**
+
+---
+
+# 22 — 🔄 What I Thought vs What I Understand Now
+
+| 🤔 Before                                       | 🧠 What I Understand Now                                                             |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Restoring backup means ransomware is solved.    | Recovery may restore operations while stolen data and other risks remain.            |
+| Siphoning means encryption.                     | ❌ No. Encryption transforms data; exfiltration moves/copies it out.                  |
+| Exfiltration might mean decrypting information. | ❌ Decryption and exfiltration are completely different actions.                      |
+| CCTV itself is enough evidence.                 | Source, integrity, system condition and proper procedure also matter.                |
+| DPDP means Section 43A.                         | ❌ They are not the same legal provision/framework.                                   |
+| Paying ransom means attackers return control.   | There is no guaranteed result.                                                       |
+| Cybersecurity mostly protects computers.        | Cybersecurity can protect services that organisations and society depend upon.       |
+| Backup solves every ransomware problem.         | Backup mainly helps recovery; it cannot retrieve data already stolen by an attacker. |
+
+---
+
+# 23 — 🧠 My Complete Day 2 Mental Model
+
+This diagram represents the major connections I made today:
+
+```mermaid
+flowchart TD
+    A["🏛️ Critical Information Infrastructure"] --> B["💻 Important Digital Systems"]
+
+    B --> C["☠️ Cyber Threat"]
+
+    C --> D["🔐 Encryption"]
+    C --> E["📤 Data Exfiltration"]
+
+    D --> F["🚫 Loss of Availability"]
+    E --> G["🔒 Loss of Confidentiality"]
+
+    F --> H["💰 Ransom Pressure"]
+    G --> H
+
+    H --> I["🏢 Organisation Responds"]
+
+    I --> J["💾 Recover Systems"]
+    I --> K["🔍 Investigate"]
+    I --> L["📹 Preserve Evidence"]
+    I --> M["🚪 Fix Entry Point"]
+    I --> N["👥 Protect Affected People"]
+    I --> O["⚖️ Handle Legal / Compliance Responsibilities"]
+
+    J --> P{"Is the incident finished?"}
+
+    P -->|"Not necessarily"| K
+    P -->|"Not necessarily"| M
+    P -->|"Not necessarily"| N
+```
+
+What I like about this diagram is that it does **not** end with:
+
+```text
+Backup restored
+      ↓
+Done ✅
+```
+
+Instead, it shows the complexity I understood:
+
+> **Technical recovery is only one branch of the response.**
+
+---
+
+# 24 — 🚧 Limitations of My Current Understanding
+
+I also want to be clear about what I **do not** know yet.
+
+After Day 2, I am **not claiming** that I can:
+
+* ❌ conduct ransomware incident response professionally,
+* ❌ investigate ransomware groups,
+* ❌ perform digital forensics,
+* ❌ interpret Indian cyber law professionally,
+* ❌ protect Critical Information Infrastructure,
+* ❌ conduct threat intelligence investigations.
+
+What I currently have is a **beginner mental model** connecting:
+
+```text
+🏛️ Critical Infrastructure
+        ↓
+☠️ Cyber Threats
+        ↓
+🔐 Encryption + 📤 Exfiltration
+        ↓
+💰 Ransomware / Extortion
+        ↓
+💾 Recovery + 🔍 Investigation
+        ↓
+📹 Evidence + ⚖️ Responsibility
+```
+
+That gives me something solid to build on.
+
+---
+
+# 25 — 🎯 My Day 2 Takeaways
+
+> ### 🏛️ 1. Some systems are bigger than the computer itself.
+>
+> Their failure may affect essential services and large numbers of people.
+
+> ### 🔐 2. Ransomware is not only about encryption.
+>
+> Attackers may also steal information and use it as additional leverage.
+
+> ### 📤 3. Encryption and exfiltration are different.
+>
+> Encryption changes information. Exfiltration moves/copies information outside an authorised environment.
+
+> ### 💾 4. Backup is important, but backup does not reverse data theft.
+>
+> Recovery does not automatically mean the complete incident is over.
+
+> ### 📹 5. Electronic evidence requires integrity.
+>
+> Having a file is not the only question. Its origin, condition and handling matter.
+
+> ### 🏢 6. A cyberattack can create more than a technical problem.
+>
+> Customer, business, regulatory and evidence-related responsibilities may remain.
+
+> ### ⚖️ 7. I should verify legal references instead of blindly memorising section numbers.
+
+> ### 🛡️ 8. Day 1 still applies.
+>
+> Even when I notice a serious vulnerability or critical system, technical capability does not expand my authorization.
+
+---
+
+# 🧠 Final Reflection
+
+Day 1 taught me to ask:
+
+> **"Am I authorized?"**
+
+Day 2 made me start asking:
+
+> **"What happens when the system is actually compromised?"**
+
+At first, ransomware looked simple to me:
+
+```text
+Attacker encrypts data
+        ↓
+Company loses access
+        ↓
+Attacker asks for money
+```
+
+But after thinking through the bank example, my understanding became:
+
+```text
+Attacker gains access
+        ↓
+ ┌──────┴──────┐
+ ↓             ↓
+Encrypt      Steal Data
+ ↓             ↓
+No Access    Data Exfiltration
+ └──────┬──────┘
+        ↓
+   Extortion
+        ↓
+Organisation Responds
+        ↓
+Recovery + Investigation + Evidence + Responsibility
+```
+
+That is the biggest difference in my thinking today.
+
+A cybersecurity incident is not always one technical problem with one technical solution.
+
+It can involve:
+
+**systems + data + people + evidence + business + law + responsibility.**
+
+I also made mistakes while learning:
+
+* I mixed up siphoning and encryption.
+* I did not initially understand exfiltration.
+* I treated backup as though it could solve the entire ransomware incident.
+* I mixed Section 43A with the DPDP framework.
+* I treated Section 65B as though it were still the only current electronic-evidence provision.
+
+I corrected those ideas instead of hiding them.
+
+That is what I want this portfolio to show:
+
+> **I am not documenting cybersecurity to pretend that I already know everything. I am documenting how I reason, where I make mistakes, how I verify them, and how my understanding becomes more accurate over time.**
+
+---
+
+## ✅ Day 2 Learning Status
+
+```text
+🛡️ SYSTEMS-FIRST CYBERSECURITY PORTFOLIO
+│
+├── 🐧 Linux / Bash
+│      └── Level 8.1 — Process Observation
+│             └── ⏸️ Temporarily paused — NOT abandoned
+│
+└── 🏛️ GRC Coaching
+       │
+       ├── ✅ Day 1
+       │      └── Governance • Risk • Compliance
+       │          Authorization • Scope
+       │
+       └── ✅ Day 2
+              └── Critical Infrastructure
+                  ↓
+                  NCIIPC
+                  ↓
+                  Electronic Evidence
+                  ↓
+                  Ransomware
+                  ↓
+                  Encryption / Decryption
+                  ↓
+                  Data Exfiltration
+                  ↓
+                  Recovery & Organisational Responsibility
+```
+
+### 🚀 Next
+
+Continue with **Day 3 coaching**, while keeping the **Systems-First Cybersecurity Roadmap** as a separate active learning track.
+
+---
+
+> ### 🛡️ Portfolio Principle
+>
+> **Document what I genuinely understand. Show the connections. Show the limitations. Show where I was wrong and how I corrected it. Never turn one classroom session into an exaggerated claim of expertise.**
