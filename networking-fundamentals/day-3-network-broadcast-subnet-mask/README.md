@@ -54,7 +54,7 @@
 
 # 01 — 🏨 Understanding Networks Using the Building Analogy
 
-Today's class started with a building or hotel analogy.
+I used a building or hotel analogy to understand how communication differs between the same network and different networks.
 
 Suppose two families are staying in rooms:
 
@@ -102,7 +102,7 @@ A router allows communication **between different networks**.
 
 # 02 — 🖥️ Same Network Communication
 
-One example discussed in class was:
+One example I used to understand this was:
 
 ```text
 Computer A
@@ -112,7 +112,7 @@ Computer B
 192.168.10.2
 ```
 
-Using the default Class C network structure studied today:
+Using the default Class C network structure:
 
 ```text
 192.168.10.1
@@ -208,7 +208,7 @@ Conceptually:
 192.168.20.1
 ```
 
-The simple rule I learned today is:
+The simple rule I learned is:
 
 ```text
 Same Network
@@ -225,7 +225,7 @@ Router Required
 
 # 04 — ⚠️ Same IP Class Does Not Automatically Mean Same Network
 
-An important distinction I understood today is that two IPv4 addresses can both fall inside the historical Class C range without belonging to the same network.
+An important distinction I understood is that two IPv4 addresses can both fall inside the historical Class C range without belonging to the same network.
 
 For example:
 
@@ -432,7 +432,7 @@ Therefore:
 
 # 09 — 🔢 Total Addresses Based on Host Bits
 
-The address capacities studied today were:
+The address capacities I studied were:
 
 | Traditional Class | Host Bits | Total Address Combinations |
 | ----------------- | --------: | -------------------------: |
@@ -790,7 +790,7 @@ Valid Host Range
 
 # 17 — 🎭 What Is a Subnet Mask?
 
-Another major concept introduced today was the:
+Another major concept I learned was the:
 
 > **Subnet Mask**
 
@@ -798,7 +798,7 @@ My beginner-friendly understanding is:
 
 > **A subnet mask tells a system which bits belong to the network portion and which bits belong to the host portion of an IPv4 address.**
 
-The rule introduced in class was:
+The rule I learned is:
 
 ```text
 1 → Network bit
@@ -872,7 +872,7 @@ The technically stronger understanding is:
 
 # 19 — 🏠 Default Class C Subnet Mask
 
-The default Class C mask studied today is:
+The default Class C mask I studied is:
 
 ```text
 255.255.255.0
@@ -909,7 +909,7 @@ N.N.N.H
 
 # 20 — 🏢 Default Class B Subnet Mask
 
-The default Class B mask studied today is:
+The default Class B mask I studied is:
 
 ```text
 255.255.0.0
@@ -943,7 +943,7 @@ Host portion
 
 # 21 — 🏙️ Default Class A Subnet Mask
 
-The default Class A mask studied today is:
+The default Class A mask I studied is:
 
 ```text
 255.0.0.0
@@ -1030,7 +1030,7 @@ Subnet Mask:
 255.255.255.0
 ```
 
-the basic classful model studied today gives:
+the basic classful model gives:
 
 ```text
 Network Portion
@@ -1074,7 +1074,7 @@ This was the point where the concepts from Day 2 started connecting together.
 
 # 24 — 🪟 Checking Network Connections Using `ncpa.cpl`
 
-My instructor also demonstrated a Windows shortcut for viewing network adapters.
+I also learned a Windows shortcut for viewing network adapters.
 
 Press:
 
@@ -1110,7 +1110,7 @@ This provides a graphical way to inspect the network interfaces available on the
 
 # 25 — 💻 Checking IP Configuration Using `ipconfig`
 
-Another command demonstrated today was:
+Another command I practiced was:
 
 ```cmd
 ipconfig
@@ -1138,13 +1138,13 @@ Subnet Mask    : 255.255.255.0
 Default Gateway: 192.168.1.1
 ```
 
-This connected the concepts from the classroom directly with the values configured on a real computer.
+This connected the networking concepts I was learning directly with values configured on a real computer.
 
 ---
 
 # 26 — 🚪 Understanding the Default Gateway at My Current Level
 
-Today I connected the router concept with the **Default Gateway**.
+I connected the router concept with the **Default Gateway**.
 
 My current beginner mental model is:
 
@@ -1166,13 +1166,13 @@ Network  Gateway
       Other Network
 ```
 
-I will study routing and gateways more deeply in later networking sessions.
+I will study routing and gateways more deeply as I progress through networking fundamentals.
 
 ---
 
 # 27 — 📡 Testing Connectivity Using `ping`
 
-The `ping` command was also demonstrated.
+I also practiced using the `ping` command.
 
 Example:
 
@@ -1180,7 +1180,7 @@ Example:
 ping 192.168.1.1
 ```
 
-Another example used in class was:
+Another example I used was:
 
 ```cmd
 ping 8.8.8.8
@@ -1285,7 +1285,7 @@ The reported time relates to that round trip.
 
 # 30 — ⏳ Understanding TTL
 
-Another field introduced today was:
+Another field I learned about was:
 
 > **TTL — Time To Live**
 
@@ -1320,7 +1320,7 @@ When TTL eventually reaches zero, the packet is discarded.
 
 # 31 — ⚠️ My Technical Clarification About TTL
 
-In class, common values such as:
+While learning about TTL, I encountered common values such as:
 
 ```text
 64
@@ -1372,7 +1372,7 @@ Always Local Network
 
 # 32 — 🧪 Cisco Packet Tracer Lab
 
-Today I also practiced these ideas using:
+I also practiced these ideas using:
 
 > **Cisco Packet Tracer**
 
@@ -1459,7 +1459,7 @@ The important Day 3 concept was understanding **what the broadcast address repre
 
 # 34 — 🔌 Switch vs Router — My Current Understanding
 
-The easiest way for me to remember today's lesson is:
+The easiest way for me to remember this concept is:
 
 ```text
 SWITCH
@@ -1666,11 +1666,11 @@ This is the biggest connection I made during Networking Day 3.
 | `ping 8.8.8.8`     | Test connectivity toward an Internet IP |
 | `ping 192.168.1.1` | Test connectivity to an example local address/gateway |
 
-I will study additional networking commands when they are covered in class.
+I will study additional networking commands as I continue progressing through networking fundamentals.
 
 ---
 
-# 38 — ⚠️ Scope of Today's Class
+# 38 — ⚠️ Scope of My Day 3 Learning
 
 The IP Fundamentals study material contains additional topics including:
 
@@ -1692,7 +1692,7 @@ Additional Commands
 Practice Q&A
 ```
 
-However, I have intentionally **not included those topics in detail in Day 3** because they have not yet been fully covered in my classroom sessions.
+However, I have intentionally **not included those topics in detail in Day 3** because I have not yet studied and practiced them deeply enough.
 
 I want this portfolio to represent what I actually understand and practice rather than copying material before learning it.
 
@@ -1700,7 +1700,7 @@ I want this portfolio to represent what I actually understand and practice rathe
 
 # 39 — ✅ What I Can Explain After Day 3
 
-After today's lesson, I should be able to explain:
+After completing Day 3, I should be able to explain:
 
 - Why devices in the same network can communicate locally.
 - Why communication between different networks requires routing.
@@ -1837,7 +1837,7 @@ Router
 
 # 41 — 🎯 Day 3 Reflection
 
-Today's lesson helped me move from simply identifying IPv4 classes to understanding **how devices decide whether communication is local or needs to move to another network**.
+Day 3 helped me move from simply identifying IPv4 classes to understanding **how devices decide whether communication is local or needs to move to another network**.
 
 The building and elevator analogy made the idea easier to visualize:
 
@@ -1889,4 +1889,4 @@ and why the first and last addresses in the classful examples are not assigned a
 
 The Packet Tracer exercise also helped connect these concepts with an actual simulated network rather than only memorizing definitions.
 
-My next step is to continue with the remaining IP fundamentals when they are taught in class, including reserved/special addresses, private and public addressing, and different communication types such as unicast, multicast and broadcast.
+My next step is to continue exploring the remaining IP fundamentals, including reserved/special addresses, private and public addressing, and different communication types such as unicast, multicast and broadcast.
