@@ -18,37 +18,39 @@
 My current mental model is:
 
 ```text
-USER / APPLICATION
-        │
-        ▼
-┌──────────────────────────────┐
-│ 7 — Application              │
-│ Network services/protocols   │
-├──────────────────────────────┤
-│ 6 — Presentation             │
-│ Representation / protection  │
-├──────────────────────────────┤
-│ 5 — Session                  │
-│ Communication management     │
-├──────────────────────────────┤
-│ 4 — Transport                │
-│ TCP / UDP / Ports            │
-├──────────────────────────────┤
-│ 3 — Network                  │
-│ IP Addressing / Routing      │
-├──────────────────────────────┤
-│ 2 — Data Link                │
-│ Frames / MAC / Local Link    │
-├──────────────────────────────┤
-│ 1 — Physical                 │
-│ Bits / Signals / Media       │
-└──────────────────────────────┘
-        │
-        ▼
-     NETWORK
+┌─────────────────────────────────────────────────────────┐
+│                    USER / APPLICATION                   │
+└──────────────────────────┬──────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│  LAYER 7 — APPLICATION                                 │
+│  HTTP • HTTPS • FTP • DNS • SMTP • SSH                 │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 6 — PRESENTATION                                │
+│  Encoding • Encryption • Compression                   │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 5 — SESSION                                     │
+│  Establish • Maintain • Terminate                      │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 4 — TRANSPORT                                   │
+│  TCP • UDP • Port Numbers                              │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 3 — NETWORK                                     │
+│  IP Addressing • Routing                               │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 2 — DATA LINK                                   │
+│  Frames • MAC Addresses • Ethernet                     │
+├─────────────────────────────────────────────────────────┤
+│  LAYER 1 — PHYSICAL                                    │
+│  Bits • Electrical • Light • Radio                     │
+└──────────────────────────┬──────────────────────────────┘
+                           │
+                           ▼
+                     PHYSICAL NETWORK
 ```
 
-On the receiving side, the process happens in the opposite direction.
+On the receiving side, the same communication is interpreted in the opposite direction.
 
 ---
 
@@ -62,54 +64,59 @@ The OSI model was standardized by:
 
 > **ISO — International Organization for Standardization**
 
-The basic problem it helps solve is complexity.
+The basic problem it helps solve is **complexity**.
 
 Modern communication can involve:
 
 ```text
-Applications
-Operating Systems
-Network Interfaces
-Switches
-Routers
-Cables
-Wi-Fi
-Protocols
-Servers
-Different Vendors
-Different Technologies
+┌──────────────────────┐   ┌──────────────────────┐
+│     Applications     │   │  Operating Systems   │
+└──────────────────────┘   └──────────────────────┘
+
+┌──────────────────────┐   ┌──────────────────────┐
+│ Network Interfaces   │   │       Routers        │
+└──────────────────────┘   └──────────────────────┘
+
+┌──────────────────────┐   ┌──────────────────────┐
+│       Switches       │   │      Protocols       │
+└──────────────────────┘   └──────────────────────┘
+
+┌──────────────────────┐   ┌──────────────────────┐
+│   Cables / Wi-Fi     │   │ Servers / Vendors    │
+└──────────────────────┘   └──────────────────────┘
 ```
 
-Trying to understand everything as one giant process would be difficult.
+Trying to understand all of that as one giant communication process would be difficult.
 
-Instead, the OSI model separates networking responsibilities into seven logical layers.
+The OSI model separates the responsibilities.
 
 ```text
-Complex Network Communication
-              ↓
-       Divide Responsibilities
-              ↓
-          Seven Layers
-              ↓
-Understand / Design / Troubleshoot
-Communication More Systematically
+                COMPLEX NETWORK COMMUNICATION
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ▼                ▼                ▼
+      Understand        Design         Troubleshoot
+          │                │                │
+          └────────────────┼────────────────┘
+                           │
+                           ▼
+                    SEVEN OSI LAYERS
 ```
 
 Another important purpose is standardization.
 
-Networking equipment and software may be created by different companies, but common networking standards allow those systems to communicate with each other.
+Networking equipment and software may be created by different companies, but common networking standards allow these systems to communicate.
 
 My simple understanding is:
 
-> **The OSI model gives networking engineers a common framework for describing what part of communication is responsible for what.**
+> **The OSI model gives networking engineers a common framework for describing which part of communication is responsible for what.**
 
-It is important for me not to imagine the OSI model as seven separate physical programs sitting inside my computer.
+It is important for me not to imagine the OSI model as seven physical programs running independently inside a computer.
 
 It is mainly a:
 
 > **Reference Model**
-
-It helps describe networking responsibilities.
 
 ---
 
@@ -118,13 +125,17 @@ It helps describe networking responsibilities.
 The seven layers from highest to lowest are:
 
 ```text
-7 — Application
-6 — Presentation
-5 — Session
-4 — Transport
-3 — Network
-2 — Data Link
-1 — Physical
+┌───────┬──────────────────────┬─────────────────────────────────────┐
+│ Layer │ Name                 │ Main Question                       │
+├───────┼──────────────────────┼─────────────────────────────────────┤
+│   7   │ Application          │ What network service is needed?     │
+│   6   │ Presentation         │ How is data represented/protected?  │
+│   5   │ Session              │ How is communication maintained?    │
+│   4   │ Transport            │ How should endpoints communicate?   │
+│   3   │ Network              │ Where should the packet travel?     │
+│   2   │ Data Link            │ Where should the local frame go?    │
+│   1   │ Physical             │ How are the bits transmitted?       │
+└───────┴──────────────────────┴─────────────────────────────────────┘
 ```
 
 A simple first-level understanding is:
@@ -139,94 +150,93 @@ A simple first-level understanding is:
 | 2 — Data Link    | Local-link communication using frames and MAC addresses   |
 | 1 — Physical     | Sending bits through electrical, optical or radio signals |
 
-The layers started making more sense when I connected them to questions.
-
-```text
-Application
-→ What network service is being used?
-
-Presentation
-→ How should the information be represented or protected?
-
-Session
-→ How is the communication maintained?
-
-Transport
-→ How should data be delivered between endpoints?
-
-Network
-→ Which network destination should it reach?
-
-Data Link
-→ Where should this frame go on the current local link?
-
-Physical
-→ How are the actual bits transmitted?
-```
-
 ---
 
 # 03 — 📦 Following One Piece of Data Through the OSI Model
 
 The best way for me to understand OSI was to stop memorizing definitions and follow actual data.
 
-Suppose I create some data:
+Suppose I create:
 
 ```text
-1234
+┌───────────────────┐
+│       DATA        │
+│       1234        │
+└───────────────────┘
 ```
 
-or imagine that I want to send information describing four different pens.
-
-At the beginning, it is simply:
+As it moves downward through the networking stack, it changes form.
 
 ```text
-DATA
+┌─────────────────────────────────────────────────────┐
+│                  APPLICATION DATA                   │
+│                       1234                          │
+└──────────────────────────┬──────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────┐
+│                TRANSPORT LAYER                      │
+│        [ TCP Header | 1234 ]                        │
+│                   SEGMENT                           │
+└──────────────────────────┬──────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────┐
+│                  NETWORK LAYER                      │
+│     [ IP Header | TCP Header | 1234 ]               │
+│                    PACKET                           │
+└──────────────────────────┬──────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────┐
+│                DATA LINK LAYER                      │
+│ [ Ethernet | IP | TCP | Data | Trailer ]            │
+│                     FRAME                           │
+└──────────────────────────┬──────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────┐
+│                 PHYSICAL LAYER                      │
+│            0101101010010110...                      │
+│                      BITS                           │
+└─────────────────────────────────────────────────────┘
 ```
 
-That data begins at the upper layers.
-
-As it moves downward through the networking stack, different networking information is added.
-
-The data gradually becomes:
+At the destination, the same communication is interpreted in reverse.
 
 ```text
-Data
- ↓
-Segment
- ↓
-Packet
- ↓
-Frame
- ↓
-Bits
+┌──────────────┐
+│     BITS     │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│    FRAME     │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│    PACKET    │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│   SEGMENT    │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│     DATA     │
+└──────────────┘
 ```
 
-Then those bits are transmitted.
-
-At the destination, the receiving system works in reverse:
-
-```text
-Bits
- ↓
-Frame
- ↓
-Packet
- ↓
-Segment
- ↓
-Data
-```
-
-This finally allows the receiving application to interpret the original information.
-
-This entire journey gave me a much stronger understanding of the OSI model than simply remembering seven names.
+This journey gave me a stronger understanding of OSI than simply remembering seven layer names.
 
 ---
 
 # 04 — 📥 Encapsulation and Decapsulation
 
-Two important terms that describe this process are:
+Two important terms describe this process:
 
 > **Encapsulation**
 
@@ -238,101 +248,103 @@ and:
 
 Encapsulation happens as information moves downward through the networking stack.
 
-Each relevant layer adds information needed for its own responsibility.
-
-A simplified example:
+Instead of imagining it only as a downward arrow, I think of it as **putting one package inside another package**.
 
 ```text
 Original Data
 
-1234
+┌──────────────────────────────┐
+│             DATA             │
+│             1234             │
+└──────────────────────────────┘
 ```
 
-Transport Layer:
+Transport adds its information:
 
 ```text
-[TCP Header | 1234]
+┌────────────────────────────────────────────┐
+│ TCP HEADER │             DATA              │
+│            │             1234              │
+└────────────────────────────────────────────┘
+
+                 SEGMENT
 ```
 
-This becomes a:
+Network adds another layer:
 
 ```text
-SEGMENT
+┌────────────────────────────────────────────────────┐
+│ IP HEADER │ TCP HEADER │            DATA           │
+│           │            │            1234           │
+└────────────────────────────────────────────────────┘
+
+                       PACKET
 ```
 
-Network Layer:
+Data Link wraps it again:
 
 ```text
-[IP Header | TCP Header | 1234]
+┌──────────────────────────────────────────────────────────────────┐
+│ ETHERNET │ IP │ TCP │              DATA              │ TRAILER   │
+│ HEADER   │    │     │              1234              │           │
+└──────────────────────────────────────────────────────────────────┘
+
+                              FRAME
 ```
 
-This becomes a:
+Finally, the physical layer transmits the frame as bits.
 
 ```text
-PACKET
+010101101010100101101010...
 ```
 
-Data Link Layer:
+So my understanding is:
 
-```text
-[Ethernet Header | IP Header | TCP Header | 1234 | Trailer]
-```
-
-This becomes a:
-
-```text
-FRAME
-```
-
-Physical Layer:
-
-```text
-0101101010010110...
-```
-
-These are:
-
-```text
-BITS
-```
-
-So my current understanding is:
-
-> **Encapsulation is not simply data moving downward. It is the process of wrapping the data with networking information needed by different layers.**
+> **Encapsulation is the process of wrapping data with networking information required by the lower layers.**
 
 ---
 
 ## Decapsulation
 
-The receiving system performs the reverse process.
+The receiver performs the reverse process.
 
 ```text
-BITS
- ↓
-Data Link processes the Frame
- ↓
-Network processes the Packet
- ↓
-Transport processes the Segment
- ↓
-Upper layers process the Data
- ↓
-Application receives usable information
+╔══════════════════════════════════╗
+║             FRAME                ║
+║  Ethernet + IP + TCP + Data      ║
+╚══════════════════════════════════╝
+                │
+       Remove / Process Layer 2
+                ▼
+╔══════════════════════════════════╗
+║             PACKET               ║
+║        IP + TCP + Data           ║
+╚══════════════════════════════════╝
+                │
+       Remove / Process Layer 3
+                ▼
+╔══════════════════════════════════╗
+║            SEGMENT               ║
+║           TCP + Data             ║
+╚══════════════════════════════════╝
+                │
+       Remove / Process Layer 4
+                ▼
+╔══════════════════════════════════╗
+║              DATA                ║
+╚══════════════════════════════════╝
 ```
 
 Therefore:
 
 ```text
-ENCAPSULATION
-     ↓
-Wrapping / adding information
-while moving downward
-
-
-DECAPSULATION
-     ↓
-Processing / removing that information
-while moving upward
+┌───────────────────────┐    ┌─────────────────────────┐
+│     ENCAPSULATION     │    │     DECAPSULATION      │
+├───────────────────────┤    ├─────────────────────────┤
+│ Adds / wraps info     │    │ Processes/removes info │
+│ Sender side           │    │ Receiver side           │
+│ Moves downward        │    │ Moves upward             │
+└───────────────────────┘    └─────────────────────────┘
 ```
 
 ---
@@ -343,55 +355,70 @@ Another new term I wanted to understand was:
 
 > **PDU — Protocol Data Unit**
 
-A PDU is the name used for the information being handled at a particular networking layer.
-
-The PDU names are:
-
-| OSI Layer    | PDU                |
-| ------------ | ------------------ |
-| Application  | Data               |
-| Presentation | Data               |
-| Session      | Data               |
-| Transport    | Segment / Datagram |
-| Network      | Packet             |
-| Data Link    | Frame              |
-| Physical     | Bits               |
-
-My quick memory structure is:
+A PDU is the name used for information at a particular networking layer.
 
 ```text
-Layer 7 → DATA
-Layer 6 → DATA
-Layer 5 → DATA
+┌──────────────────────┬──────────────────────┐
+│ OSI Layer            │ PDU                  │
+├──────────────────────┼──────────────────────┤
+│ Application          │ Data                 │
+│ Presentation         │ Data                 │
+│ Session              │ Data                 │
+├──────────────────────┼──────────────────────┤
+│ Transport            │ Segment / Datagram   │
+├──────────────────────┼──────────────────────┤
+│ Network              │ Packet               │
+├──────────────────────┼──────────────────────┤
+│ Data Link            │ Frame                │
+├──────────────────────┼──────────────────────┤
+│ Physical             │ Bits                 │
+└──────────────────────┴──────────────────────┘
+```
 
-Layer 4 → SEGMENT / DATAGRAM
+My visual memory pattern is:
 
-Layer 3 → PACKET
+```text
+       UPPER LAYERS
+┌─────────────────────┐
+│        DATA         │
+│ Layers 7 / 6 / 5    │
+└─────────────────────┘
 
-Layer 2 → FRAME
+      TRANSPORT
+┌─────────────────────┐
+│ SEGMENT / DATAGRAM  │
+└─────────────────────┘
 
-Layer 1 → BITS
+       NETWORK
+┌─────────────────────┐
+│       PACKET        │
+└─────────────────────┘
+
+      DATA LINK
+┌─────────────────────┐
+│        FRAME        │
+└─────────────────────┘
+
+       PHYSICAL
+┌─────────────────────┐
+│        BITS         │
+└─────────────────────┘
 ```
 
 One terminology correction I made is:
 
 ```text
-Segmentation = Process
-
-Segment = PDU
+Segmentation  → Process
+Segment       → PDU
 ```
 
 For TCP, the Layer 4 PDU is commonly called a:
 
-```text
-Segment
-```
+> **Segment**
 
 For UDP, it is commonly called a:
 
-```text
-Datagram
-```
+> **Datagram**
 
 ---
 
@@ -399,11 +426,11 @@ Datagram
 
 The Application Layer is the layer closest to the software used by the user.
 
-Initially, it is easy to think:
+Initially it is easy to think:
 
 ```text
 Chrome = Application Layer
-Gmail = Application Layer
+Gmail  = Application Layer
 ```
 
 A more accurate understanding is:
@@ -413,13 +440,18 @@ A more accurate understanding is:
 For example:
 
 ```text
-Browser
-   │
-   ↓
-HTTP / HTTPS
-   │
-   ↓
-Network Communication
+┌──────────────────────┐
+│       Browser        │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│     HTTP / HTTPS     │
+│ Application Protocol│
+└──────────┬───────────┘
+           │
+           ▼
+       NETWORKING
 ```
 
 Some important protocols I came across are:
@@ -433,14 +465,20 @@ Some important protocols I came across are:
 | SMTP     | Simple Mail Transfer Protocol      | Sending email                     |
 | SSH      | Secure Shell                       | Secure remote command-line access |
 
-At this stage, I do not need to know the internal details of every protocol.
+At this stage, my goal is not to master every protocol internally.
 
-My goal is to recognize:
+My mental structure is:
 
 ```text
-Protocol Name
-      ↓
-What Networking Problem Does It Solve?
+┌───────────────────────┐
+│    PROTOCOL NAME      │
+└──────────┬────────────┘
+           │
+           ▼
+┌───────────────────────┐
+│ What problem does it  │
+│ solve in networking?  │
+└───────────────────────┘
 ```
 
 ---
@@ -453,21 +491,21 @@ What Networking Problem Does It Solve?
 
 HTTP is used for web communication.
 
-Conceptually:
-
 ```text
-Browser
-   │
-   │ Request
-   ▼
-Web Server
-   │
-   │ Response
-   ▼
-Browser
+┌───────────────────┐
+│      Browser      │
+└─────────┬─────────┘
+          │ Request
+          ▼
+┌───────────────────┐
+│    Web Server     │
+└─────────┬─────────┘
+          │ Response
+          ▼
+┌───────────────────┐
+│      Browser      │
+└───────────────────┘
 ```
-
-For example, the browser may request a webpage and the web server sends the required information back.
 
 ---
 
@@ -475,16 +513,18 @@ For example, the browser may request a webpage and the web server sends the requ
 
 **HTTPS — Hypertext Transfer Protocol Secure**
 
-HTTPS protects web communication using cryptographic security, normally through TLS.
-
-My simple model is:
+HTTPS protects web communication using TLS.
 
 ```text
-HTTP Communication
-        +
-TLS Protection
-        ↓
-HTTPS
+┌──────────────┐
+│     HTTP     │
+└──────┬───────┘
+       │
+       │ + TLS Protection
+       ▼
+┌──────────────┐
+│    HTTPS     │
+└──────────────┘
 ```
 
 ---
@@ -493,39 +533,41 @@ HTTPS
 
 **FTP — File Transfer Protocol**
 
-FTP is designed for transferring files between systems.
-
-Example:
+FTP is designed for transferring files.
 
 ```text
-My Computer
-     │
-     │ Upload report.txt
-     ▼
-FTP Server
+        FILE TRANSFER
+
+┌───────────────────┐
+│    My Computer    │
+└─────────┬─────────┘
+          │
+          │ Upload
+          ▼
+┌───────────────────┐
+│    FTP Server     │
+└───────────────────┘
 ```
 
 or:
 
 ```text
-FTP Server
-     │
-     │ Download file
-     ▼
-My Computer
+┌───────────────────┐
+│    FTP Server     │
+└─────────┬─────────┘
+          │
+          │ Download
+          ▼
+┌───────────────────┐
+│    My Computer    │
+└───────────────────┘
 ```
 
 Traditional FTP itself does not provide modern encrypted protection, so secure alternatives are commonly used when security is required.
 
 For my current level:
 
-```text
-FTP
- ↓
-File Transfer
-```
-
-is the main idea I need to remember.
+> **FTP = File Transfer**
 
 ---
 
@@ -539,31 +581,23 @@ Humans prefer names such as:
 google.com
 ```
 
-Computers need network addressing.
-
-DNS helps resolve:
+Networking needs IP addresses.
 
 ```text
-google.com
-     ↓
-IP Address
+┌──────────────────┐
+│    google.com    │
+│ Human-Friendly   │
+└────────┬─────────┘
+         │
+         │ DNS Resolution
+         ▼
+┌──────────────────┐
+│    IP Address    │
+│ Network-Friendly │
+└──────────────────┘
 ```
 
 This becomes extremely useful during troubleshooting.
-
-If:
-
-```text
-IP Address Works
-```
-
-but:
-
-```text
-Domain Name Does Not Work
-```
-
-DNS becomes an important suspect.
 
 ---
 
@@ -571,20 +605,22 @@ DNS becomes an important suspect.
 
 **SMTP — Simple Mail Transfer Protocol**
 
-SMTP is primarily associated with:
+SMTP is primarily associated with sending email.
 
 ```text
-Sending Email
-```
-
-Simplified:
-
-```text
-My Email Client
-       ↓
-Mail Server
-       ↓
-Recipient's Mail Server
+┌──────────────────┐
+│ My Email Client  │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ My Mail Server   │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────────┐
+│ Recipient Mail Server│
+└──────────────────────┘
 ```
 
 ---
@@ -593,16 +629,19 @@ Recipient's Mail Server
 
 **SSH — Secure Shell**
 
-SSH allows secure remote access to another system's command line.
-
-Conceptually:
+SSH allows secure remote command-line access.
 
 ```text
-My Laptop
-    │
-    │ SSH
-    ▼
-Remote Linux Server
+┌──────────────────┐
+│    My Laptop     │
+└────────┬─────────┘
+         │
+         │ Secure Shell
+         ▼
+┌──────────────────┐
+│ Remote Linux     │
+│ Server           │
+└──────────────────┘
 ```
 
 A command may eventually look like:
@@ -611,35 +650,46 @@ A command may eventually look like:
 ssh user@192.168.1.20
 ```
 
-This protocol is especially important for:
+SSH is especially important for:
 
 ```text
-Linux Administration
-Cloud Systems
-Cybersecurity
-Servers
-DevOps
+┌───────────────────┐  ┌───────────────────┐
+│ Linux Admin       │  │ Cloud Systems     │
+└───────────────────┘  └───────────────────┘
+
+┌───────────────────┐  ┌───────────────────┐
+│ Cybersecurity     │  │ DevOps / Servers  │
+└───────────────────┘  └───────────────────┘
 ```
 
 ---
 
 # 08 — 🎨 Layer 6: Presentation Layer
 
-The Presentation Layer helps deal with how information is represented.
+The Presentation Layer deals with how information is represented.
 
-Three responsibilities commonly associated with this layer are:
+Three responsibilities commonly associated with it are:
 
 ```text
-Encoding / Translation
+┌───────────────────┐
+│     ENCODING      │
+│ Representation    │
+└───────────────────┘
 
-Encryption / Decryption
+┌───────────────────┐
+│    ENCRYPTION     │
+│ Confidentiality   │
+└───────────────────┘
 
-Compression / Decompression
+┌───────────────────┐
+│   COMPRESSION     │
+│ Reduce Data Size  │
+└───────────────────┘
 ```
 
-These initially sounded similar to me because all three can change how data looks.
+These initially sounded similar to me because all three can change how data appears.
 
-But they solve completely different problems.
+They actually solve very different problems.
 
 ---
 
@@ -647,37 +697,33 @@ But they solve completely different problems.
 
 Encoding changes information into an agreed representation.
 
-For example:
+Example:
 
 ```text
-A
-```
-
-can be represented using ASCII as:
-
-```text
-65
-```
-
-which can be represented in binary as:
-
-```text
-01000001
+┌─────────────┐
+│ Character A │
+└──────┬──────┘
+       │ ASCII
+       ▼
+┌─────────────┐
+│     65      │
+└──────┬──────┘
+       │ Binary
+       ▼
+┌─────────────┐
+│  01000001   │
+└─────────────┘
 ```
 
 **ASCII** stands for:
 
 > **American Standard Code for Information Interchange**
 
-Modern systems commonly use Unicode encodings such as UTF-8 because they can represent far more languages and symbols.
+Modern systems commonly use Unicode encodings such as UTF-8.
 
 The important idea is:
 
-```text
-Encoding
-   ↓
-Representation / Compatibility
-```
+> **Encoding = Representation / Compatibility**
 
 Encoding is not designed to hide information.
 
@@ -685,23 +731,26 @@ Encoding is not designed to hide information.
 
 ## Encryption
 
-Encryption protects information from being easily understood by unauthorized parties.
-
-Conceptually:
+Encryption protects information from being understood by unauthorized parties.
 
 ```text
-Readable Data
-     ↓
-Encryption
-     ↓
-Unreadable Ciphertext
-     ↓
-Decryption
-     ↓
-Readable Data
+┌──────────────────┐
+│  Readable Data   │
+└────────┬─────────┘
+         │ Encryption
+         ▼
+┌──────────────────┐
+│    Ciphertext    │
+│ Not Human-Readable│
+└────────┬─────────┘
+         │ Decryption
+         ▼
+┌──────────────────┐
+│  Readable Data   │
+└──────────────────┘
 ```
 
-The goal is mainly:
+The main goal is:
 
 > **Confidentiality**
 
@@ -709,36 +758,28 @@ The goal is mainly:
 
 ## SSL and TLS
 
-I also came across:
+**SSL — Secure Sockets Layer**
 
-```text
-SSL
-TLS
-```
-
-**SSL** stands for:
-
-> **Secure Sockets Layer**
-
-**TLS** stands for:
-
-> **Transport Layer Security**
+**TLS — Transport Layer Security**
 
 TLS is the modern successor to SSL.
 
-TLS is used to provide cryptographic protection for communication such as HTTPS.
-
-A simple memory connection is:
-
 ```text
-HTTP
- +
-TLS
- ↓
-HTTPS
+          WEB COMMUNICATION
+
+┌──────────────┐      ┌──────────────┐
+│     HTTP     │  +   │     TLS      │
+│ Web Protocol │      │ Protection   │
+└──────────────┘      └──────────────┘
+          \              /
+           \            /
+            ▼          ▼
+          ┌──────────────┐
+          │    HTTPS     │
+          └──────────────┘
 ```
 
-In real modern networking, protocols do not always fit perfectly into one OSI layer, so I currently treat TLS at the OSI level as a useful conceptual example of data protection rather than forcing it into one physical "Presentation Layer program."
+For my current level, TLS is a useful example of cryptographic protection rather than something I need to force into one literal physical OSI layer.
 
 ---
 
@@ -746,68 +787,48 @@ In real modern networking, protocols do not always fit perfectly into one OSI la
 
 Compression reduces how much space information requires.
 
-Conceptually:
-
 ```text
-Large Data
-    ↓
-Compression
-    ↓
-Smaller Representation
-    ↓
-Transmission / Storage
+┌────────────────────┐
+│     Large Data     │
+│ ██████████████████ │
+└─────────┬──────────┘
+          │ Compression
+          ▼
+┌────────────────────┐
+│    Smaller Data    │
+│ ████████           │
+└────────────────────┘
 ```
 
-The receiving side can then decompress the information.
-
-Examples I came across include:
+Two broad types are:
 
 ```text
-GZIP
-JPEG
-Compressed Audio / Video
+┌─────────────────────────┐
+│ LOSSLESS COMPRESSION    │
+├─────────────────────────┤
+│ Exact reconstruction    │
+│ GZIP • ZIP • PNG        │
+└─────────────────────────┘
+
+┌─────────────────────────┐
+│ LOSSY COMPRESSION       │
+├─────────────────────────┤
+│ Some information lost   │
+│ JPEG • MP3 • Video      │
+└─────────────────────────┘
 ```
 
-There are two broad ideas I want to remember.
-
-### Lossless Compression
-
-The original information can be reconstructed exactly.
-
-Examples include formats/methods such as:
+The distinction I want to remember is:
 
 ```text
-GZIP
-ZIP
-PNG
+┌──────────────┬────────────────────────┐
+│ Encoding     │ Representation         │
+├──────────────┼────────────────────────┤
+│ Encryption   │ Confidentiality        │
+├──────────────┼────────────────────────┤
+│ Compression  │ Reduce Size            │
+└──────────────┴────────────────────────┘
 ```
-
-### Lossy Compression
-
-Some information may intentionally be discarded to achieve greater size reduction.
-
-Examples include:
-
-```text
-JPEG
-MP3
-Many Video Codecs
-```
-
-Therefore:
-
-```text
-Encoding
-→ Representation
-
-Encryption
-→ Confidentiality
-
-Compression
-→ Reduce Size
-```
-
-These are not interchangeable terms.
 
 ---
 
@@ -815,175 +836,148 @@ These are not interchangeable terms.
 
 The Session Layer represents communication-session management.
 
-My current understanding is:
-
 ```text
-Establish
-   ↓
-Maintain
-   ↓
-Terminate
+        SESSION LIFECYCLE
+
+┌───────────────────────┐
+│       ESTABLISH       │
+│ Begin Communication   │
+└───────────┬───────────┘
+            │
+            ▼
+┌───────────────────────┐
+│       MAINTAIN        │
+│ Continue Communication│
+└───────────┬───────────┘
+            │
+            ▼
+┌───────────────────────┐
+│       TERMINATE       │
+│ End Communication     │
+└───────────────────────┘
 ```
-
-For example:
-
-```text
-System A
-   │
-   │ Establish Communication
-   ▼
-System B
-
-Communication Continues
-
-System A
-   │
-   │ Session Ends
-   ▼
-System B
-```
-
-The useful idea for me is:
-
-> **Some mechanism has to manage the lifecycle of an ongoing communication session.**
 
 Modern Internet protocols do not always map cleanly into separate OSI Session and Presentation layers.
 
-Applications and protocols may perform these responsibilities themselves.
-
-So I use Layer 5 mainly to understand the responsibility rather than searching for a physical "Session Layer device."
+So I use Layer 5 mainly to understand the **responsibility** rather than searching for a physical Session Layer device.
 
 ---
 
 # 10 — 🚚 Layer 4: Transport Layer
 
-The Transport Layer introduced two extremely important protocols:
+The Transport Layer introduced:
 
 ```text
-TCP
-UDP
+┌─────────────────────┐
+│         TCP         │
+│ Reliable Transport  │
+└─────────────────────┘
+
+┌─────────────────────┐
+│         UDP         │
+│ Simpler Transport   │
+└─────────────────────┘
+
+┌─────────────────────┐
+│    PORT NUMBERS     │
+│ Endpoint Identifier │
+└─────────────────────┘
 ```
-
-It is also where:
-
-```text
-Port Numbers
-```
-
-become important.
 
 ---
 
 ## TCP — Transmission Control Protocol
 
-TCP stands for:
-
-> **Transmission Control Protocol**
-
 TCP provides mechanisms for reliable communication.
 
-Important concepts include:
-
 ```text
-Sequencing
-Acknowledgements
-Retransmission
-Error Detection
-Flow Control
+┌─────────────────────────────────────────────┐
+│                  TCP                        │
+├─────────────────────────────────────────────┤
+│ Sequencing                                  │
+│ Acknowledgements                            │
+│ Retransmission                              │
+│ Error Detection                             │
+│ Flow Control                                │
+└─────────────────────────────────────────────┘
 ```
 
-Suppose data logically belongs in this order:
+Suppose data belongs in this order:
 
 ```text
-1
-2
-3
-4
+┌───┐ ┌───┐ ┌───┐ ┌───┐
+│ 1 │ │ 2 │ │ 3 │ │ 4 │
+└───┘ └───┘ └───┘ └───┘
 ```
 
-Networking does not mean every piece must always arrive exactly as expected.
-
-TCP provides mechanisms that allow the receiver to reconstruct the communication correctly.
-
-For example:
+But the receiver sees:
 
 ```text
-Received:
+┌───┐ ┌───┐       ┌───┐
+│ 1 │ │ 2 │       │ 4 │
+└───┘ └───┘       └───┘
 
-1
-3
-4
+          Missing 3
 ```
 
-The missing information can be detected through TCP's reliability mechanisms and retransmission can occur.
-
-TCP also maintains ordering information.
-
-This is why TCP is described as:
-
-> **Reliable**
+TCP reliability mechanisms can detect that something is missing and allow retransmission.
 
 ---
 
 ## TCP Reliable Does Not Mean TCP Secure
 
-One assumption I corrected was:
-
 ```text
-TCP = Secure
-UDP = Not Secure
+┌──────────────────────────┐
+│       RELIABILITY        │
+│ Did the data arrive?     │
+│ Is it ordered correctly? │
+└──────────────────────────┘
+
+               ≠
+
+┌──────────────────────────┐
+│        SECURITY          │
+│ Is the data protected?   │
+│ Is it encrypted?         │
+└──────────────────────────┘
 ```
 
-That is incorrect.
+A TCP connection can carry unencrypted information.
 
-TCP provides reliability.
+So:
 
-It does not automatically provide encryption.
-
-Therefore:
-
-```text
-Reliability ≠ Security
-```
-
-A TCP connection can carry completely unencrypted data.
-
-Encryption must be provided separately by suitable protocols or security mechanisms.
+> **Reliability ≠ Security**
 
 ---
 
 ## UDP — User Datagram Protocol
 
-UDP stands for:
-
-> **User Datagram Protocol**
-
-UDP provides a much simpler transport service.
-
-It does not provide TCP's built-in guarantees for:
+UDP provides a simpler transport service.
 
 ```text
-Delivery
-Ordering
-Retransmission
+┌──────────────────────────────────────┐
+│                 UDP                  │
+├──────────────────────────────────────┤
+│ No built-in delivery guarantee       │
+│ No built-in ordering guarantee       │
+│ No built-in retransmission           │
+│ Lower transport overhead             │
+└──────────────────────────────────────┘
 ```
 
-This means UDP has less protocol overhead.
-
-It can therefore be useful for applications where low delay may be more important than recovering every lost piece of information.
-
-Common examples can include:
+Examples can include:
 
 ```text
-DNS
-Online Gaming
-Voice Communication
-Video / Streaming Technologies
+┌─────────────┐ ┌─────────────┐
+│     DNS     │ │   Gaming    │
+└─────────────┘ └─────────────┘
+
+┌─────────────┐ ┌─────────────┐
+│ Voice / VoIP│ │ Streaming   │
+└─────────────┘ └─────────────┘
 ```
 
-depending on the particular application and protocol design.
-
-Instead of remembering:
+Instead of memorizing:
 
 ```text
 TCP = Slow
@@ -993,158 +987,138 @@ UDP = Fast
 I prefer:
 
 ```text
-TCP
-→ More reliability mechanisms
-→ More protocol overhead
-
-UDP
-→ Fewer built-in reliability mechanisms
-→ Lower transport overhead
+┌────────────────────────────┬────────────────────────────┐
+│ TCP                        │ UDP                        │
+├────────────────────────────┼────────────────────────────┤
+│ Reliability mechanisms     │ Fewer reliability features │
+│ More protocol overhead     │ Lower transport overhead   │
+└────────────────────────────┴────────────────────────────┘
 ```
 
 ---
 
 # 11 — 🚪 Why Port Numbers Exist
 
-One computer can run many network applications simultaneously.
-
-For example:
+A single computer can run many network applications.
 
 ```text
-Laptop
-│
-├── Browser
-├── SSH Client
-├── Email
-├── Game
-└── Other Applications
+                   ONE COMPUTER
+                        │
+         ┌──────────────┼──────────────┐
+         │              │              │
+         ▼              ▼              ▼
+    ┌─────────┐    ┌─────────┐    ┌─────────┐
+    │ Browser │    │   SSH   │    │  Email  │
+    └─────────┘    └─────────┘    └─────────┘
+         │              │              │
+         └──────────────┼──────────────┘
+                        │
+                   PORT NUMBERS
 ```
 
-An IP address helps identify the host/network location.
+An IP address helps identify the host.
 
-But the operating system still needs to know:
-
-> **Which communication endpoint should receive this data?**
-
-That is where:
-
-> **Port Numbers**
-
-become important.
-
-My simple mental model is:
+A port helps identify the communication endpoint.
 
 ```text
-IP Address
-    ↓
-Which Host?
+┌───────────────────┐
+│    IP ADDRESS     │
+│    Which host?    │
+└───────────────────┘
 
-Port Number
-    ↓
-Which Service / Communication Endpoint?
+┌───────────────────┐
+│    PORT NUMBER    │
+│ Which endpoint?   │
+└───────────────────┘
 ```
 
-Some well-known examples are:
+Some common examples are:
 
 ```text
-HTTP  → TCP Port 80
-
-HTTPS → TCP Port 443
-
-SSH   → TCP Port 22
+┌─────────┬──────────────┐
+│ Service │ TCP Port     │
+├─────────┼──────────────┤
+│ HTTP    │ 80           │
+│ HTTPS   │ 443          │
+│ SSH     │ 22           │
+└─────────┴──────────────┘
 ```
 
-These service ports do not mean every application always uses one permanently fixed port on both sides.
-
-Client applications often use temporary:
-
-> **Ephemeral Ports**
-
-For example:
+A client application can also use a temporary ephemeral port.
 
 ```text
-My Laptop
-192.168.1.20:53021
-        │
-        ▼
-Web Server
-203.x.x.x:443
+┌──────────────────────────┐
+│ My Laptop                │
+│ 192.168.1.20:53021       │
+└────────────┬─────────────┘
+             │
+             │ HTTPS Connection
+             ▼
+┌──────────────────────────┐
+│ Web Server               │
+│ 203.x.x.x:443            │
+└──────────────────────────┘
 ```
-
-Here:
-
-```text
-443
-```
-
-identifies the HTTPS service at the server.
-
-The client-side port may be temporary.
 
 ---
 
 # 12 — 🛣️ Layer 3: Network Layer
 
-The Network Layer is where I connect two major concepts:
+The Network Layer connects:
 
 ```text
-IP Addressing
-Routing
+┌──────────────────┐       ┌──────────────────┐
+│  IP ADDRESSING   │       │     ROUTING      │
+│ Logical Address  │       │ Path Selection   │
+└─────────┬────────┘       └─────────┬────────┘
+          │                           │
+          └─────────────┬─────────────┘
+                        ▼
+                 ┌─────────────┐
+                 │   LAYER 3   │
+                 │   NETWORK   │
+                 └─────────────┘
 ```
 
-The major protocol family associated with this layer is:
-
-> **IP — Internet Protocol**
-
-The PDU at this layer is:
+The PDU is:
 
 > **Packet**
 
-A router is strongly associated with Layer 3.
-
-My simplified model is:
+Routers are strongly associated with Layer 3.
 
 ```text
-Source IP
-     ↓
-Packet
-     ↓
-Routers
-     ↓
-Destination IP
+┌──────────────┐
+│  Source Host │
+└──────┬───────┘
+       │ Packet
+       ▼
+┌──────────────┐
+│   Router 1   │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│   Router 2   │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│ Destination  │
+└──────────────┘
 ```
 
-Routers examine network-layer information and decide where packets should go next.
-
----
-
-## Does the Network Layer Assign IP Addresses?
-
-One assumption I corrected is:
-
-> "The Network Layer assigns IP addresses."
-
-A better statement is:
-
-> **Layer 3 uses logical IP addressing for communication and routing.**
-
-Actual IP configuration may come from mechanisms such as:
+A correction I made:
 
 ```text
-DHCP
-Static Configuration
-ISP / Network Configuration
+Incorrect:
+Network Layer = Assigns IP Addresses
+
+Better:
+Network Layer = Uses IP addressing
+and routing
 ```
 
-I will explore those mechanisms separately.
-
-For OSI, the important connection is:
-
-```text
-Layer 3
-   ↓
-IP Addressing + Routing
-```
+Actual IP configuration may come from DHCP, static configuration or provider/network configuration.
 
 ---
 
@@ -1152,142 +1126,120 @@ IP Addressing + Routing
 
 The Data Link Layer deals with communication across the current network link.
 
-Important concepts associated with Layer 2 are:
-
 ```text
-Frames
-MAC Addresses
-Ethernet
-Switches
+                  DATA LINK LAYER
+
+       ┌────────────┬────────────┬────────────┐
+       │            │            │            │
+       ▼            ▼            ▼            ▼
+   ┌───────┐    ┌───────┐    ┌────────┐   ┌────────┐
+   │ Frame │    │  MAC  │    │Ethernet│   │ Switch │
+   └───────┘    └───────┘    └────────┘   └────────┘
 ```
 
 The PDU is:
 
 > **Frame**
 
-A switch commonly examines Layer 2 information to forward frames within a local network.
-
 ---
 
 ## MAC Address
 
-**MAC** stands for:
-
-> **Media Access Control**
+**MAC — Media Access Control**
 
 A MAC address is associated with a network interface.
 
-For example:
-
 ```text
-Laptop
-│
-├── Wi-Fi Interface
-│      ↓
-│   MAC Address
-│
-└── Ethernet Interface
-       ↓
-    MAC Address
+                 LAPTOP
+                   │
+          ┌────────┴────────┐
+          │                 │
+          ▼                 ▼
+┌─────────────────┐ ┌─────────────────┐
+│ Wi-Fi Interface │ │Ethernet Interface│
+│ MAC Address A   │ │ MAC Address B   │
+└─────────────────┘ └─────────────────┘
 ```
 
-The distinction that became important to me is:
+The important distinction is:
 
 ```text
-IP Address
-   ↓
-Logical addressing across networks
+┌─────────────────────────┐
+│       IP ADDRESS        │
+│ Logical network address │
+│ Across networks         │
+└─────────────────────────┘
 
-MAC Address
-   ↓
-Communication on the current local link
+             VS
+
+┌─────────────────────────┐
+│       MAC ADDRESS       │
+│ Local-link addressing   │
+│ Current network segment │
+└─────────────────────────┘
 ```
-
-MAC addressing should not be thought of as normal end-to-end Internet addressing.
 
 ---
 
 ## IP vs MAC During Routing
 
-Suppose communication travels:
+Suppose traffic travels:
 
 ```text
-Laptop
-   ↓
-Home Router
-   ↓
-ISP Router
-   ↓
-Other Routers
-   ↓
-Destination Server
+             INTERNET PATH
+
+┌──────────┐
+│  Laptop  │
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│ Home     │
+│ Router   │
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│ ISP      │
+│ Router   │
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│ Other    │
+│ Routers  │
+└────┬─────┘
+     │
+     ▼
+┌──────────┐
+│ Server   │
+└──────────┘
 ```
 
-The destination IP helps identify the final network destination.
+Layer 3 keeps the idea of the final destination.
 
-But Layer 2 framing is recreated as communication moves across different network links.
-
-Simplified:
+Layer 2 framing changes for each local link.
 
 ```text
-LOCAL LINK 1
+LINK 1
 
-Laptop MAC
-     ↓
-Router MAC
+┌──────────────┐       ┌──────────────┐
+│ Laptop MAC   │ ───▶  │ Router MAC   │
+└──────────────┘       └──────────────┘
+
+
+LINK 2
+
+┌─────────────────┐    ┌─────────────────┐
+│ Router Interface│ ─▶ │ Next-Hop MAC    │
+└─────────────────┘    └─────────────────┘
 ```
 
-Then another link may use different Layer 2 addresses.
+So:
 
 ```text
-LOCAL LINK 2
-
-Router Interface
-      ↓
-Next-Hop Interface
-```
-
-This helped me separate two ideas:
-
-```text
-IP
-→ End-to-end logical network addressing
-
-MAC
-→ Current-link delivery
-```
-
----
-
-## Ethernet
-
-Ethernet is one major Layer 2 technology used in wired networks.
-
-A simplified Ethernet frame contains information such as:
-
-```text
-Destination MAC
-Source MAC
-Payload
-Error-Detection Information
-```
-
-Layer 2 can also detect corruption of individual frames using mechanisms such as:
-
-> **FCS — Frame Check Sequence**
-
-which commonly uses:
-
-> **CRC — Cyclic Redundancy Check**
-
-For my current level, I only need to remember:
-
-```text
-Layer 2
-→ Frames
-→ MAC Addresses
-→ Local-Link Communication
-→ Error Detection
+IP  → End-to-end logical destination
+MAC → Local-link / next-hop delivery
 ```
 
 ---
@@ -1296,59 +1248,35 @@ Layer 2
 
 The Physical Layer is responsible for transmitting raw bits.
 
+```text
+                          BITS
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ▼                ▼                ▼
+┌────────────────┐ ┌────────────────┐ ┌────────────────┐
+│ Copper Cable   │ │ Fiber Optic    │ │     Wi-Fi      │
+│ Electrical     │ │ Light Pulses   │ │ Radio Waves    │
+└────────────────┘ └────────────────┘ └────────────────┘
+```
+
 The PDU is:
 
 > **Bits**
 
-The bits may be carried using different physical mechanisms.
-
-Examples include:
+A message that began as readable application data can eventually become:
 
 ```text
-Copper Ethernet
-      ↓
-Electrical Signals
-
-
-Fiber-Optic Cable
-      ↓
-Light
-
-
-Wi-Fi
-      ↓
-Radio Waves
+010101101001011001010...
 ```
 
-So information that began as:
-
-```text
-1234
-```
-
-can eventually be represented and transmitted as physical signals carrying:
-
-```text
-010101101001...
-```
-
-Devices/components commonly associated with Layer 1 include:
-
-```text
-Cables
-Connectors
-Repeaters
-Hubs
-Physical Signaling Components
-```
+and then be carried as physical signals.
 
 ---
 
 ## NIC
 
-Another term I came across is:
-
-> **NIC — Network Interface Card**
+**NIC — Network Interface Card**
 
 or more generally:
 
@@ -1356,165 +1284,152 @@ or more generally:
 
 A NIC allows a device to connect to a network.
 
-Examples include:
-
 ```text
-Wi-Fi Adapter
-
-Ethernet Adapter
+┌──────────────────────────────┐
+│            DEVICE            │
+│                              │
+│  ┌────────────────────────┐  │
+│  │      Wi-Fi NIC         │  │
+│  └────────────────────────┘  │
+│                              │
+│  ┌────────────────────────┐  │
+│  │    Ethernet NIC        │  │
+│  └────────────────────────┘  │
+└──────────────────────────────┘
 ```
 
-A NIC interacts with responsibilities around both:
-
-```text
-Layer 1
-and
-Layer 2
-```
-
-because it deals with physical transmission as well as link-layer communication.
+NICs interact heavily with both Layer 1 and Layer 2 responsibilities.
 
 ---
 
 # 15 — 🌍 Tracing Communication from My Laptop to a Website
 
-I wanted to combine all seven layers into one practical example.
-
 Suppose I open a website using HTTPS.
 
-At a simplified level:
+Instead of thinking of it as one direct action, I now visualize it like this:
 
 ```text
-I request a website
-       │
-       ▼
-APPLICATION
-HTTP / HTTPS communication
-       │
-       ▼
-PRESENTATION-RELATED FUNCTIONS
-Data representation / TLS protection
-       │
-       ▼
-SESSION-RELATED FUNCTIONS
-Communication/session management
-       │
-       ▼
-TRANSPORT
-TCP
-Source Port + Destination Port
-       │
-       ▼
-NETWORK
-Source IP + Destination IP
-       │
-       ▼
-DATA LINK
-Local Source MAC + Next-Hop MAC
-Frame
-       │
-       ▼
-PHYSICAL
-Bits transmitted as signals
+┌─────────────────────────────────────────────────────┐
+│                    MY LAPTOP                        │
+│                                                     │
+│  ┌──────────────────────────────────────────────┐   │
+│  │ APPLICATION                                  │   │
+│  │ Browser → HTTP / HTTPS                       │   │
+│  └────────────────────┬─────────────────────────┘   │
+│                       │                             │
+│  ┌────────────────────▼─────────────────────────┐   │
+│  │ PRESENTATION / SECURITY FUNCTIONS            │   │
+│  │ Encoding / TLS / Compression                 │   │
+│  └────────────────────┬─────────────────────────┘   │
+│                       │                             │
+│  ┌────────────────────▼─────────────────────────┐   │
+│  │ TRANSPORT                                    │   │
+│  │ TCP + Source/Destination Ports               │   │
+│  └────────────────────┬─────────────────────────┘   │
+│                       │                             │
+│  ┌────────────────────▼─────────────────────────┐   │
+│  │ NETWORK                                      │   │
+│  │ Source IP + Destination IP                   │   │
+│  └────────────────────┬─────────────────────────┘   │
+│                       │                             │
+│  ┌────────────────────▼─────────────────────────┐   │
+│  │ DATA LINK                                    │   │
+│  │ Source MAC + Next-Hop MAC                    │   │
+│  └────────────────────┬─────────────────────────┘   │
+│                       │                             │
+│  ┌────────────────────▼─────────────────────────┐   │
+│  │ PHYSICAL                                     │   │
+│  │ Bits → Electrical / Light / Radio            │   │
+│  └────────────────────┬─────────────────────────┘   │
+└───────────────────────┼─────────────────────────────┘
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │ Home Router  │
+                 └──────┬───────┘
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │     ISP      │
+                 └──────┬───────┘
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │   Internet   │
+                 │   Routers    │
+                 └──────┬───────┘
+                        │
+                        ▼
+                 ┌──────────────┐
+                 │ Web Server   │
+                 └──────────────┘
 ```
 
-The traffic may then cross several routers.
+At the destination, the server performs decapsulation and processes the request.
 
-Conceptually:
+This helped me understand that:
 
 ```text
-My Laptop
-    ↓
-Home Network
-    ↓
-Default Gateway / Router
-    ↓
-ISP
-    ↓
-Internet Routers
-    ↓
-Destination Network
-    ↓
-Server
+Application
+     │
+     │ does NOT directly jump to
+     ▼
+Internet
 ```
 
-At the destination, decapsulation happens.
-
-```text
-Bits
- ↓
-Frame processed
- ↓
-Packet processed
- ↓
-TCP segment processed
- ↓
-Upper-layer data processed
- ↓
-Application receives request
-```
-
-The response then travels back through another communication process.
-
-This example helped me understand that networking is not:
-
-```text
-Application → Internet
-```
-
-There are multiple responsibilities working together underneath what looks like one simple user action.
+There are multiple networking responsibilities underneath one simple user action.
 
 ---
 
 # 16 — 🧪 The FTP Corruption Question
 
-One scenario that made the Transport Layer easier to understand was:
+One scenario that made the Transport Layer clearer was:
 
-> **A file is being transferred using FTP and part of the transmission is lost or corrupted. Which OSI layer is responsible for reliable recovery?**
+> **A file is being transferred using FTP and part of the transmission is lost or corrupted. Which OSI layer provides reliable recovery?**
 
-FTP normally runs over:
-
-```text
-TCP
-```
-
-TCP belongs to:
-
-> **Layer 4 — Transport**
-
-Therefore, for this type of OSI troubleshooting question, the expected answer is:
+FTP normally uses TCP.
 
 ```text
-Transport Layer
-      ↓
-TCP
-      ↓
-Reliable Delivery
-      ↓
-Retransmission if required
+┌─────────────────────┐
+│         FTP         │
+│ File Transfer       │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│         TCP         │
+│ Reliable Transport  │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│   TRANSPORT LAYER   │
+│      Layer 4        │
+└─────────────────────┘
 ```
 
-Initially, it may also seem that the Data Link Layer should be involved because Layer 2 has frame error detection.
+Layer 2 can detect certain frame-level errors.
 
-That idea is not completely unrelated.
-
-Layer 2 can detect errors affecting a frame on an individual network link.
-
-However:
+TCP provides end-to-end reliability.
 
 ```text
-Layer 2
-→ Link-level frame error detection
+┌──────────────────────────┐
+│ Layer 2                  │
+│ Frame Error Detection    │
+└──────────────────────────┘
 
-TCP
-→ End-to-end reliable delivery
+              VS
+
+┌──────────────────────────┐
+│ Layer 4 — TCP            │
+│ End-to-End Reliability   │
+│ Retransmission           │
+└──────────────────────────┘
 ```
 
-For an FTP transfer requiring retransmission and reliable recovery, the important answer is:
+Therefore the expected answer is:
 
 > **Transport Layer — TCP**
-
-This example helped me understand why different layers can detect different kinds of problems without performing the same job.
 
 ---
 
@@ -1525,445 +1440,414 @@ One of the most practical reasons I want to understand OSI is troubleshooting.
 Instead of seeing:
 
 ```text
-Internet Not Working
+┌─────────────────────────┐
+│   "Internet Not Working"│
+└─────────────────────────┘
 ```
 
-as one giant problem, I can investigate communication layer by layer.
-
-A common bottom-up approach is:
+as one giant problem, I can divide the investigation.
 
 ```text
-Layer 1
-Physical
-   ↓
-Layer 2
-Data Link
-   ↓
-Layer 3
-Network
-   ↓
-Layer 4
-Transport
-   ↓
-Upper Layers
-Application / Protocol Behaviour
+                      NETWORK ISSUE
+                           │
+         ┌─────────────────┼─────────────────┐
+         │                 │                 │
+         ▼                 ▼                 ▼
+┌────────────────┐ ┌────────────────┐ ┌────────────────┐
+│ Layer 1        │ │ Layer 2        │ │ Layer 3        │
+│ Signal/Cable   │ │ Local Link     │ │ IP / Routing   │
+└────────────────┘ └────────────────┘ └────────────────┘
+                                                │
+                           ┌────────────────────┼────────────────────┐
+                           │                                         │
+                           ▼                                         ▼
+                  ┌────────────────┐                      ┌────────────────┐
+                  │ Layer 4        │                      │ Upper Layers   │
+                  │ TCP/UDP/Ports  │                      │ DNS/App/etc.   │
+                  └────────────────┘                      └────────────────┘
 ```
 
-This helps narrow down possibilities before randomly changing settings.
+This gives me a structured way to narrow the problem instead of randomly changing settings.
 
 ---
 
-## Example 1 — Wi-Fi Is Connected but Gateway Cannot Be Reached
-
-Suppose:
+## Example 1 — Wi-Fi Connected but Gateway Cannot Be Reached
 
 ```text
-Wi-Fi
-Connected
-
-IP Address
-192.168.1.20
-
-Default Gateway
-192.168.1.1
+┌──────────────────────────┐
+│ Wi-Fi: Connected         │
+│ IP: 192.168.1.20         │
+│ Gateway: 192.168.1.1     │
+└────────────┬─────────────┘
+             │
+             │ ping gateway
+             ▼
+┌──────────────────────────┐
+│      REQUEST TIMEOUT     │
+└──────────────────────────┘
 ```
-
-But:
-
-```bash
-ping 192.168.1.1
-```
-
-fails.
-
-Seeing:
-
-```text
-Wi-Fi Connected
-```
-
-does not mean every network layer is automatically working.
 
 I would investigate:
 
 ```text
-Layer 1
-→ Signal / Physical Interface
+┌──────────────────────┐
+│ LAYER 1              │
+│ Signal / Interface   │
+└──────────────────────┘
 
-Layer 2
-→ Wi-Fi Association
-→ Local-Link Communication
-→ MAC / ARP-related communication
+┌──────────────────────┐
+│ LAYER 2              │
+│ Wi-Fi / Local Link   │
+│ MAC / ARP Behaviour  │
+└──────────────────────┘
 
-Layer 3
-→ IP Address
-→ Subnet Mask
-→ Gateway Configuration
+┌──────────────────────┐
+│ LAYER 3              │
+│ IP / Mask / Gateway  │
+└──────────────────────┘
 ```
 
-This prevents me from immediately blaming an application such as the browser.
+Seeing `Wi-Fi Connected` does not prove every network layer is functioning.
 
 ---
 
 ## Example 2 — IP Works but Domain Name Does Not
 
-Suppose:
+```text
+┌──────────────────────┐
+│ ping 8.8.8.8         │
+│       WORKS          │
+└──────────────────────┘
 
-```bash
-ping 8.8.8.8
+             BUT
+
+┌──────────────────────┐
+│ google.com           │
+│ Cannot Resolve       │
+└──────────────────────┘
 ```
 
-works.
-
-But communication using:
+What is different?
 
 ```text
-google.com
+┌──────────────────────┐
+│ 8.8.8.8              │
+│ Already an IP        │
+└──────────────────────┘
+
+┌──────────────────────┐
+│ google.com           │
+│ Needs DNS Resolution │
+└──────────────────────┘
 ```
 
-fails because the name cannot be resolved.
+So I would investigate:
 
-The difference is important.
-
-```text
-8.8.8.8
-→ Already an IP address
-
-google.com
-→ Requires name resolution
-```
-
-That points me toward:
-
-> **DNS**
-
-DNS is mainly considered an:
-
-> **Application Layer protocol**
-
-So:
-
-```text
-IP Communication Works
-        +
-Domain Resolution Fails
-        ↓
-Investigate DNS
-```
-
-This is much more precise than saying:
-
-```text
-Internet Is Broken
-```
+> **DNS — Application Layer**
 
 ---
 
 ## Example 3 — Streaming Is Buffering
 
-If a streaming application starts buffering, the OSI model gives me a structured troubleshooting path.
-
 ```text
-Layer 1
-→ Weak Wi-Fi?
-→ Cable/interface problem?
-
-Layer 2
-→ Local-link issue?
-→ Wireless contention?
-
-Layer 3
-→ Routing problem?
-→ Gateway / ISP path issue?
-
-Layer 4
-→ Transport connectivity problem?
-→ Ports or firewall behaviour?
-
-Upper Layers
-→ DNS?
-→ Application/server/service problem?
+                       BUFFERING
+                           │
+           ┌───────────────┼───────────────┐
+           │               │               │
+           ▼               ▼               ▼
+    ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+    │ Layer 1     │ │ Layer 2     │ │ Layer 3     │
+    │ Weak Wi-Fi? │ │ Local issue?│ │ Routing?    │
+    └─────────────┘ └─────────────┘ └─────────────┘
+                                           │
+                    ┌──────────────────────┼──────────────────────┐
+                    │                                             │
+                    ▼                                             ▼
+             ┌─────────────┐                              ┌─────────────┐
+             │ Layer 4     │                              │ Upper Layer │
+             │ Ports/TCP?  │                              │ DNS/App?    │
+             └─────────────┘                              └─────────────┘
 ```
 
 The OSI model does not automatically tell me the answer.
 
-Instead:
-
-> **It gives me a disciplined way to narrow down where the problem may exist.**
+It gives me a **method for narrowing the possibilities**.
 
 ---
 
 # 18 — 🧠 Devices and Layers: Useful but Not Absolute
 
-A beginner OSI table often shows:
+A beginner OSI map often looks like:
 
 ```text
-Layer 4 → Firewall
-
-Layer 3 → Router
-
-Layer 2 → Switch
-
-Layer 1 → Hub
+┌───────────────┬────────────────────┐
+│ Layer         │ Common Association │
+├───────────────┼────────────────────┤
+│ Transport     │ Firewall           │
+│ Network       │ Router             │
+│ Data Link     │ Switch             │
+│ Physical      │ Hub / Cable        │
+└───────────────┴────────────────────┘
 ```
 
-This is useful as an introduction, but I learned not to interpret it as:
+This is useful, but not absolute.
+
+Modern devices can work across multiple layers.
 
 ```text
-Router can ONLY work at Layer 3
-
-Firewall can ONLY work at Layer 4
-
-Switch can ONLY work at Layer 2
+┌────────────────────────────┐
+│      MODERN FIREWALL       │
+├────────────────────────────┤
+│ Layer 3 Information        │
+│ Layer 4 Ports/Protocols    │
+│ Layer 7 Application Data   │
+└────────────────────────────┘
 ```
 
-Modern networking devices can perform functions across multiple layers.
+Some switches can also perform Layer 3 routing.
 
-For example:
+So I treat device mappings as:
 
-```text
-Modern Firewall
-→ Layer 3 information
-→ Layer 4 ports/protocols
-→ Sometimes Layer 7 application information
-```
-
-and some switches can also perform:
-
-```text
-Layer 3 Routing
-```
-
-So I use the device mapping as:
-
-> **The layer the device is traditionally or primarily associated with for that function.**
+> **Common or traditional associations, not permanent boundaries.**
 
 ---
 
 # 19 — 📝 Quick Revision Map
 
-This is the compact version I want to be able to reconstruct without notes.
+This is the compact diagram I want to be able to reconstruct without notes.
 
 ```text
-┌─────────────────────────────────────────────┐
-│ Layer 7 — APPLICATION                       │
-│ HTTP / HTTPS / FTP / DNS / SMTP / SSH      │
-│ PDU: Data                                   │
-├─────────────────────────────────────────────┤
-│ Layer 6 — PRESENTATION                      │
-│ Encoding / Encryption / Compression         │
-│ PDU: Data                                   │
-├─────────────────────────────────────────────┤
-│ Layer 5 — SESSION                           │
-│ Establish / Maintain / Terminate            │
-│ PDU: Data                                   │
-├─────────────────────────────────────────────┤
-│ Layer 4 — TRANSPORT                         │
-│ TCP / UDP / Port Numbers                    │
-│ PDU: Segment / Datagram                     │
-├─────────────────────────────────────────────┤
-│ Layer 3 — NETWORK                           │
-│ IP Addressing / Routing                     │
-│ Device: Router                              │
-│ PDU: Packet                                 │
-├─────────────────────────────────────────────┤
-│ Layer 2 — DATA LINK                         │
-│ MAC / Ethernet / Frames                     │
-│ Device: Switch                              │
-│ PDU: Frame                                  │
-├─────────────────────────────────────────────┤
-│ Layer 1 — PHYSICAL                          │
-│ Electrical / Light / Radio Signals          │
-│ Cables / Hubs / Physical Interfaces         │
-│ PDU: Bits                                   │
-└─────────────────────────────────────────────┘
+╔════════════════════════════════════════════════════╗
+║                 OSI MODEL                         ║
+╠═══════╦══════════════════╦════════════════════════╣
+║ Layer ║ Name             ║ Main Concepts          ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   7   ║ Application      ║ HTTP / HTTPS / DNS     ║
+║       ║                  ║ FTP / SMTP / SSH       ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   6   ║ Presentation     ║ Encoding / Encryption  ║
+║       ║                  ║ Compression            ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   5   ║ Session          ║ Session Management     ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   4   ║ Transport        ║ TCP / UDP / Ports      ║
+║       ║ PDU              ║ Segment / Datagram     ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   3   ║ Network          ║ IP / Routing           ║
+║       ║ PDU              ║ Packet                 ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   2   ║ Data Link        ║ MAC / Ethernet / Switch║
+║       ║ PDU              ║ Frame                  ║
+╠═══════╬══════════════════╬════════════════════════╣
+║   1   ║ Physical         ║ Electrical / Light     ║
+║       ║ PDU              ║ Radio / Bits           ║
+╚═══════╩══════════════════╩════════════════════════╝
 ```
 
-My PDU memory pattern is:
+Addressing model:
 
 ```text
-DATA
-DATA
-DATA
-SEGMENT
-PACKET
-FRAME
-BITS
+┌───────────────────────────────────────────────┐
+│          NETWORK COMMUNICATION IDENTITY       │
+├─────────────────┬─────────────────────────────┤
+│ PORT            │ Which service / endpoint?   │
+├─────────────────┼─────────────────────────────┤
+│ IP ADDRESS      │ Which logical destination?  │
+├─────────────────┼─────────────────────────────┤
+│ MAC ADDRESS     │ Which local-link interface? │
+└─────────────────┴─────────────────────────────┘
 ```
 
-And the addressing connection I now understand is:
+PDU model:
 
 ```text
-PORT
- ↓
-Which service / communication endpoint?
-
-
-IP
- ↓
-Which logical network destination?
-
-
-MAC
- ↓
-Which interface / next hop on the local link?
+        ┌───────────────┐
+        │     DATA      │
+        │ Layers 7–5    │
+        └───────┬───────┘
+                │
+                ▼
+        ┌───────────────┐
+        │    SEGMENT    │
+        │    Layer 4    │
+        └───────┬───────┘
+                │
+                ▼
+        ┌───────────────┐
+        │    PACKET     │
+        │    Layer 3    │
+        └───────┬───────┘
+                │
+                ▼
+        ┌───────────────┐
+        │     FRAME     │
+        │    Layer 2    │
+        └───────┬───────┘
+                │
+                ▼
+        ┌───────────────┐
+        │      BITS     │
+        │    Layer 1    │
+        └───────────────┘
 ```
 
 ---
 
 # 20 — ⚠️ Important Corrections I Made While Learning
 
-Some of the most useful progress came from correcting assumptions rather than simply adding new terms.
-
-### TCP
-
 ```text
-Incorrect:
-TCP = Secure
-
-Better:
-TCP = Reliable transport
-
-Security requires separate protection.
+┌────────────────────────────────────────────────────────┐
+│ TCP                                                    │
+├────────────────────────────────────────────────────────┤
+│ ❌ TCP = Secure                                        │
+│ ✅ TCP = Reliable transport                            │
+│ Security requires separate protection                  │
+└────────────────────────────────────────────────────────┘
 ```
 
----
-
-### MAC Address
-
 ```text
-Incorrect:
-MAC Address = End-to-End Internet Address
-
-Better:
-MAC Address = Local-link addressing
-associated with network interfaces
+┌────────────────────────────────────────────────────────┐
+│ MAC ADDRESS                                            │
+├────────────────────────────────────────────────────────┤
+│ ❌ End-to-end Internet address                         │
+│ ✅ Local-link address associated with an interface     │
+└────────────────────────────────────────────────────────┘
 ```
 
----
-
-### IP Address
-
 ```text
-Incorrect:
-Network Layer automatically assigns IP addresses
-
-Better:
-Layer 3 uses IP addresses for
-logical addressing and routing
+┌────────────────────────────────────────────────────────┐
+│ IP ADDRESS                                             │
+├────────────────────────────────────────────────────────┤
+│ ❌ Network Layer automatically assigns IPs             │
+│ ✅ Layer 3 uses IP addressing and routing              │
+└────────────────────────────────────────────────────────┘
 ```
 
----
-
-### Encoding
-
 ```text
-Incorrect:
-Encoding = Encrypting information
-
-Better:
-Encoding = Representing information
-according to an agreed format
+┌────────────────────────────────────────────────────────┐
+│ ENCODING                                               │
+├────────────────────────────────────────────────────────┤
+│ ❌ Encoding = Encryption                               │
+│ ✅ Encoding = Representation                           │
+└────────────────────────────────────────────────────────┘
 ```
 
----
-
-### Wi-Fi
-
 ```text
-Incorrect:
-Wi-Fi Connected = Networking is completely working
-
-Better:
-Association may exist while other
-Layer 2 / Layer 3 problems still remain
+┌────────────────────────────────────────────────────────┐
+│ WI-FI CONNECTED                                        │
+├────────────────────────────────────────────────────────┤
+│ ❌ Every network layer is definitely working           │
+│ ✅ Other Layer 2 / Layer 3 issues may still exist      │
+└────────────────────────────────────────────────────────┘
 ```
 
-These corrections were important because networking terminology can sound similar while describing completely different responsibilities.
+These corrections were important because networking terms can sound related while solving very different problems.
 
 ---
 
 # 21 — 💭 Day 5 Reflection
 
-Before studying the OSI model, I understood several networking concepts individually.
-
-I already had ideas about:
+Before studying the OSI model, I already understood several networking concepts individually.
 
 ```text
-IP Addresses
+                    WHAT I ALREADY KNEW
 
-MAC Addresses
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│ IP Addresses │ │ MAC Addresses│ │ Port Numbers │
+└──────────────┘ └──────────────┘ └──────────────┘
 
-Ports
-
-Routers
-
-Protocols
-
-Local Networks
+┌──────────────┐ ┌──────────────┐
+│   Routers    │ │  Protocols   │
+└──────────────┘ └──────────────┘
 ```
-
-But they were still somewhat separate pieces in my mind.
 
 The OSI model gave those concepts a structure.
 
-Now when I imagine sending data, I can visualize:
-
 ```text
-Application creates information
-           ↓
-Upper layers prepare/manage it
-           ↓
-TCP/UDP handles transport
-           ↓
-IP handles logical addressing/routing
-           ↓
-Layer 2 prepares the local-link frame
-           ↓
-Physical layer transmits bits
+                      OSI MODEL
+                          │
+       ┌──────────────────┼───────────────────┐
+       │                  │                   │
+       ▼                  ▼                   ▼
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│ Protocols   │     │ Addressing  │     │ Devices     │
+│ HTTP/TCP    │     │ Port/IP/MAC │     │Router/Switch│
+└─────────────┘     └─────────────┘     └─────────────┘
+       │                  │                   │
+       └──────────────────┼───────────────────┘
+                          ▼
+               ONE COMMUNICATION MODEL
 ```
 
-And when the information reaches its destination:
+Now I can visualize both sending and receiving.
 
 ```text
-Bits
- ↓
-Frame
- ↓
-Packet
- ↓
-Segment
- ↓
-Data
- ↓
-Application
+               SENDER                         RECEIVER
+
+        ┌───────────────┐               ┌───────────────┐
+        │ Application   │               │ Application   │
+        └───────┬───────┘               └───────▲───────┘
+                │                               │
+        ┌───────▼───────┐               ┌───────┴───────┐
+        │ Transport     │               │ Transport     │
+        └───────┬───────┘               └───────▲───────┘
+                │                               │
+        ┌───────▼───────┐               ┌───────┴───────┐
+        │ Network       │               │ Network       │
+        └───────┬───────┘               └───────▲───────┘
+                │                               │
+        ┌───────▼───────┐               ┌───────┴───────┐
+        │ Data Link     │               │ Data Link     │
+        └───────┬───────┘               └───────▲───────┘
+                │                               │
+        ┌───────▼───────┐               ┌───────┴───────┐
+        │ Physical      │═══════════════▶│ Physical      │
+        └───────────────┘    NETWORK    └───────────────┘
+
+         ENCAPSULATION                  DECAPSULATION
 ```
 
-This was also the first point where I started seeing the OSI model as a troubleshooting tool rather than something that exists only to memorize seven layer names.
+This was also the point where I started seeing OSI as a troubleshooting framework rather than something that exists only for memorization.
 
-If a communication problem occurs, I can begin asking:
-
-```text
-Is the physical connection working?
-
-Can the local link communicate?
-
-Is IP addressing/routing working?
-
-Is the required transport connection working?
-
-Is DNS or another application protocol failing?
-```
-
-That is a much more structured way of thinking than simply saying:
+Instead of:
 
 ```text
 "The network is down."
 ```
 
+I can begin asking:
+
+```text
+                 WHERE IS IT FAILING?
+
+        ┌───────────────────────────────┐
+        │ Physical connection working? │
+        └──────────────┬────────────────┘
+                       │
+                       ▼
+        ┌───────────────────────────────┐
+        │ Local-link communication?     │
+        └──────────────┬────────────────┘
+                       │
+                       ▼
+        ┌───────────────────────────────┐
+        │ IP addressing / routing?      │
+        └──────────────┬────────────────┘
+                       │
+                       ▼
+        ┌───────────────────────────────┐
+        │ TCP / UDP / Ports working?    │
+        └──────────────┬────────────────┘
+                       │
+                       ▼
+        ┌───────────────────────────────┐
+        │ DNS / Application problem?    │
+        └───────────────────────────────┘
+```
+
 The biggest idea I want to carry forward from Day 5 is:
 
-> **Every layer solves a different communication problem, and understanding where each responsibility belongs makes both network communication and network troubleshooting easier to reason about.**
+> **Every OSI layer solves a different communication problem. Understanding those responsibilities allows me to trace communication and troubleshoot failures logically instead of treating networking as one giant black box.**
 
 ---
 
@@ -1973,60 +1857,91 @@ My next topic is:
 
 > **TCP/IP Model**
 
-Now that I understand the seven-layer OSI reference model, the next question I want to answer is:
+The question I want to answer next is:
 
 ```text
-If OSI explains networking using seven layers,
-how does the TCP/IP model represent
-real Internet communication?
+┌───────────────────────────────────────────────────────┐
+│                    NEXT QUESTION                      │
+├───────────────────────────────────────────────────────┤
+│ OSI explains communication using seven layers.        │
+│                                                       │
+│ How does the TCP/IP model organize the same           │
+│ Internet communication in practice?                   │
+└───────────────────────────────────────────────────────┘
 ```
 
-I also want to understand how:
+I also want to understand this mapping:
 
 ```text
-OSI Model
-        ↕
-TCP/IP Model
+┌─────────────────────┐          ┌─────────────────────┐
+│      OSI MODEL      │          │    TCP/IP MODEL    │
+│      7 Layers       │   ⇄      │   Fewer Layers     │
+│ Reference Model     │          │ Internet Protocols │
+└─────────────────────┘          └─────────────────────┘
 ```
 
-map to each other.
-
-My current expectation is that concepts such as:
+Concepts such as:
 
 ```text
-HTTP
-TCP / UDP
-IP
-Ethernet
+┌────────┐  ┌────────┐  ┌────────┐  ┌──────────┐
+│ HTTP   │  │ TCP    │  │  IP    │  │ Ethernet │
+└────────┘  └────────┘  └────────┘  └──────────┘
 ```
 
-will appear again, but organized differently.
-
-That will be the next step in connecting the reference model I learned today with the protocol suite used by the Internet.
+should appear again, but organized differently.
 
 ---
 
-## 📌 Networking Journey
+# 📌 Networking Journey Map
+
+Instead of seeing my networking journey only as a straight sequence of days, I now see the concepts building around one central goal:
 
 ```text
-Day 1
-Network Addressing Foundations
-        ↓
-Day 2
-IPv4, Binary and Address Classes
-        ↓
-Day 3
-Network ID, Broadcast ID and Subnet Mask
-        ↓
-Day 4
-Special IPs, Private/Public Addressing,
-Routing, Gateway and NAT
-        ↓
-Day 5
-OSI Model
-        ↓
-Next
-TCP/IP Model
+                         ┌───────────────────────┐
+                         │ NETWORKING FUNDAMENTALS│
+                         └───────────┬───────────┘
+                                     │
+             ┌───────────────────────┼────────────────────────┐
+             │                       │                        │
+             ▼                       ▼                        ▼
+┌────────────────────────┐ ┌────────────────────────┐ ┌────────────────────────┐
+│ ADDRESSING FOUNDATION  │ │ NETWORK STRUCTURE      │ │ COMMUNICATION MODEL    │
+│                        │ │                        │ │                        │
+│ Day 1                  │ │ Day 3                  │ │ Day 5                  │
+│ IP / MAC / Ports       │ │ Network ID             │ │ OSI Model              │
+│ Protocol Basics        │ │ Broadcast ID           │ │ Encapsulation          │
+│                        │ │ Subnet Mask             │ │ PDU / Troubleshooting  │
+└────────────┬───────────┘ └────────────┬───────────┘ └────────────┬───────────┘
+             │                          │                          │
+             ▼                          ▼                          ▼
+┌────────────────────────┐ ┌────────────────────────┐ ┌────────────────────────┐
+│ ADDRESS REPRESENTATION │ │ INTERNET CONNECTIVITY  │ │ NEXT STEP              │
+│                        │ │                        │ │                        │
+│ Day 2                  │ │ Day 4                  │ │ TCP/IP Model           │
+│ IPv4                   │ │ Private / Public IP    │ │ OSI ↔ TCP/IP Mapping   │
+│ Binary                 │ │ Gateway / NAT          │ │ Real Internet Stack    │
+│ Address Classes        │ │ Routing                │ │                        │
+└────────────────────────┘ └────────────────────────┘ └────────────────────────┘
+```
+
+This better represents how I actually see the journey now.
+
+The topics are not isolated days.
+
+They connect together:
+
+```text
+Addressing
+    +
+Subnet / Network Structure
+    +
+Routing
+    +
+Protocols
+    +
+OSI Communication Model
+    =
+Understanding How Network Communication Works
 ```
 
 > **My goal with this networking journey is not simply to memorize definitions. I want to understand why each concept exists, connect it with the concepts I already know, test my assumptions, and eventually be able to trace and troubleshoot real network communication logically.**
