@@ -635,28 +635,11 @@ Internet Address      Physical Address      Type
 
 ## 📸 Lab Evidence
 
-The screenshot shows:
+In my Packet Tracer lab, I recorded successful pings to `192.168.1.2`, `192.168.1.3`, and `192.168.1.4`, with zero packet loss in the displayed tests. I also recorded three dynamically learned entries in PC0's ARP cache after communication with the local devices.
 
-- Successful ping replies from `192.168.1.2`
-- Successful ping replies from `192.168.1.3`
-- Successful ping replies from `192.168.1.4`
-- Zero packet loss for the displayed ping tests
-- Three dynamically learned ARP cache entries
-- A new ARP entry appearing after communication with each device
+The screenshot described in my original notes is not currently included in this repository. These written observations describe the lab result, but a reader cannot independently inspect the screenshot here.
 
-```markdown
-![Packet Tracer ARP cache after pinging local devices](images/day-12-arp-cache.png)
-```
-
-The image should be stored at:
-
-```text
-images/day-12-arp-cache.png
-```
-
-This evidence proves that PC0 learned the IPv4-to-MAC mappings of the local devices.
-
-It does not, by itself, display the individual ARP Request and ARP Reply frames. Packet Tracer’s Simulation Mode or a packet capture would be required to inspect those messages directly.
+The ARP cache observations also do not show the individual ARP Request and ARP Reply frames. Packet Tracer Simulation Mode or a packet capture would be needed to inspect those messages directly.
 
 ---
 
