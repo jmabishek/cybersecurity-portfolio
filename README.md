@@ -1,131 +1,33 @@
-hi guys
-my name ia abhi 
-i uave started my journy in cyber security 
-And this is my first step towards my goal
-i will update my journy and challanges as i go 
-for now lets end it uere on day 2 2026 apr 25
-
 # Cybersecurity Portfolio
 
-## About Me
+Hi, I'm Abishek. I'm building my cybersecurity skills by working through networking labs, inspecting traffic, writing Linux tools, and documenting what my tests actually show.
 
-Hello, I'm Abishek Jogi Mokarla.
+**Current focus:** Networking fundamentals and practical labs. My Linux work is paused while I focus on networking, and I plan to resume it.
 
-I am an Electronics and Communication Engineering graduate (2026) currently building a strong foundation in Cybersecurity through hands-on learning, practical exercises, scripting projects, and technical documentation.
+## Start here: selected work
 
-This repository serves as my public learning portfolio where I document my progress, projects, notes, challenges, reflections, and practical work as I move through a structured cybersecurity roadmap.
+| Work | What I did | What you can inspect |
+|---|---|---|
+| [Two-LAN routing and DHCP lab](networking-fundamentals/06-ip-routing/day-15-router-dhcp-practical-lab/README.md) | Planned two subnets, configured a router as the DHCP server, fixed disabled interfaces, and tested communication between LANs. | Address plan, Cisco commands, client settings, routing-table results, ping results, mistakes, and test limits. |
+| [Wireshark traffic investigation](networking-fundamentals/02-osi-and-tcp-fundamentals/wireshark-packet-capture-tcp-udp/README.md) | Filtered a packet capture and examined conversations, UDP traffic, QUIC, and DNS. | My investigation process and what the observed traffic does and does not establish. |
+| [ARP investigation](networking-fundamentals/04-arp/day-12-address-resolution-protocol/README.md) | Traced how a device finds a local MAC address and why traffic to another network uses the gateway's MAC address. | The request-and-reply flow and my troubleshooting explanations. |
+| [Linux directory triage script](tools/README.md) | Built a Bash script that reports file attributes worth reviewing, including world-writable files and SUID/SGID permissions. | [Source code](tools/suspicious_hunter.sh), usage, development notes, and known limitations. |
 
-My goal is not just to learn tools, but to understand the underlying concepts deeply and build practical skills that can be applied in real-world cybersecurity roles.
+These are learning labs and tools. A flagged file is a lead to investigate, not proof of malicious activity.
 
----
+## Explore the repository
 
-## Current Progress
+- [Networking fundamentals](networking-fundamentals/) — IP addressing, OSI and TCP/IP, Wireshark, subnetting, ARP, DHCP, and routing.
+- [Linux fundamentals](linux-fundamentals/) — terminal use, permissions, Bash, scripts, and process observation. Currently paused.
+- [GRC notes](grc/) — governance, risk, evidence, and understanding what an organization needs to protect.
+- [Tools](tools/) — Bash directory triage script and its development notes.
 
-### Current Focus
+## How I document my work
 
-🦾 Hero 1 — Linux & Bash (Iron Man)
+For each topic, I try to record the goal, my setup, the steps I took, the result I observed, mistakes I corrected, and what the evidence cannot yet prove. The detailed daily notes show how my understanding changes as I test it.
 
-Current Status:
-
-* Linux & Bash Foundations: In Progress
-* Completed:
-
-  * Terminal Basics
-  * Files & Directories
-  * Permissions
-  * Variables & Environment
-  * Functions & Conditions
-  * File Conditions
-* Current Level:
-
-  * Level 6 — Loops and Automation
-
----
-
-## Cybersecurity Learning Roadmap
-
-This portfolio follows a structured roadmap called **The Spine**.
-
-The roadmap is built around eight connected domains:
-
-| Hero                | Domain                     |
-| ------------------- | -------------------------- |
-| 🦾 Iron Man         | Linux & Bash               |
-| 🕸️ Spider-Man      | Networking                 |
-| 🛡️ Captain America | Security Concepts          |
-| 🗺️ Nick Fury       | MITRE ATT&CK               |
-| 📝 Hawkeye          | Text Processing            |
-| 🐍 Bruce Banner     | Python                     |
-| 🐙 J.A.R.V.I.S      | Git & GitHub               |
-| 🗣️ Black Widow     | Professional Communication |
-
-The goal is to understand cybersecurity from the ground up rather than learning isolated tools.
-
----
-
-## Repository Structure
-
-```text
-cybersecurity-portfolio/
-├── linux-fundamentals/
-├── networking-fundamentals/
-├── security-concepts/
-├── python/
-├── git-github/
-├── progress-tracker/
-├── projects/
-└── README.md
-```
-
----
-
-## What You Will Find Here
-
-* Linux learning notes
-* Bash scripting exercises
-* Automation projects
-* Security-related experiments
-* Technical reflections
-* Learning progress logs
-* Documentation of challenges and solutions
-* Future networking and security projects
-
----
-
-## GitHub Portfolio Philosophy
-
-I believe that documenting learning is as important as learning itself.
-
-Instead of only showcasing finished projects, this repository also captures:
-
-* How I approach problems
-* How I debug issues
-* How my understanding evolves over time
-* How I build technical skills step by step
-
----
-
-## Current Goal
-
-Build strong foundations in:
-
-* Linux
-* Bash Scripting
-* Networking
-* Security Fundamentals
-* Python Automation
-
-and prepare for Cybersecurity Analyst and Security Operations Center (SOC) roles.
-
----
+My aim is to develop the networking, Linux, investigation, and communication skills needed for security analyst and SOC work.
 
 ## Contact
 
-GitHub:
-https://github.com/jmabishek
-
-Location:
-Hyderabad, India
-
-Status:
-Actively Learning | Open to Internship Opportunities | Open to Relocation
+[GitHub profile](https://github.com/jmabishek)
