@@ -6,7 +6,7 @@
 ![Focus](https://img.shields.io/badge/focus-threat%20hunting-blue?style=for-the-badge)
 ![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-T1548.001-red?style=for-the-badge)
 
-> Point it at a directory and it **hunts** — scanning for the files that signal danger on a real system, then writing a timestamped report to screen *and* disk.
+> Point it at a directory and it **hunts** — scanning for the files that signal danger on a real system, then displaying the findings in the terminal. The current script does not save the intended dated report.
 
 A sharper sibling to `audit.sh`. Where `audit.sh` **describes** a folder, this one **interrogates** it. It answers the first question a SOC analyst asks walking up to an unfamiliar machine: *"Is anything in here dangerous?"*
 
@@ -31,7 +31,7 @@ sushunt <foldername>
 ```
 
 - **Scope:** searches under `~` *by design* — a deliberate safety choice so the tool never wanders into root-owned system directories.
-- **Output:** prints live to the terminal **and** saves a dated report (`30-06-26.txt`) via `tee`.
+- **Output:** displays findings in the terminal. The dated report feature needs a fix before it can be claimed.
 - **Gate:** if the folder doesn't exist, it says so and stops — no silent failure.
 
 ---

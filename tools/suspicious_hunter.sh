@@ -11,7 +11,7 @@
 #  Usage  : sushunt <foldername>
 #  Scope  : searches under ~ on purpose — a safety choice, so the tool
 #           never wanders into root-owned system directories.
-#  Output : prints to the screen AND saves a dated report, via tee.
+#  Output : prints to the screen. Dated report saving needs a fix.
 # =====================================================================
 
 sushunt() {
