@@ -2,7 +2,7 @@
 
 ![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-![Status](https://img.shields.io/badge/status-working-brightgreen?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-partially%20working-yellow?style=for-the-badge)
 ![Focus](https://img.shields.io/badge/focus-threat%20hunting-blue?style=for-the-badge)
 ![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-T1548.001-red?style=for-the-badge)
 
@@ -112,6 +112,8 @@ Linux's core rule: a program runs with **your** permissions. SUID is a deliberat
 ---
 
 ## 🚧 Roadmap
+
+1. **Fix dated report saving** — `tee` currently receives an empty filename because `logfile` is assigned inside the other side of a pipeline.
 
 1. **Section 5 (root-owned + world-writable)** — needs two conditions on one line: the world-writable bit (`-perm -o+w`) **and** an owner filter (`-user root`). Without the owner filter it just duplicates Section 1, so it's parked until `-user` is formally learned.
 2. **Drop the `cd`** — `cd`-ing inside the function moves the shell when the script is *sourced*. `find` can take the path directly; revisit to remove it.
