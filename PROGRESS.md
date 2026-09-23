@@ -1,3 +1,13 @@
+# Learning Progress
+
+## Current focus — 23 September 2026
+
+**Networking is active.** I have documented IP addressing, OSI and TCP/IP, packet inspection with Wireshark, subnetting, ARP, DHCP, and routing. My latest documented practical work is the [Day 15 two-LAN routing and router-based DHCP lab](networking-fundamentals/06-ip-routing/day-15-router-dhcp-practical-lab/README.md).
+
+**Linux is paused while I focus on networking.** The existing Linux notes include Bash scripting and process observation. I plan to resume that work; the July entry below records where I had left the directory triage script.
+
+---
+
 ## Level 7.3 — find: -user & negation · 2 July 2026
 
 Concepts mastered (not yet written into the tool):
