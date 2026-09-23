@@ -1,5 +1,9 @@
 # 🌐 Day 15 — Practical IP Routing Lab: Router as DHCP Server for Two LANs
 
+## 📂 Packet Tracer lab file
+
+[Download the two-LAN router and DHCP lab](day-15-two-lan-router-dhcp.pkt) and open it in Cisco Packet Tracer. The configuration, address plan, tests, and limits are documented below.
+
 ## 📌 Lab overview
 
 Today I built and tested a two-LAN network in Cisco Packet Tracer. This was primarily a practical lab: I configured router interfaces, made the router serve DHCP addresses to both LANs, added PCs and servers, diagnosed configuration mistakes, and verified communication between the LANs.
