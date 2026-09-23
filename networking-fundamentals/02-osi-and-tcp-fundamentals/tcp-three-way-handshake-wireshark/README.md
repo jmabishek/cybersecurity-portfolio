@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 07
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Verify how TCP establishes a connection using actual packet fields.
+- **Actions:** I captured traffic in Wireshark, filtered TCP packets and compared flags, sequence numbers, acknowledgments and options.
+- **Result:** I identified SYN, SYN-ACK and ACK and checked the sequence-plus-one relationship during connection establishment.
+- **Evidence:** Documented handshake observations, display filters and field explanations below.
+- **Limitations:** The original capture is not attached. This is normal TCP inspection, without a demonstrated attack investigation.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## TCP Segments → TCP Header → Three-Way Handshake → Wireshark Packet Analysis
 
 **Learning Track:** Networking Fundamentals  

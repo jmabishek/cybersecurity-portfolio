@@ -1,5 +1,21 @@
 # 🛡️ suspicious_hunter.sh — Directory Threat Hunter
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Identify filesystem entries whose permissions, modification times or sizes deserve review.
+- **Actions:** I built Bash find checks and tested permission matching with deliberately changed permissions.
+- **Result:** The script displays matching entries in the terminal for further investigation.
+- **Evidence:** [Source code](suspicious_hunter.sh), usage notes and documented permission checks below.
+- **Limitations:** Report saving is broken and the root-owned/world-writable check is unfinished. Matches are investigation leads; they do not establish malicious activity.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ![Bash](https://img.shields.io/badge/Bash-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![Status](https://img.shields.io/badge/status-partially%20working-yellow?style=for-the-badge)

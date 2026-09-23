@@ -1,5 +1,21 @@
 # 🌐 Advanced IP Subnetting and VLSM
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Design different-sized subnets within a parent network and understand the bit-level calculations.
+- **Actions:** I derived masks from prefixes, practiced bitwise AND, compared FLSM and VLSM, and checked larger subnet boundaries.
+- **Result:** I connected borrowed bits, address-block sizes and nonoverlapping allocations, including networks larger than /24.
+- **Evidence:** Binary calculations, parent/child network examples and VLSM allocation rules below.
+- **Limitations:** These are documented design exercises; firewall rules, routing policies and deployed segmentation were not tested here.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Day 10 — Networking Fundamentals
 
 Today I continued my IPv4 subnetting learning from Day 9.

@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 04
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Distinguish ordinary host addressing from private, public and special-purpose IPv4 ranges.
+- **Actions:** I classified address examples and traced the roles of the default gateway, routing and NAT in internet communication.
+- **Result:** I distinguished RFC1918 private space, loopback and link-local addressing, and separated the gateway address from the network address.
+- **Evidence:** Address-range tables, worked examples and observation commands below.
+- **Limitations:** NAT and internet routing are explained conceptually here; this entry does not demonstrate their configuration.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Special IPv4 Addresses, Private & Public IPs, Default Gateway, NAT and Internet Address Allocation
 
 **Learning Track:** Networking Fundamentals

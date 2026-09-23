@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 06
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Connect network endpoints and TCP states to the applications using them.
+- **Actions:** I used netstat -na and netstat -ano on Windows, then matched process IDs with tasklist; I also studied sockets and NAT/PAT.
+- **Result:** I interpreted local and remote endpoints, connection states and owning processes.
+- **Evidence:** Command examples, a sanitized connection example and documented process observations below.
+- **Limitations:** A port number or process name alone does not establish malicious activity. NAT/PAT was studied, not configured in this exercise.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## TCP/IP → TCP Header → Ports → Sockets → NAT/PAT → Real Connections
 
 **Learning Track:** Networking Fundamentals  

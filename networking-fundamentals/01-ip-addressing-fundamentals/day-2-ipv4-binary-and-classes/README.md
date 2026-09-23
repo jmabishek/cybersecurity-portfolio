@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 02
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Understand how IPv4 addresses are represented and how network and host portions were historically divided.
+- **Actions:** I practiced decimal-to-binary conversions, octet place values and historical address-class identification.
+- **Result:** I explained the four-octet structure, the 0-255 octet range and the difference between address capacity and bandwidth.
+- **Evidence:** Worked binary conversions, class tables and address examples below.
+- **Limitations:** Classful addressing is historical; modern subnet boundaries require a mask or prefix. These are written exercises, not deployment results.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## IPv4 Address Format, Decimal–Binary Conversion and IP Address Classes
 
 **Learning Track:** Networking Fundamentals

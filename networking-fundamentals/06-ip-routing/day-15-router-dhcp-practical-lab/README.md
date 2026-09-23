@@ -1,5 +1,21 @@
 # 🌐 Day 15 — Practical IP Routing Lab: Router as DHCP Server for Two LANs
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Route between two LANs while using the router as their DHCP server.
+- **Actions:** I planned /26 and /27 subnets, enabled router interfaces, configured two DHCP pools and checked client settings and connected routes.
+- **Result:** Both selected PCs received DHCP settings; the documented ping tests returned four replies in each direction with no loss.
+- **Evidence:** [Packet Tracer file](day-15-two-lan-router-dhcp.pkt), address plan, configuration and recorded test results below.
+- **Limitations:** DNS resolution, internet access and VLAN-based segmentation were not verified. The ping results cover the selected PCs.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## 📂 Packet Tracer lab file
 
 [Download the two-LAN router and DHCP lab](day-15-two-lan-router-dhcp.pkt) and open it in Cisco Packet Tracer. The configuration, address plan, tests, and limits are documented below.

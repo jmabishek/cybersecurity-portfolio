@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 08
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Find relevant conversations within busy browser-generated network traffic.
+- **Actions:** I filtered TCP, UDP and DNS, isolated a UDP stream, inspected endpoints and located DNS query names.
+- **Result:** I observed QUIC over UDP/443 and googlevideo.com names, while keeping conclusions within the captured evidence.
+- **Evidence:** Filters, workflow and written packet observations below.
+- **Limitations:** The capture is not attached. A DNS hostname alone does not prove a specific user action, and encrypted payloads were not decrypted.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Wireshark Traffic Capture → Packet Filtering → Conversations → DNS Hostname Identification
 
 **Learning Track:** Networking Fundamentals  

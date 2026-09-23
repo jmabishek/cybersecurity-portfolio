@@ -1,5 +1,21 @@
 # 🌐 Day 12 — Address Resolution Protocol (ARP)
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Understand how a known local IPv4 address becomes a destination MAC address.
+- **Actions:** I built a four-PC Packet Tracer LAN, pinged peers and inspected learned mappings with arp -a.
+- **Result:** I recorded successful pings to three peers and three dynamic ARP entries; I explained gateway-MAC use for remote destinations.
+- **Evidence:** Written ping results, address mappings and the lab walkthrough below.
+- **Limitations:** The screenshot is not attached. Cache entries alone do not display the individual ARP request/reply frames; spoofing was not tested.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## 📌 Today’s Focus
 
 Today I explored **ARP (Address Resolution Protocol)** and understood how a computer discovers the MAC address required to deliver an Ethernet frame inside a local network.

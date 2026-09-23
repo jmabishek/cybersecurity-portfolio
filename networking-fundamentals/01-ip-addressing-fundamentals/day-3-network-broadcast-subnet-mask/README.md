@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 03
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Determine whether a destination is local and identify valid host addresses within a subnet.
+- **Actions:** I calculated network and broadcast ranges, explored ipconfig and ping, and practiced a three-PC switched network in Packet Tracer.
+- **Result:** I connected the subnet mask to local-versus-routed delivery and distinguished host addresses from network and broadcast addresses.
+- **Evidence:** Documented topology, address calculations and command examples below.
+- **Limitations:** The original simulation and screenshots are not attached; broadcast-ping behavior can also vary by device.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Same vs Different Networks, Network ID, Broadcast ID, Subnet Mask, Ping and Packet Tracer
 
 **Learning Track:** Networking Fundamentals  

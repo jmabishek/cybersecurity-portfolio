@@ -1,5 +1,21 @@
 # 🌐 Day 14 — IP Routing, Directly Connected Networks, DHCP Integration, ARP and ICMP
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Connect two IPv4 subnets and supply clients with suitable network settings.
+- **Actions:** I configured two /27 LANs, router interfaces and local DHCP servers, then used ping and Packet Tracer Simulation Mode.
+- **Result:** I documented directly connected routing, ARP/ICMP behavior and troubleshooting of masks, DHCP settings and an APIPA address.
+- **Evidence:** Address tables, Cisco commands, DHCP settings and the troubleshooting walkthrough below.
+- **Limitations:** The original simulation file is not attached. Static routes, multiple routers, DHCP relay and routing protocols were not configured.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## 📌 Overview
 
 Today I built and analyzed a Cisco Packet Tracer network containing two different IPv4 subnets connected by a router.

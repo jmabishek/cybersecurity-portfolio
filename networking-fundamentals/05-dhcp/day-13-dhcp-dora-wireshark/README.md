@@ -1,5 +1,21 @@
 # 🌐 Day 13 — DHCP, DORA, and Wireshark Packet Analysis
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Observe automatic client configuration and distinguish separate DHCP exchanges.
+- **Actions:** I captured Windows DHCP traffic during release and renewal, filtered UDP 67/68 traffic and compared transaction IDs.
+- **Result:** I documented a complete Discover-Offer-Request-ACK sequence, a Release and a separate Request/ACK exchange.
+- **Evidence:** The packet table below records packet numbers, endpoints, ports and transaction IDs.
+- **Limitations:** The original capture is not attached. DHCP relay, exclusions and reservations are explained here without a demonstrated configuration lab.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## 📌 Overview
 
 Today I studied **DHCP (Dynamic Host Configuration Protocol)** and learned how a device automatically receives the network configuration it needs to communicate.

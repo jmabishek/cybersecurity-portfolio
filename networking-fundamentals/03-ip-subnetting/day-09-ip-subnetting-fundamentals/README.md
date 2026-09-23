@@ -1,5 +1,21 @@
 # 🌐 IP Subnetting Foundations
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Choose subnet sizes that meet host requirements without crossing address boundaries.
+- **Actions:** I calculated host capacity, block sizes, usable ranges and network/broadcast addresses using IPv4 examples.
+- **Result:** I explained why a /26 has 64 total addresses and normally 62 usable hosts, and why allocations must begin on valid boundaries.
+- **Evidence:** Worked calculations, allocation examples and a subnet-planning workflow below.
+- **Limitations:** This entry establishes the calculation method; its design exercises do not provide a completed network configuration or connectivity evidence.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Day 9 — Networking Fundamentals
 
 Today I focused on building a strong foundation in **IPv4 subnetting**.

@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 01
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Understand why network communication needs protocols, IP addresses, MAC addresses and ports.
+- **Actions:** I compared their roles, reviewed IPv4 and IPv6 formats, and worked through client and service port examples.
+- **Result:** I connected local frame delivery, logical network addressing and transport endpoints into one communication model.
+- **Evidence:** Written examples, port ranges and addressing diagrams in the notes below.
+- **Limitations:** This entry documents foundational understanding; it does not include a packet capture or a configured routing lab.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Understanding Protocols, Addressing, IPv4, IPv6, MAC Addresses and Ports
 
 **Learning Track:** Networking Fundamentals

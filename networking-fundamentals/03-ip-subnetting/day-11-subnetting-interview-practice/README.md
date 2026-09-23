@@ -1,5 +1,21 @@
 # 🌐 Advanced IP Subnetting — VLSM, Network Boundaries & Interview Practice
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Find the subnet of an arbitrary IPv4 address and solve mixed-size allocation problems.
+- **Actions:** I worked through VLSM department examples, converted masks and prefixes, and checked boundaries across the third and fourth octets.
+- **Result:** I calculated network and broadcast addresses, usable ranges and host capacity with a repeatable boundary method.
+- **Evidence:** Worked interview-style questions and a mixed-size allocation table below.
+- **Limitations:** No timed benchmark or deployed network is provided. Longest-prefix route selection and /31-/32 cases remain follow-up topics.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 > **Goal:** Move beyond basic subnet creation and learn how to analyze any random IPv4 address, identify its subnet, calculate network/broadcast addresses, and solve practical VLSM problems across both the 3rd and 4th octets.
 
 ---

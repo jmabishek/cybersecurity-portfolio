@@ -1,5 +1,21 @@
 # 🌐 NETWORKING — DAY 05
 
+<!-- portfolio-quick-review:start -->
+## ⚡ Quick review
+
+- **Problem:** Organize network communication into responsibilities that help explain and troubleshoot failures.
+- **Actions:** I mapped protocols, addresses and data units to the seven OSI layers, then traced encapsulation and example troubleshooting scenarios.
+- **Result:** I connected ports, packets, frames and bits with their roles in end-to-end communication.
+- **Evidence:** Layer diagrams, protocol mappings and worked troubleshooting examples below.
+- **Limitations:** OSI is a reference model. The scenarios illustrate reasoning rather than document measured incidents or implementation boundaries.
+
+[Read the full learning notes ↓](#full-learning-notes)
+
+---
+
+<a id="full-learning-notes"></a>
+<!-- portfolio-quick-review:end -->
+
 ## Understanding the OSI Model — How Data Travels Through Seven Networking Layers
 
 **Learning Track:** Networking Fundamentals
