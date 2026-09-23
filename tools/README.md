@@ -114,6 +114,5 @@ Linux's core rule: a program runs with **your** permissions. SUID is a deliberat
 ## 🚧 Roadmap
 
 1. **Fix dated report saving** — `tee` currently receives an empty filename because `logfile` is assigned inside the other side of a pipeline.
-
-1. **Section 5 (root-owned + world-writable)** — needs two conditions on one line: the world-writable bit (`-perm -o+w`) **and** an owner filter (`-user root`). Without the owner filter it just duplicates Section 1, so it's parked until `-user` is formally learned.
-2. **Drop the `cd`** — `cd`-ing inside the function moves the shell when the script is *sourced*. `find` can take the path directly; revisit to remove it.
+2. **Section 5 (root-owned + world-writable)** — needs two conditions on one line: the world-writable bit (`-perm -o+w`) **and** an owner filter (`-user root`). Without the owner filter it just duplicates Section 1, so it's parked until `-user` is formally learned.
+3. **Drop the `cd`** — `cd`-ing inside the function moves the shell when the script is *sourced*. `find` can take the path directly; revisit to remove it.

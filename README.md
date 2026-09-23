@@ -30,4 +30,7 @@ My aim is to develop the networking, Linux, investigation, and communication ski
 
 ## Contact
 
+**Location:** Hyderabad, India  
+**Availability:** Open to cybersecurity internship opportunities
+
 [GitHub profile](https://github.com/jmabishek)
