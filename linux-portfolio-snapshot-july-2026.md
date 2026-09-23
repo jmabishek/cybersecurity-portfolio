@@ -1,3 +1,9 @@
+# Archived Linux portfolio snapshot
+
+This page records how the portfolio was presented in July 2026. Its progress status and repository structure are historical. For current work, see the [portfolio homepage](README.md) and [learning progress](PROGRESS.md).
+
+---
+
 <div align="center">
 
 <h1>🛡️ Cybersecurity Portfolio</h1>
