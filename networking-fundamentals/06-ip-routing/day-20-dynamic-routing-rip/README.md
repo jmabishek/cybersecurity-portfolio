@@ -1,262 +1,222 @@
 # 🌐 Day 20 — Dynamic Routing with RIP
 
 <!-- portfolio-quick-review:start -->
-## ⚡ Quick review
 
-- **Problem:** Static routing requires remote routes to be configured manually on routers.
-- **Approach:** I removed the manually configured static routes and enabled RIP so the routers could exchange routing information automatically.
-- **Result:** Remote networks appeared in the routing table with the code `R`, showing that they were learned through RIP.
-- **Key understanding:** Static routing depends on routes entered by an administrator, while dynamic routing protocols allow routers to learn and update routing information from other routers.
-- **Routing protocol:** RIP — Routing Information Protocol.
-- **Metric used by RIP:** Hop count.
+## ⚡ Quick Review
+
+* **Problem:** Static routing requires manually configuring routes to remote networks.
+* **What I practiced:** Removed static routes, configured RIP on three routers, and verified dynamically learned networks.
+* **Result:** Remote networks appeared in routing tables with the code `R`.
+* **Routing Protocol:** RIP — Routing Information Protocol.
+* **Metric:** Hop count.
+* **Administrative Distance:** 120.
+* **Maximum usable metric:** 15 hops.
+* **Key Understanding:** RIP automatically exchanges routing information between participating routers, reducing the need to configure every remote route manually.
+
+**Main takeaway:** RIP learns remote network routes dynamically. The `network` command enables RIP participation on matching interfaces; it does not manually create a static route.
 
 [Read the full learning notes ↓](#full-learning-notes)
 
 ---
 
 <a id="full-learning-notes"></a>
+
 <!-- portfolio-quick-review:end -->
 
-## 📌 What changed from static routing?
+# 🎯 1. What I Practiced
 
-In my previous routing labs, I manually told routers how to reach remote networks using commands such as:
+* Removed previously configured static routes.
+* Enabled RIP on Cisco routers.
+* Configured RIPv2.
+* Advertised connected networks.
+* Understood the purpose of the `network` command.
+* Verified RIP-learned routes.
+* Compared RIPv1 and RIPv2.
+* Understood hop count and Administrative Distance.
+* Learned `no auto-summary`.
+* Learned how to remove individual RIP networks and the entire RIP process.
+* Understood why RIP is not suitable for many large networks.
 
-```cisco
-ip route <destination-network> <subnet-mask> <next-hop-IP>
-```
+**Objective:** Understand how routers learn remote networks dynamically instead of manually configuring every route.
 
-For example:
+---
+
+# 🧠 2. Static Routing vs RIP
+
+Before learning RIP, I configured routes manually.
+
+Example:
 
 ```cisco
 ip route 192.168.1.0 255.255.255.0 200.200.200.1
 ```
 
-This is **static routing** because I manually create the route.
+This tells the router:
 
-Today I learned **dynamic routing**.
+> To reach network `192.168.1.0/24`, forward packets toward `200.200.200.1`.
 
-Instead of configuring every remote route manually, routers can exchange routing information using a routing protocol.
-
-The protocol used in this lab was:
-
-> **RIP — Routing Information Protocol**
-
-My main mental model is:
+With RIP, participating routers exchange routing information and learn remote networks automatically.
 
 ```text
 STATIC ROUTING
-Administrator creates routes
-        ↓
-Router uses those routes
+
+Administrator configures route
+           |
+           v
+Router installs route
+           |
+           v
+Packets forwarded
+
+
+DYNAMIC ROUTING (RIP)
+
+Routers exchange routes
+           |
+           v
+Router learns remote networks
+           |
+           v
+Routes installed automatically
+           |
+           v
+Packets forwarded
 ```
 
-```text
-DYNAMIC ROUTING
-Routers exchange routing information
-        ↓
-Routers learn remote networks
-        ↓
-Routing tables update automatically
-```
+### Comparison
+
+| Static Routing                          | RIP                                           |
+| --------------------------------------- | --------------------------------------------- |
+| Routes configured manually              | Routes learned dynamically                    |
+| Uses `ip route`                         | Uses `router rip`                             |
+| Routing-table code `S`                  | Routing-table code `R`                        |
+| Administrator specifies next hop        | RIP learns next hops                          |
+| Changes require manual maintenance      | RIP can react to route changes                |
+| Useful for simple, predictable networks | Useful for small dynamic-routing environments |
+
+**Important:** Static routing and RIP can operate on the same router.
+
+Enabling RIP does not automatically remove existing static routes.
 
 ---
 
-## 🎯 What I practiced
+# 🗺️ 3. My Three-Router Packet Tracer Lab
 
-- Understanding the difference between static and dynamic routing.
-- Removing previously configured static routes.
-- Enabling RIP on Cisco routers.
-- Advertising directly connected networks through RIP.
-- Checking the routing table with `show ip route`.
-- Identifying RIP-learned routes using the code `R`.
-- Understanding RIP hop count.
-- Reading `[120/1]` and `[120/2]` in routing-table entries.
-- Checking RIP information using `show ip protocols`.
-- Understanding that routing protocols need time to react when network connectivity changes.
-- Learning the basic idea of routing convergence.
-
----
-
-# 🧠 What is dynamic routing?
-
-**Dynamic routing** allows routers to exchange information about the networks they know.
-
-Instead of manually entering:
-
-```cisco
-ip route ...
-```
-
-for every destination network, I enable a routing protocol.
-
-The routers then exchange routing information with other routers participating in that protocol.
-
-This is useful when a network contains several routers because manually maintaining every route can become difficult.
-
----
-
-# 🛰️ What is RIP?
-
-**RIP** stands for:
-
-> **Routing Information Protocol**
-
-RIP is a dynamic routing protocol.
-
-Its job is to help routers learn about remote networks from other routers.
-
-RIP mainly chooses between routes using:
-
-> **Hop count**
-
-A **hop** represents passing through a router on the path toward a destination network.
-
-For example:
+## Network Topology
 
 ```text
-Router2 → HQ → 192.168.0.0
+         LAN 1
+    192.168.1.0/24
+           |
+           |
+        Router0
+           |
+           |
+    200.200.200.0/24
+           |
+           |
+       HQ Router
+           |
+           +----------- LAN 0
+           |         192.168.0.0/24
+           |
+    100.100.100.0/24
+           |
+           |
+        Router2
+           |
+           |
+         LAN 2
+    192.168.2.0/24
 ```
 
-The destination network is one router hop away.
+### Network Details
 
-But:
+| Network            | Purpose      |
+| ------------------ | ------------ |
+| `192.168.1.0/24`   | Router0 LAN  |
+| `200.200.200.0/24` | Router0 ↔ HQ |
+| `192.168.0.0/24`   | HQ LAN       |
+| `100.100.100.0/24` | HQ ↔ Router2 |
+| `192.168.2.0/24`   | Router2 LAN  |
+
+Every router already knows its directly connected networks.
+
+The challenge is learning networks connected to other routers.
+
+### Before RIP
+
+Router0 knows:
 
 ```text
-Router2 → HQ → Router0 → 192.168.1.0
-```
-
-requires two router hops.
-
-RIP prefers routes with the lower hop count.
-
----
-
-## 🗺️ My three-router topology
-
-The lab contained three routers:
-
-```mermaid
-flowchart LR
-    LAN1["192.168.1.0/24"] --- R0["Router0"]
-    R0 ---|"200.200.200.0/24"| HQ["HQ Router"]
-    HQ --- LAN0["192.168.0.0/24"]
-    HQ ---|"100.100.100.0/24"| R2["Router2"]
-    R2 --- LAN2["192.168.2.0/24"]
-```
-
-The main networks were:
-
-| Network | Purpose |
-|---|---|
-| `192.168.1.0/24` | LAN connected to Router0 |
-| `200.200.200.0/24` | Router0 ↔ HQ connection |
-| `192.168.0.0/24` | LAN connected to HQ |
-| `100.100.100.0/24` | HQ ↔ Router2 connection |
-| `192.168.2.0/24` | LAN connected to Router2 |
-
-The routers already know their own directly connected networks.
-
-The problem is learning the networks located behind the other routers.
-
----
-
-# 🔄 Step 1 — Remove the old static routes
-
-Before enabling RIP, HQ contained manually configured routes such as:
-
-```text
-S 192.168.1.0/24 via 200.200.200.1
-S 192.168.2.0/24 via 100.100.100.1
-```
-
-`S` means:
-
-> **Static route**
-
-To properly observe RIP learning the routes dynamically, I removed the old static routes.
-
-```cisco
-enable
-configure terminal
-
-no ip route 192.168.2.0 255.255.255.0 100.100.100.1
-no ip route 192.168.20.0 255.255.255.0 200.200.200.1
-no ip route 192.168.1.0 255.255.255.0 200.200.200.1
-
-end
-write memory
-```
-
-After removing the static routes, HQ only knew its directly connected networks.
-
-Example:
-
-```text
-C 100.100.100.0
-C 192.168.0.0/24
+C 192.168.1.0/24
 C 200.200.200.0/24
 ```
 
-`C` means:
+Router0 does not automatically know how to reach:
 
-> **Connected network**
+```text
+192.168.0.0/24
+192.168.2.0/24
+```
 
-This gave me a clean starting point for observing RIP.
+That's why routing information must be configured or learned.
 
 ---
 
-# 🔧 Step 2 — Enable RIP
+# 🔧 4. RIP Configuration — Practical Commands
 
-The basic command is:
+## Step 1 — Remove Old Static Routes
 
-```cisco
-router rip
-```
+To observe routes being learned through RIP, I removed the static routes used for the same destinations.
 
-This enters RIP configuration mode.
-
-Example:
+Example on HQ:
 
 ```cisco
-Router(config)# router rip
-Router(config-router)#
+en
+conf t
+
+no ip route 192.168.1.0 255.255.255.0 200.200.200.1
+no ip route 192.168.2.0 255.255.255.0 100.100.100.1
+
+end
 ```
 
-The router is now ready to be told which connected networks should participate in RIP.
+**Important:** Removing static routes is not mandatory to enable RIP.
 
----
+I removed them for this lab to verify that remote networks were being learned dynamically.
 
-# 📢 Step 3 — Advertise connected networks
+A static route with Administrative Distance 1 normally takes priority over a RIP route with AD 120 when both refer to the same destination prefix.
 
-## Router0
+## Step 2 — Configure RIP on Router0
 
-Router0 was connected to:
+Router0 connects to:
 
 ```text
 192.168.1.0/24
 200.200.200.0/24
 ```
 
-The RIP configuration used was:
+Configuration:
 
 ```cisco
-enable
-configure terminal
+en
+conf t
 
 router rip
- version 2
- network 192.168.1.0
- network 200.200.200.0
+version 2
+no auto-summary
+
+network 192.168.1.0
+network 200.200.200.0
 
 end
-write memory
+wr
 ```
 
----
+## Step 3 — Configure RIP on HQ
 
-## HQ Router
-
-HQ was connected to:
+HQ connects to:
 
 ```text
 192.168.0.0/24
@@ -264,643 +224,854 @@ HQ was connected to:
 100.100.100.0/24
 ```
 
-The configuration used was:
+Configuration:
 
 ```cisco
-enable
-configure terminal
+en
+conf t
 
 router rip
- network 192.168.0.0
- network 100.100.100.0
- network 200.200.200.0
+version 2
+no auto-summary
+
+network 192.168.0.0
+network 200.200.200.0
+network 100.100.100.0
 
 end
-write memory
+wr
 ```
 
----
+## Step 4 — Configure RIP on Router2
 
-## Router2
-
-Router2 was connected to:
+Router2 connects to:
 
 ```text
-100.100.100.0/24
 192.168.2.0/24
+100.100.100.0/24
 ```
 
-The RIP configuration used was:
+Configuration:
 
 ```cisco
-enable
-configure terminal
+en
+conf t
 
 router rip
- network 100.100.100.0
- network 192.168.2.0
+version 2
+no auto-summary
+
+network 192.168.2.0
+network 100.100.100.0
 
 end
-write memory
+wr
 ```
+
+### Original Lab vs Improved Configuration
+
+In my original recorded lab, Router0 explicitly used `version 2`, while the HQ and Router2 configuration blocks did not explicitly include that command.
+
+The updated configurations above represent a cleaner RIPv2 setup:
+
+* Explicitly enable RIPv2 on all participating routers.
+* Disable automatic classful summarization.
+* Include the required connected networks.
+
+These are recommended revised configurations, not a claim that every command appeared in my original lab.
 
 ---
 
-# ⚠️ What the `network` command actually means
+# 🧠 5. Understanding Every RIP Command
 
-This was an important correction to my understanding.
+| Command               | Purpose                                          |
+| --------------------- | ------------------------------------------------ |
+| `router rip`          | Enables or enters RIP configuration              |
+| `version 2`           | Specifies RIPv2                                  |
+| `no auto-summary`     | Disables automatic classful route summarization  |
+| `network 192.168.1.0` | Enables RIP participation on matching interfaces |
+| `end`                 | Returns to privileged EXEC mode                  |
+| `wr`                  | Saves the configuration                          |
+| `sh ip route`         | Displays the routing table                       |
+| `sh ip protocols`     | Displays routing protocol information            |
 
-When I enter:
+## What Does `network` Actually Do?
+
+Consider:
 
 ```cisco
 network 192.168.1.0
 ```
 
-I am **not manually creating a route to `192.168.1.0`**.
+This does **not** mean:
 
-The router already knows that network if it is directly connected.
+> Create a new route to 192.168.1.0.
 
-The command tells RIP that the connected network/interface should participate in RIP so routing information can be exchanged with RIP neighbors.
+Instead, it tells RIP to include matching connected interfaces in the routing process.
 
-So:
-
-```text
-ip route ...
-```
-
-and:
-
-```text
-network ...
-```
-
-have completely different purposes.
-
----
-
-# 🔎 Step 4 — Check the routing table
-
-After configuring RIP, I used:
-
-```cisco
-show ip route
-```
-
-Before RIP, HQ mainly displayed connected networks:
-
-```text
-C 100.100.100.0
-C 192.168.0.0/24
-C 200.200.200.0/24
-```
-
-After RIP exchanged routing information, HQ learned:
-
-```text
-R 192.168.1.0/24 [120/1] via 200.200.200.1
-R 192.168.2.0/24 [120/1] via 100.100.100.1
-```
-
-The important change was:
-
-```text
-R
-```
-
-`R` means:
-
-> **The route was learned through RIP.**
-
-This is different from:
-
-```text
-C = Connected
-S = Static
-R = RIP
-```
-
----
-
-# 🔢 Understanding `[120/1]`
-
-One RIP route appeared as:
-
-```text
-R 192.168.1.0/24 [120/1] via 200.200.200.1
-```
-
-I learned to read:
-
-```text
-[120/1]
-```
-
-as:
-
-```text
-[Administrative Distance / Metric]
-```
-
-For RIP:
-
-```text
-120 = Administrative Distance
-1   = Hop Count
-```
-
-### Administrative Distance
-
-**Administrative Distance (AD)** represents how trustworthy a routing-information source is considered by the router.
-
-RIP uses an administrative distance of:
-
-```text
-120
-```
-
-### Metric
-
-A **metric** is the value a routing protocol uses to compare possible routes.
-
-RIP uses:
-
-```text
-Hop Count
-```
-
----
-
-# 🪜 Understanding hop count from my topology
-
-Router2 learned:
-
-```text
-R 192.168.0.0/24 [120/1]
-```
-
-because the path is:
-
-```text
-Router2 → HQ → 192.168.0.0
-```
-
-That network is one router hop away.
-
-Router2 also learned:
-
-```text
-R 192.168.1.0/24 [120/2]
-```
-
-because the path is:
-
-```text
-Router2 → HQ → Router0 → 192.168.1.0
-```
-
-The network is two router hops away.
-
-This helped me understand what RIP's metric actually represents.
-
----
-
-# 🔄 How routers learn from each other
-
-The routers exchange information approximately like this:
-
-```text
-Router0
-"I know 192.168.1.0"
-        ↓
-       HQ
-        ↓
-Router2 learns that network through HQ
-```
-
-Router2 also advertises its own network:
-
-```text
-Router2
-"I know 192.168.2.0"
-        ↓
-       HQ
-        ↓
-Router0 can learn about it
-```
-
-Therefore I do not need to manually create every remote route with `ip route`.
-
-The routing protocol handles the exchange.
-
----
-
-# ⏱️ RIP updates and timers
-
-I used:
-
-```cisco
-show ip protocols
-```
-
-The output showed that RIP was running and sending routing updates periodically.
-
-The lab displayed information including:
-
-```text
-Routing Protocol is "rip"
-
-Sending updates every 30 seconds
-
-Invalid after 180 seconds
-hold down 180
-flushed after 240
-```
-
-The most important point for me is:
-
-> RIP does not instantly know every change in the network.
-
-Routers exchange information and need some time to update their routing tables.
-
----
-
-# 🔄 What is convergence?
-
-**Convergence** is the process of routers updating their routing information after the network changes until the routers have a consistent view of reachable routes again.
+The directly connected network can then be advertised through other RIP-enabled interfaces.
 
 For example:
 
 ```text
-Normal network
-Router A → Router B → Destination
+Router0
+   |
+   | Connected LAN
+   | 192.168.1.0/24
+   |
+   | RIP Advertisement
+   v
+  HQ
+   |
+   | Learns route
+   v
+192.168.1.0/24 via Router0
 ```
 
-If the path becomes unavailable:
-
-```text
-Router A → X Router B
-```
-
-a dynamic routing protocol eventually learns that the old path should no longer be used.
-
-If another usable route exists, the routing protocol may learn and use it.
-
-The time needed to react and update routing information is related to **convergence**.
-
----
-
-# ⚠️ Route failure observed in my lab
-
-During the lab, one routing-table entry changed to:
-
-```text
-R 192.168.2.0/24 is possibly down,
-routing via 100.100.100.1
-```
-
-This showed me that RIP was reacting to a change involving that learned route.
-
-A dynamic routing protocol does not mean there can never be packet loss.
-
-While routers are detecting a network change and updating routing information, traffic can temporarily fail.
-
-The important idea is:
-
-> Dynamic routing can react to topology changes, but the update process is not necessarily instantaneous.
-
----
-
-# 🆚 Static routing vs RIP
-
-| Static Routing | RIP Dynamic Routing |
-|---|---|
-| Routes are entered manually | Routes can be learned from other routers |
-| Uses `ip route` | Uses `router rip` |
-| Appears as `S` in the routing table | Appears as `R` |
-| Administrator provides the next hop | RIP exchanges routing information |
-| Does not automatically learn normal topology changes | RIP can update learned routes |
-| Easy for small/simple networks | Reduces manual routing work as networks grow |
-
-My simplest mental model is:
-
-> **Static routing:** I tell the router where the network is.
-
-> **Dynamic routing:** Routers tell each other which networks they know.
-
----
-
-# ⭐ Static and dynamic routes can exist together
-
-One thing I noticed in this lab is that enabling RIP did not automatically mean every static route disappeared.
-
-For example, an edge router could still contain:
-
-```text
-S* 0.0.0.0/0
-```
-
-while also having routes learned through RIP.
-
-`S*` represents a static candidate default route.
-
-So:
-
-> Static routing and dynamic routing are not mutually exclusive.
-
-A router can contain connected routes, static routes, default routes, and dynamically learned routes at the same time.
-
----
-
-# 🧪 Commands I learned
-
-| Command | Purpose |
-|---|---|
-| `enable` | Enter privileged EXEC mode |
-| `configure terminal` | Enter global configuration mode |
-| `show ip route` | Display the routing table |
-| `ip route ...` | Create a static route |
-| `no ip route ...` | Remove a static route |
-| `router rip` | Enable/configure RIP |
-| `version 2` | Configure RIP version 2 |
-| `network <network>` | Make a connected network participate in RIP |
-| `show ip protocols` | Display information about active routing protocols |
-| `write memory` / `wr` | Save the running configuration |
-
----
-
-# 💻 Basic RIP command pattern
-
-For future practice, the general structure I need to remember is:
+### Important Distinction
 
 ```cisco
-enable
-configure terminal
-
-router rip
- version 2
- network <directly-connected-network>
- network <directly-connected-network>
-
-end
-
-write memory
-
-show ip route
-show ip protocols
+ip route 192.168.1.0 255.255.255.0 200.200.200.1
 ```
 
-The exact `network` commands depend on the networks directly connected to that router.
-
----
-
-# 🔍 Useful routing-table codes
-
-| Code | Meaning |
-|---|---|
-| `C` | Connected |
-| `S` | Static |
-| `S*` | Candidate default static route |
-| `R` | RIP |
-| `O` | OSPF |
-| `D` | EIGRP |
-
-For today's lab, the most important ones were:
-
-```text
-C
-S
-R
-```
-
----
-
-# 🛠️ Mistakes I learned from
-
-## 1. Running `no ip route` in the wrong CLI mode
-
-I initially tried:
-
-```cisco
-Router# no ip route ...
-```
-
-The command was rejected.
-
-`no ip route` is a configuration command, so I needed:
-
-```cisco
-Router# configure terminal
-Router(config)# no ip route ...
-```
-
----
-
-## 2. Running `show` commands in configuration mode
-
-I also attempted commands such as:
-
-```cisco
-Router(config)# show ip route
-```
-
-The normal place to run the command is privileged EXEC mode:
-
-```cisco
-Router#
-```
-
-So I use:
-
-```cisco
-Router(config)# end
-Router# show ip route
-```
-
-This reinforced the importance of checking the Cisco CLI prompt before entering a command.
-
----
-
-## 3. `network` does not mean “create this route”
-
-This was one of the biggest conceptual differences from static routing.
+Manually creates a route.
 
 ```cisco
 network 192.168.1.0
 ```
 
-does not mean:
+Makes matching connected interfaces participate in RIP.
 
-> “Create a route to 192.168.1.0.”
-
-It tells RIP that this connected network should participate in the routing protocol.
-
-Remote routes are then learned through RIP exchanges.
+**One technical detail:** Traditional Cisco RIP `network` statements use classful network matching. They are not the same as OSPF `network` statements, which use wildcard masks.
 
 ---
 
-# 📝 RIP version observation from my lab
+# 🔄 6. Why Must We Include Router-to-Router Networks?
 
-In my recorded configuration, Router0 explicitly used:
+Suppose Router0 has:
+
+```text
+LAN: 192.168.1.0/24
+        |
+     Router0
+        |
+WAN: 200.200.200.0/24
+        |
+       HQ
+```
+
+Configuration:
 
 ```cisco
+router rip
 version 2
+
+network 192.168.1.0
 ```
 
-while the HQ router's `show ip protocols` output showed its default version behavior.
+### Will RIP Updates Reach HQ?
 
-This means my recorded classroom configuration was not completely identical on every router.
+❌ Not through the `200.200.200.0/24` link with this configuration alone.
 
-The important lesson from this lab was understanding RIP itself.
+Why?
 
-For a clean RIPv2 practice lab, I should configure:
+RIP has only been enabled on interfaces matching `192.168.1.0`.
+
+The router-to-router interface is not participating in RIP.
+
+### Correct Configuration
 
 ```cisco
 router rip
- version 2
+version 2
+
+network 192.168.1.0
+network 200.200.200.0
 ```
 
-consistently on all participating routers.
+Now RIP can exchange routing information over the router-to-router connection, assuming HQ is also configured correctly.
+
+**Important:** Router0 and HQ may still communicate using their directly connected interface IP addresses even without RIP.
+
+What fails is RIP route exchange over the unconfigured interface.
 
 ---
 
-# 🔍 My troubleshooting order for RIP
+# 🔢 7. RIP Metric — Hop Count
 
-If RIP routes are not appearing, I will check:
+RIP uses **hop count** to select routes.
 
-1. Are the router interfaces correctly addressed and `up/up`?
-2. Does `show ip route` display the expected directly connected `C` networks?
-3. Is RIP configured using `router rip`?
-4. Did I include the correct directly connected networks under RIP?
-5. Are neighboring routers also participating in RIP?
-6. Does `show ip protocols` confirm RIP is running?
-7. Does `show ip route` show remote networks with `R`?
-8. Is the route currently being treated as unavailable or possibly down?
-9. Can the end devices successfully ping across the topology?
+A hop is a router-routing step toward the destination network.
 
-Useful commands:
-
-```cisco
-show ip interface brief
-show ip route
-show ip protocols
-show running-config
-ping <destination-IP>
-```
-
----
-
-# 🔐 Why this matters for cybersecurity
-
-Understanding routing is important when troubleshooting communication failures.
-
-If a device cannot reach another network, the problem is not automatically:
-
-- a firewall,
-- malware,
-- a blocked port,
-- or a failed server.
-
-The router may simply:
-
-- not know the destination network,
-- have an incorrect route,
-- have lost a neighboring route,
-- or still be updating its routing information after a topology change.
-
-Dynamic routing knowledge helps me determine:
-
-> **Where should this packet go, how did the router learn that path, and what happens if that path disappears?**
-
-This is useful when analyzing outages, packet loss, network segmentation problems, firewall paths, and security incidents.
-
----
-
-# 🧠 My Day 20 takeaway
-
-Before this lab, I understood routing mainly as manually creating routes using `ip route`.
-
-Today I learned that routers can also learn remote networks dynamically.
-
-With RIP:
+Consider:
 
 ```text
+Router0 ---- HQ ---- Router2 ---- LAN
+```
+
+Router0 reaches Router2's LAN through two routing hops.
+
+```text
+Destination: 192.168.2.0/24
+
+RIP Metric: 2
+```
+
+### Example — Choosing a Path
+
+```text
+PATH A
+
+Router0 → HQ → Destination
+
+Hop Count = 1
+
+
+PATH B
+
+Router0 → Router2 → Router3 → HQ → Destination
+
+Hop Count = 3
+```
+
+✅ RIP prefers Path A because it has fewer hops.
+
+### RIP Limitation
+
+RIP does not calculate path quality using bandwidth.
+
+For example:
+
+```text
+Path A: 1 hop, 10 Mbps
+
+Path B: 2 hops, 1 Gbps
+```
+
+RIP normally prefers Path A because it has fewer hops, even though its connection is slower.
+
+**This is one reason OSPF can be more suitable for complex networks.**
+
+---
+
+# ⚠️ 8. RIP's 15-Hop Limitation
+
+RIP supports a maximum usable metric of 15.
+
+```text
+1 hop      ✅ Reachable
+2 hops     ✅ Reachable
+...
+15 hops    ✅ Reachable
+
+16 hops    ❌ Unreachable
+```
+
+In RIP:
+
+**16 means infinity or an unreachable route.**
+
+### Important Correction
+
+This does not mean:
+
+* RIP supports only 15 routers in an entire organization.
+* RIP supports only 15 LANs.
+* RIP supports only 15 IP networks.
+
+The limitation applies to the **hop-count metric of a route**.
+
+A network can contain more than 15 routers while still having reachable routes whose RIP metrics remain within the limit.
+
+---
+
+# 📊 9. Reading RIP Routing Tables
+
+Verification command:
+
+```cisco
+sh ip route
+```
+
+### Recorded Lab Result
+
+HQ learned routes similar to:
+
+```text
+R 192.168.1.0/24 [120/1] via 200.200.200.1
+
+R 192.168.2.0/24 [120/1] via 100.100.100.1
+```
+
+### Understanding the Output
+
+```text
+R 192.168.1.0/24 [120/1] via 200.200.200.1
+```
+
+| Value            | Meaning                   |
+| ---------------- | ------------------------- |
+| `R`              | Route learned through RIP |
+| `192.168.1.0/24` | Destination network       |
+| `120`            | Administrative Distance   |
+| `1`              | Hop-count metric          |
+| `200.200.200.1`  | Next-hop router IP        |
+
+## Administrative Distance vs Metric
+
+These are different concepts.
+
+**Administrative Distance (AD):** Determines preference between different routing information sources for the same destination prefix.
+
+**Metric:** Determines which route is preferable within a routing protocol.
+
+### Common Cisco Administrative Distances
+
+| Route Source       | Default AD |
+| ------------------ | ---------: |
+| Directly Connected |          0 |
+| Static             |          1 |
+| OSPF               |        110 |
+| RIP                |        120 |
+
+**Lower Administrative Distance is preferred when comparing routes to the same destination prefix.**
+
+Example:
+
+```text
+RIP:  [120/2]
+
+OSPF: [110/20]
+```
+
+✅ OSPF normally wins because AD 110 is lower than 120.
+
+However, RIP's metric `2` and OSPF's cost `20` are different types of measurements.
+
+They should not be directly compared.
+
+Also, routers use the longest matching destination prefix when selecting a forwarding route.
+
+---
+
+# 🆚 10. RIPv1 vs RIPv2
+
+| Feature                          | RIPv1     | RIPv2     |
+| -------------------------------- | --------- | --------- |
+| IPv4 support                     | ✅         | ✅         |
+| Includes subnet masks in updates | ❌         | ✅         |
+| Supports VLSM                    | ❌         | ✅         |
+| Classless routing updates        | ❌         | ✅         |
+| Update delivery                  | Broadcast | Multicast |
+| Authentication support           | ❌         | ✅         |
+| Maximum usable metric            | 15        | 15        |
+
+### Why Use RIPv2?
+
+Consider:
+
+```text
+192.168.1.0/24
+
+192.168.2.0/26
+```
+
+These networks use different subnet masks.
+
+RIPv1 does not include subnet masks in its advertisements.
+
+RIPv2 includes subnet masks and therefore supports classless routing information.
+
+### What About RIPv3 and RIPv4?
+
+For Cisco IPv4 RIP configuration, the standard version options are RIPv1 and RIPv2.
+
+IPv6 uses a related protocol called **RIPng (RIP Next Generation)**.
+
+RIPng is not configured by simply entering `version 3` under IPv4 RIP.
+
+---
+
+# 🔍 11. Understanding `no auto-summary`
+
+RIPv2 supports subnet masks, but automatic classful summarization can still cause problems.
+
+### Example
+
+Suppose a router has:
+
+```text
+10.1.1.0/24
+
+10.1.2.0/24
+```
+
+When advertising these routes across a classful network boundary, automatic summarization can advertise:
+
+```text
+10.0.0.0/8
+```
+
+This is much larger than the original networks.
+
+It can incorrectly suggest that the router can reach addresses it does not actually know.
+
+### Solution
+
+```cisco
 router rip
+version 2
+no auto-summary
 ```
 
-starts the RIP process, while:
+This disables automatic classful summarization.
+
+### Important Distinction
+
+`version 2`:
+
+Supports advertising subnet masks.
+
+`no auto-summary`:
+
+Prevents automatic summarization at classful boundaries.
+
+`no auto-summary` does **not** enable interfaces or advertise networks by itself.
+
+We still require the correct `network` statements.
+
+---
+
+# 🔌 12. How RIP Exchanges Routing Information
+
+RIPv2 normally uses:
 
 ```text
-network ...
+Transport Protocol: UDP
+
+Destination Port: 520
+
+Multicast Address: 224.0.0.9
 ```
 
-selects connected networks that participate in RIP.
+Routers send periodic RIP routing updates, normally every 30 seconds.
 
-After the routers exchange routing information, dynamically learned routes appear as:
+### Example
 
 ```text
-R
+Router0                         HQ
+   |                             |
+   | RIP Update                  |
+   | 192.168.1.0/24              |
+   |---------------------------->|
+   |                             |
+   |                    HQ learns route
+   |                             |
+   |<----------------------------|
+   | RIP Update                  |
+   | 192.168.0.0/24              |
+   |                             |
 ```
 
-in:
+### Does RIP Run for Every Data Packet?
+
+❌ No.
+
+RIP exchanges routing information to maintain routes.
+
+When a router forwards a normal packet, it uses its existing routing or forwarding information.
+
+```text
+RIP learns route
+       |
+       v
+Route installed
+       |
+       v
+PC sends packet
+       |
+       v
+Router forwards packet
+```
+
+RIP does not need to exchange a new routing update for every forwarded packet.
+
+---
+
+# ⏳ 13. RIP Updates and Convergence
+
+**Convergence** means routers updating their routing information after a network change until they have a consistent view of reachable routes.
+
+Example:
+
+```text
+Router0 ---- HQ ---- Router2
+```
+
+If the connection between HQ and Router2 fails:
+
+```text
+Router0 ---- HQ   X   Router2
+```
+
+RIP must detect the failure and update affected routes.
+
+It does not necessarily happen immediately.
+
+### Common RIP Timers
+
+| Timer     | Typical Value | Purpose                                        |
+| --------- | ------------- | ---------------------------------------------- |
+| Update    | 30 seconds    | Periodic routing updates                       |
+| Invalid   | 180 seconds   | Route considered invalid after missing updates |
+| Hold-down | 180 seconds   | Helps control unstable route changes           |
+| Flush     | 240 seconds   | Removes stale routing information              |
+
+The exact values depend on configuration and platform.
+
+### Recorded Lab Observation
+
+During practice, a RIP route appeared as:
+
+```text
+R 192.168.2.0/24 is possibly down
+```
+
+This indicated that the router was treating the learned route as potentially unavailable.
+
+**Important:** Dynamic routing can respond to topology changes, but it does not guarantee zero packet loss.
+
+---
+
+# 🔐 14. RIP and Passive Interfaces
+
+Normally, RIP sends routing updates through RIP-enabled interfaces.
+
+But a LAN containing ordinary PCs does not need RIP routing updates.
+
+Example:
+
+```text
+LAN PCs
+   |
+Fa0/0
+ Router0
+Fa0/1
+   |
+  HQ
+```
+
+We can stop RIP updates from being sent through the LAN-facing interface.
 
 ```cisco
-show ip route
+router rip
+passive-interface FastEthernet0/0
 ```
 
-I also learned to interpret:
+Shortcut:
 
-```text
-[120/1]
+```cisco
+pass fa0/0
 ```
 
-as:
+Assuming `Fa0/0` connects to the PC LAN.
 
-```text
-120 = RIP administrative distance
-1   = RIP hop-count metric
-```
+### Important Rules
 
-The most important difference I will remember is:
+* The LAN can still be advertised through other RIP-enabled interfaces.
+* The router continues routing packets for that LAN.
+* RIP updates are not sent through the passive interface.
+* The router-to-router interface should not be made passive if normal RIP update exchange is required there.
 
-> **Static routing = I maintain the routes manually.**
-
-> **Dynamic routing = routers exchange information and help maintain their routing tables automatically.**
+This command is optional for the basic connectivity lab but useful for cleaner network configuration.
 
 ---
 
-## ✅ Quick self-check
+# ❌ 15. Removing RIP Configurations
 
-1. What does RIP stand for?
-2. What is the difference between a static route and a RIP-learned route?
-3. What does `R` mean in `show ip route`?
-4. What does `[120/2]` mean for a RIP route?
-5. What metric does RIP use?
-6. Does `network 192.168.1.0` manually create a route to that network?
-7. What does `show ip protocols` tell me?
-8. What does convergence mean?
-9. Can static and dynamic routes exist on the same router?
+## Remove the Entire RIP Process
 
-<details>
-<summary>Check my understanding</summary>
+```cisco
+en
+conf t
 
-1. **Routing Information Protocol.**
-2. A static route is configured manually; a RIP route is learned through RIP.
-3. `R` means the route was learned through RIP.
-4. `120` is RIP's administrative distance and `2` is the hop-count metric.
-5. RIP uses hop count.
-6. No. It makes the connected network participate in RIP.
-7. It shows information about the dynamic routing protocols running on the router.
-8. Convergence is the process of routers updating their routing information after the network changes.
-9. Yes. Static, connected, default, and dynamically learned routes can exist together.
+no router rip
 
-</details>
+end
+wr
+```
+
+### What Happens?
+
+* RIP configuration is removed.
+* Routes learned through that RIP process are removed.
+* Interface IP addresses remain unchanged.
+* Directly connected networks remain available.
+* Static routes remain configured.
+
+## Remove Only One Network
+
+Suppose:
+
+```cisco
+router rip
+network 192.168.1.0
+network 200.200.200.0
+```
+
+Remove:
+
+```cisco
+no network 192.168.1.0
+```
+
+### What Happens?
+
+* The specified network statement is removed from RIP.
+* RIP can remain active on other participating interfaces.
+* The corresponding directly connected network is not deleted.
+
+**Important:** Removing a RIP `network` command does not remove the interface IP address.
 
 ---
 
-## 📍 Next learning
+# ✅ 16. What Works / What Doesn't
 
-The next dynamic routing protocol I will study is:
+| Scenario                                                  | Works? | Reason                                                                      |
+| --------------------------------------------------------- | ------ | --------------------------------------------------------------------------- |
+| Routers exchange RIP updates over enabled interfaces      | ✅      | Both interfaces participate in RIP                                          |
+| RIP learns remote networks automatically                  | ✅      | Routers exchange routing information                                        |
+| RIP routes appear with `R`                                | ✅      | `R` identifies RIP-learned routes                                           |
+| `network` manually creates static routes                  | ❌      | It enables RIP participation                                                |
+| Only the LAN network is enabled in RIP                    | ⚠️     | Router-to-router interface must also participate for updates over that link |
+| Different subnet masks with RIPv2                         | ✅      | RIPv2 carries subnet-mask information                                       |
+| RIPv1 reliably supports VLSM                              | ❌      | RIPv1 does not advertise subnet masks                                       |
+| RIP supports routes with metric 16                        | ❌      | Metric 16 means unreachable                                                 |
+| RIP always selects the fastest physical link              | ❌      | RIP uses hop count                                                          |
+| RIP and static routing exist together                     | ✅      | Both can be configured                                                      |
+| RIP automatically removes static routes                   | ❌      | Static routes remain unless removed                                         |
+| Removing RIP deletes connected networks                   | ❌      | Interface configurations remain                                             |
+| Making a LAN interface passive prevents LAN advertisement | ❌      | The LAN can still be advertised through other active RIP interfaces         |
+| RIP updates are exchanged for every forwarded packet      | ❌      | RIP maintains routing information separately from data forwarding           |
 
-**OSPF — Open Shortest Path First**
+---
 
-RIP introduced the idea of routers automatically exchanging routing information. OSPF will build on the same dynamic-routing foundation while using a different method to calculate routes.
+# 🛠️ 17. Verification and Troubleshooting
+
+Although RIP was successfully practiced, verification is important before declaring a configuration complete.
+
+| Command           | Purpose                                                              |
+| ----------------- | -------------------------------------------------------------------- |
+| `sh ip int br`    | Check interface IP addresses and status                              |
+| `sh ip route`     | Inspect the routing table                                            |
+| `sh ip protocols` | Check RIP version, networks, timers, and routing information sources |
+| `sh run`          | Inspect the running configuration                                    |
+| `ping <IP>`       | Test connectivity                                                    |
+| `wr`              | Save configuration                                                   |
+
+### Quick Verification
+
+**1. Check interfaces**
+
+```cisco
+sh ip int br
+```
+
+Expected: Required interfaces should normally show `up/up`.
+
+**2. Check routing protocol**
+
+```cisco
+sh ip protocols
+```
+
+Verify:
+
+```text
+Routing Protocol is "rip"
+```
+
+Confirm the expected RIP version and participating networks.
+
+**3. Check routing table**
+
+```cisco
+sh ip route
+```
+
+Look for:
+
+```text
+R 192.168.2.0/24 [120/2]
+```
+
+**4. Test connectivity**
+
+```cisco
+ping 192.168.2.10
+```
+
+Use the actual destination IP from the lab.
+
+### Important Lesson
+
+A route appearing in the routing table does not guarantee that a destination PC is reachable.
+
+The network still requires:
+
+* Working interfaces.
+* Correct addressing.
+* Valid forward and return routes.
+* Proper default gateways on end devices.
+* No blocking security rules.
+
+---
+
+# 🔐 18. Cybersecurity Relevance
+
+Understanding RIP helps identify routing-related problems during network investigations.
+
+| Scenario                 | Relevance                                                  |
+| ------------------------ | ---------------------------------------------------------- |
+| Missing routes           | Identify routing failures                                  |
+| Network outages          | Understand how routers respond to link failures            |
+| Unexpected route changes | Investigate possible incorrect or malicious advertisements |
+| Route manipulation       | Understand risks from unauthorized routing updates         |
+| Network monitoring       | Recognize RIP packets and routing activity                 |
+| Segmentation testing     | Confirm whether networks have valid routes between them    |
+
+RIP is generally not preferred for modern large enterprise routing designs because of its scalability, convergence, and metric limitations.
+
+However, understanding it provides a useful foundation for studying OSPF and network security.
+
+---
+
+# 🧠 19. What I Learned Beyond Configuration
+
+The most important improvement in my understanding was learning what each RIP command actually changes.
+
+### My Mental Model
+
+```text
+Router Interfaces Configured
+             |
+             v
+Directly Connected Networks Exist
+             |
+             v
+Enable RIP
+             |
+             v
+Choose RIPv2
+             |
+             v
+Enable RIP on Required Interfaces
+             |
+             v
+Routers Exchange Routing Updates
+             |
+             v
+Remote Networks Learned
+             |
+             v
+Routing Table Updated
+             |
+             v
+Packets Forwarded
+```
+
+### Key Takeaways
+
+**`router rip`**
+
+Enters RIP configuration.
+
+**`version 2`**
+
+Selects RIPv2.
+
+**`network`**
+
+Enables RIP on matching connected interfaces.
+
+**`no auto-summary`**
+
+Disables automatic classful route summarization.
+
+**`sh ip route`**
+
+Shows installed routes.
+
+**`sh ip protocols`**
+
+Shows routing protocol information.
+
+**`no network`**
+
+Removes a particular RIP network statement.
+
+**`no router rip`**
+
+Removes the entire RIP configuration.
+
+**Hop Count**
+
+RIP's route-selection metric.
+
+**Administrative Distance 120**
+
+RIP's default route-source preference value on Cisco routers.
+
+---
+
+# 📌 20. Lab Evidence and Scope
+
+### Successfully Practiced
+
+* Three-router Packet Tracer topology.
+* Removal of previously configured static routes.
+* RIP configuration across Router0, HQ, and Router2.
+* Dynamic learning of remote LAN networks.
+* RIP routing-table verification.
+* Interpretation of `R` routing entries.
+* Interpretation of `[120/1]` and `[120/2]`.
+* Observation of a route becoming possibly unavailable.
+
+### Understanding Strengthened Through Revision
+
+* Difference between static and dynamic routing.
+* Why router-to-router networks must participate in RIP.
+* RIPv1 vs RIPv2.
+* RIP's 15-hop limitation.
+* Administrative Distance vs metric.
+* Purpose of `no auto-summary`.
+* RIP update behavior.
+* Passive-interface configuration.
+* Removing individual RIP networks.
+* Removing the entire RIP process.
+* Why forward and return routes are both necessary for successful communication.
+
+**Evidence note:** The recorded routing results come from the original Packet Tracer lab. Additional commands introduced during revision are presented as improved configuration practices, not as previously captured experimental results.
+
+---
+
+## ✅ Day 20 — Dynamic Routing with RIP Completed
+
+This lab helped me move from manually configuring routes to understanding how routers exchange routing information dynamically.
+
+I can now explain:
+
+* Why RIP exists.
+* How RIP discovers remote networks.
+* Why `network` differs from `ip route`.
+* How RIP chooses routes.
+* Why RIP has a 15-hop limitation.
+* Why RIPv2 is preferable to RIPv1.
+* How to configure, verify, modify, and remove RIP.
+* Why successful routing requires both forward and return paths.
+
+**Final Takeaway:**
+
+> Static routing tells a router exactly where to forward packets. RIP allows routers to exchange routing information and learn remote networks automatically, using hop count to compare available paths.
+
+
