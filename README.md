@@ -34,3 +34,17 @@ My aim is to develop the networking, Linux, investigation, and communication ski
 **Availability:** Open to cybersecurity internship opportunities
 
 [GitHub profile](https://github.com/jmabishek)
+
+## 🔐 Hands-On Cybersecurity Projects
+
+### CYVERO — Secure Web Server Deployment & Access Control
+
+Built and configured an Apache HTTP server on Kali Linux, implemented IP-based access control using UFW, and monitored successful and blocked connections.
+
+**Technologies:** Kali Linux, Apache2, UFW, VirtualBox, HTML/CSS
+
+- 🌐 [View Live Website](https://jmabishek.github.io/cybersecurity-portfolio/)
+- 📂 [View Project Files](projects/cyvero-secure-web-server/)
+- 📄 [View Project Report](projects/cyvero-secure-web-server/documentation/CYVERO_Phase1_Report.pdf)
+
+**Key Skills:** Linux Administration | Networking | Firewall Configuration | Access Control | Log Monitoring
